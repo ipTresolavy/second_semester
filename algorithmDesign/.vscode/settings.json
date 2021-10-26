@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "pilha.h": "c",
+        "fila.h": "c",
+        "pilha03.h": "c",
+        "pilha10.h": "c",
+        "stdarg.h": "c",
+        "bitset": "c",
+        "chrono": "c",
+        "algorithm": "c"
+    }
+}

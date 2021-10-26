@@ -1,0 +1,11 @@
+-std=c17
+
+-Wall 
+
+-Wextra
+
+-ansi
+
+-pedantic
+
+-O2

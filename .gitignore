@@ -1,0 +1,9 @@
+# under development
+/algorithmDesign/EPS/EP3/**
+
+/**/.vscode
+
+/algorithmDesign/**/*.o
+/algorithmDesign/**/*_exec
+
+/digitalSystems/**/work

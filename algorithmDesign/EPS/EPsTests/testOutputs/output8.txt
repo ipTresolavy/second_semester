@@ -1,3 +1,0 @@
-Insira a dimensão m x n do tabuleiro: Insira o tabuleiro:
-
-Impossivel

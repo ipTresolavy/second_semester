@@ -8,4 +8,7 @@ algorithmDesign/EPS/EP3/**
 algorithmDesign/**/*.o
 algorithmDesign/**/*_exec
 
-# digitalSystems/FSM/work/**
+digitalSystems/**/work
+digitalSystems/**/modelsim.ini
+digitalSystems/**/transcript
+digitalSystems/**/*.wlf

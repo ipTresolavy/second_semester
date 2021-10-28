@@ -1,9 +1,11 @@
 # under development
-/algorithmDesign/EPS/EP3/**
+algorithmDesign/EPS/EP3/**
+############################
 
-/**/.vscode
 
-/algorithmDesign/**/*.o
-/algorithmDesign/**/*_exec
+**/.vscode
 
-/digitalSystems/**/work
+algorithmDesign/**/*.o
+algorithmDesign/**/*_exec
+
+# digitalSystems/FSM/work/**

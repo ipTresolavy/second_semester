@@ -1,3 +1,13 @@
+/**
+ * @file ep2.c
+ * @author Igor Pontes Tresolavy (tresolavy@usp.br)
+ * @brief Segundo EP da disciplina de MAC0122
+ * @version 1.0
+ * @date 2021-10-28
+ * 
+ * 
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>

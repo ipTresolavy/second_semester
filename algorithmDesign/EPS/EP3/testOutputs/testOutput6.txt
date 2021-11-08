@@ -1,0 +1,2 @@
+Insira a quantidade de panquecas a serem ordenadas: Insira a pilha de 7 panquecas: 
+ 4  3  2  1  0 

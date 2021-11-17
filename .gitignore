@@ -1,9 +1,7 @@
 # under development
-#release after 2021-11-12
-algorithmDesign/list/terceira_lista/**
-
-#release after 2021-11-12
-digitalSystems/EP2/**
+#release after 2021-11-26
+algorithmDesign/list/quarta_lista/**
+algorithmDesign/EPS/EP4/**
 
 #release after 2021-11-19
 PEA/ETAPA_4/**
@@ -19,3 +17,4 @@ digitalSystems/**/work
 digitalSystems/**/modelsim.ini
 digitalSystems/**/transcript
 digitalSystems/**/*.wlf
+digitalSystems/**/*.opt

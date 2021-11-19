@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <ctype.h>
 
 typedef struct ocurrenceCell
@@ -10,23 +9,22 @@ typedef struct ocurrenceCell
     struct ocurrenceCell *next;
 } ocurrences;
 
-typedef char item;
 typedef struct wordCell
 { 
-  item *word;
+  char *word;
   ocurrences *ocurr;
   struct wordCell* next; 
 } words;
 
 typedef enum {FALSE, TRUE} boolean;
 
-void updateHashTable(item*, unsigned long, words**, unsigned long*, unsigned long);
-words** resizeHashTable(words**, unsigned long, unsigned long, unsigned long);
-words* searchForWord(words**, unsigned long, item*);
-ocurrences* searchForLine(words*, unsigned long);
+void updateHashTable(char*, unsigned long, words**, unsigned long*, unsigned long);
+words** resizeHashTable(words**, unsigned long, unsigned long);
+words* searchForWord(words*, char*);
+ocurrences* searchForLine(ocurrences*, unsigned long);
 void addOcurrence(words*, unsigned long);
-void addToHashTable(words*, item*, unsigned long, unsigned long);
-boolean compare(item*, item*);
+void addToHashTable(words**, unsigned long, char*, unsigned long, unsigned long);
+boolean compare(char*, char*);
 
 int main()
 {
@@ -34,7 +32,7 @@ int main()
     words **hashTable;
     unsigned long hashTableSize, line, maxWordSize, wordSize;
     char c, *fileName;
-    item *wordParser;
+    char *wordParser;
 
     printf("Digite o caminho até o arquivo: ");
     for(wordSize = 0, fileName = malloc(sizeof(char)); (c = getchar()) != EOF && c != '\n'; ++wordSize)
@@ -51,7 +49,7 @@ int main()
     }
     else
     {
-        /* Libera espaço utilizado pela string nome do arquivo */
+        /* Libera espaço utilizado pela string "nome do arquivo" */
         free(fileName);
 
         /* Inicializa variáveis */
@@ -61,13 +59,7 @@ int main()
         /* Alocamento inicial de memória */
         hashTable = calloc(hashTableSize, sizeof(words*));
         *hashTable = calloc(1, sizeof(words));
-        (*hashTable)->word = calloc(maxWordSize + 1, sizeof(item));
-        (*hashTable)->next = NULL;
-        (*hashTable)->ocurr = NULL;
-        wordParser = calloc(maxWordSize + 1, sizeof(item));
-        /* (*hashTable)->ocurr = calloc(1, sizeof(ocurrences));
-        (*hashTable)->ocurr->next = calloc(1, sizeof(struct ocurrenceCell));
-        (*hashTable)->next = calloc(1, sizeof(struct wordCell)); */
+        wordParser = calloc(maxWordSize + 1, sizeof(char));
     }
     
 
@@ -77,7 +69,7 @@ int main()
     {
         if(wordSize >= maxWordSize)
         {
-            wordParser = realloc(wordParser, sizeof(item)*(maxWordSize *= 2));
+            wordParser = realloc(wordParser, sizeof(char)*((maxWordSize *= 2) + 1));
             if(wordParser == NULL)
             {
                 printf("realocamento de memória para palavra falhou");
@@ -90,7 +82,8 @@ int main()
         else
         {
             *(wordParser + wordSize) = '\0';
-            updateHashTable(wordParser, wordSize, hashTable, &hashTableSize, line);
+            if(wordSize > 0)
+                updateHashTable(wordParser, wordSize, hashTable, &hashTableSize, line);
         }   
     
     }
@@ -100,116 +93,97 @@ int main()
     return 0;
 }
 
-void updateHashTable(item* word, unsigned long wordSize, words** hashTable, unsigned long *hashTableSize, unsigned long line)
+void updateHashTable(char *word, unsigned long wordSize, words** hashTable, unsigned long *hashTableSize, unsigned long line)
 {
     unsigned long i, hashFunction;
     words *foundWord;
     ocurrences *foundOcurrence;
 
     for(i = hashFunction = 0UL; i < wordSize; ++i)
-        hashFunction += (*(word + i) - 'A')*(wordSize - i);
+        hashFunction += ((*(word + i))%((*(word + i) <= '9')?('0'):((*(word + i) <= 'Z')?('A' + 10):('a' + 10))))*(wordSize - i);
 
-    if(hashFunction > *hashTableSize)
+    if(hashFunction >= *hashTableSize)
     {
-        hashTable = resizeHashTable(hashTable, wordSize, *hashTableSize, hashFunction + 1);
+        hashTable = resizeHashTable(hashTable, *hashTableSize, hashFunction + 1);
         *hashTableSize = hashFunction + 1;
     }
 
-    if(*(hashTable + hashFunction) != NULL && (foundWord = searchForWord(hashTable, *hashTableSize, word)) != NULL)
-        if((foundOcurrence = searchForLine(foundWord, line)) != NULL)
+    if(*(hashTable + hashFunction) != NULL && (foundWord = searchForWord(*(hashTable + hashFunction), word)) != NULL)
+        if((foundOcurrence = searchForLine(foundWord->ocurr, line)) != NULL)
             ++(foundOcurrence->numOfApp);
         else
             addOcurrence(foundWord, line);
     else
-        addToHashTable(*(hashTable + hashFunction), word, wordSize, line);
+        addToHashTable(hashTable, hashFunction, word, wordSize, line);
 }
 
-words** resizeHashTable(words** hashTable, unsigned long wordSize, unsigned long oldSize, unsigned long newSize)
+words** resizeHashTable(words** hashTable,unsigned long oldSize, unsigned long newSize)
 {
     words** newHashTable = calloc(newSize, sizeof(words*));
-    unsigned long i;
 
+    while(0 < --oldSize)
+        *(newHashTable + oldSize) = *(hashTable + oldSize);
+    *newHashTable = *hashTable;
 
-    for(i = 0UL; i < newSize; ++i)
-        *(newHashTable + i) = calloc(1, sizeof(words));
-
-    for(i = 0UL; i < newSize; ++i)
-    {
-        (*(newHashTable + i))->word = calloc(wordSize + 1, sizeof(item));
-        (*(newHashTable + i))->next = NULL;
-        (*(newHashTable + i))->ocurr = NULL;
-    }
-
-    for(i = 0UL; i < oldSize; ++i)
-        *(newHashTable + i) = *(hashTable + i);
-    /* free(hashTable); */
+    free(hashTable);
 
     return newHashTable;
 }
 
-words* searchForWord(words** hashTable, unsigned long hashTableSize, item* word)
+words* searchForWord(words* beggining, char *word)
 {
-    unsigned long i;
-    words* iterator = NULL;
+    words *target = NULL;
 
+    for(target = beggining; target != NULL && !compare(word, target->word); target = target->next)
+        ;
 
-    if((*(hashTable + 1))->word)
-        for(i = 0UL; i < hashTableSize; ++i)
-        if(*(hashTable + i) != NULL)
-            for(iterator = *(hashTable + i); 
-            iterator != NULL 
-            && 
-            iterator->word != NULL 
-            && 
-            compare(iterator->word, word) != 0; 
-            iterator = iterator->next)
-                ;
-    
-    return iterator;
+    return target;
 }
 
-boolean compare(item* word1, item* word2)
+boolean compare(char *word1, char *word2)
 {
-    while(*word2 != '\0' && *word1 != '\0' && *word1 == *word2)
+    while(*word1 != '\0' && *word2 != '\0' && *word1 == *word2)
     {
         ++word1;
         ++word2;
     }
 
-    return (*word2 == '\0' && *word1 == '\0')?(TRUE):(FALSE);
+    return (*word1 == '\0' && *word2 == '\0')?(TRUE):(FALSE);
 }
 
-ocurrences* searchForLine(words* word, unsigned long line)
+ocurrences* searchForLine(ocurrences *beggining, unsigned long line)
 {
-    ocurrences* iterator = NULL;
+    ocurrences* target = NULL;
 
-    for(iterator = word->ocurr; iterator != NULL && iterator->line != line; iterator = iterator->next)
+    for(target = beggining; target != NULL && target->line != line; target = target->next)
         ;
-    
-    return iterator;
+
+    return target;
 }
 
 void addOcurrence(words* word, unsigned long line)
 {
-    ocurrences *newOcurr = malloc(sizeof(ocurrences));
+    ocurrences* newOcurrence = malloc(sizeof(ocurrences));
 
-    newOcurr->line = line;
-    newOcurr->numOfApp = 1;
-    newOcurr->next = word->ocurr;
-    word->ocurr = newOcurr;
+    newOcurrence->line = line;
+    newOcurrence->numOfApp = 1;
+    newOcurrence->next = word->ocurr;
+    word->ocurr = newOcurrence;
 }
 
-void addToHashTable(words* hashTablePosition, item* newWord, unsigned long newWordSize, unsigned long line)
+void addToHashTable(words **hashTable, unsigned long position, char *word, unsigned long wordSize, unsigned long line)
 {
-    words* newString = malloc(sizeof(words));
+    words* newWord = malloc(sizeof(words));
     unsigned long i;
 
-    newString->word = malloc((newWordSize+1)*sizeof(char));
-    for(i = 0UL; *(newWord + i) != '\0'; ++i)
-        *(newString->word + i) = *(newWord + i);
-    *(newString->word + i) = '\0';
+    newWord->ocurr = NULL;
+    addOcurrence(newWord, line);
+    
+    newWord->word = malloc((wordSize + 1)*sizeof(char));
+    for(i = 0UL; i < wordSize; ++i)
+        *(newWord->word + i) = *(word + i);
+    *(newWord->word + wordSize) = '\0';
 
-    addOcurrence(hashTablePosition, line);
-    newString->next = hashTablePosition;
-    hashTablePosition = newString;
+    newWord->next = *(hashTable + position);
+    *(hashTable + position) = newWord;
 }

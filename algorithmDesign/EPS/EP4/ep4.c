@@ -35,7 +35,7 @@ int main()
     char c, *fileName;
     char *wordParser;
 
-    printf("Digite o caminho até o arquivo: ");
+    /* printf("Digite o caminho até o arquivo: "); */
     for(wordSize = 0, fileName = malloc(sizeof(char)); (c = getchar()) != EOF && c != '\n'; ++wordSize)
     {
         fileName = realloc(fileName, wordSize + 1);
@@ -90,8 +90,8 @@ int main()
     }
     fclose(file);
 
-    printf("%s\n", (((*(hashTable + 1293))->next)->word));
     colapseHashTable(&hashTable, &hashTableSize);
+    
 
     /* Não se esqueca dos free's */
     return 0;
@@ -203,6 +203,7 @@ void addToHashTable(words **hashTable, unsigned long position, char *word, unsig
 
 void colapseHashTable(words*** hashTable, unsigned long *hashTableSize)
 {
+    words* aux;
     unsigned long nonNullPointer = 0UL, 
         nullPointer = 0UL; 
 
@@ -230,8 +231,13 @@ void colapseHashTable(words*** hashTable, unsigned long *hashTableSize)
     *hashTable = realloc(*hashTable, (nullPointer)*sizeof(words*));
     *hashTableSize = nullPointer;
     for(nonNullPointer = 0; nonNullPointer < nullPointer; nonNullPointer++)
-        printf("%s\n", ((*(*hashTable + nonNullPointer))->word));
+    {
+        aux = ((*(*hashTable + nonNullPointer)));
+        do
+        {
+            printf("%s|", aux->word);
+            aux = aux->next;
+        }while(aux != NULL);
 
-    /* *hashTable = resizeHashTable(*hashTable, *hashTableSize, nullPointer);
-    *hashTableSize = nullPointer; */
+    }
 }

@@ -18,7 +18,7 @@ typedef struct wordCell
 
 typedef enum {FALSE, TRUE} boolean;
 
-void updateHashTable(char*, unsigned long, words**, unsigned long*, unsigned long);
+void updateHashTable(char*, unsigned long, words***, unsigned long*, unsigned long);
 words** resizeHashTable(words**, unsigned long, unsigned long);
 words* searchForWord(words*, char*);
 ocurrences* searchForLine(ocurrences*, unsigned long);
@@ -83,7 +83,7 @@ int main()
         {
             *(wordParser + wordSize) = '\0';
             if(wordSize > 0)
-                updateHashTable(wordParser, wordSize, hashTable, &hashTableSize, line);
+                updateHashTable(wordParser, wordSize, &hashTable, &hashTableSize, line);
         }   
     
     }
@@ -93,7 +93,7 @@ int main()
     return 0;
 }
 
-void updateHashTable(char *word, unsigned long wordSize, words** hashTable, unsigned long *hashTableSize, unsigned long line)
+void updateHashTable(char *word, unsigned long wordSize, words*** hashTable, unsigned long *hashTableSize, unsigned long line)
 {
     unsigned long i, hashFunction;
     words *foundWord;
@@ -104,17 +104,24 @@ void updateHashTable(char *word, unsigned long wordSize, words** hashTable, unsi
 
     if(hashFunction >= *hashTableSize)
     {
-        hashTable = resizeHashTable(hashTable, *hashTableSize, hashFunction + 1);
+        /* *hashTable = resizeHashTable(*hashTable, *hashTableSize, hashFunction + 1); */
+        *hashTable = realloc(*hashTable, (hashFunction + 1)*sizeof(words*));
+        for(i = *hashTableSize; i <= hashFunction; ++i)
+        {
+            *(*hashTable + i) = malloc(sizeof(words));
+            *(*hashTable + i) = NULL;
+        }
         *hashTableSize = hashFunction + 1;
+        addToHashTable(*hashTable, hashFunction, word, wordSize, line);
     }
-
-    if(*(hashTable + hashFunction) != NULL && (foundWord = searchForWord(*(hashTable + hashFunction), word)) != NULL)
-        if((foundOcurrence = searchForLine(foundWord->ocurr, line)) != NULL)
-            ++(foundOcurrence->numOfApp);
-        else
-            addOcurrence(foundWord, line);
     else
-        addToHashTable(hashTable, hashFunction, word, wordSize, line);
+        if(*(*hashTable + hashFunction) != NULL && (foundWord = searchForWord(*(*hashTable + hashFunction), word)) != NULL)
+            if((foundOcurrence = searchForLine(foundWord->ocurr, line)) != NULL)
+                ++(foundOcurrence->numOfApp);
+            else
+                addOcurrence(foundWord, line);
+        else
+            addToHashTable(*hashTable, hashFunction, word, wordSize, line);
 }
 
 words** resizeHashTable(words** hashTable,unsigned long oldSize, unsigned long newSize)

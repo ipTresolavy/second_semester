@@ -26,6 +26,7 @@ void addOcurrence(words*, unsigned long);
 void addToHashTable(words**, unsigned long, char*, unsigned long, unsigned long);
 boolean compare(char*, char*);
 void colapseHashTable(words***, unsigned long*);
+unsigned long amntOfHashTableElements(words**, unsigned long);
 
 int main()
 {
@@ -91,7 +92,8 @@ int main()
     fclose(file);
 
     colapseHashTable(&hashTable, &hashTableSize);
-    
+    printf("%lu\n", amntOfHashTableElements(hashTable, hashTableSize));
+
 
     /* Não se esqueca dos free's */
     return 0;
@@ -203,7 +205,6 @@ void addToHashTable(words **hashTable, unsigned long position, char *word, unsig
 
 void colapseHashTable(words*** hashTable, unsigned long *hashTableSize)
 {
-    words* aux;
     unsigned long nonNullPointer = 0UL, 
         nullPointer = 0UL; 
 
@@ -230,7 +231,7 @@ void colapseHashTable(words*** hashTable, unsigned long *hashTableSize)
     
     *hashTable = realloc(*hashTable, (nullPointer)*sizeof(words*));
     *hashTableSize = nullPointer;
-    for(nonNullPointer = 0; nonNullPointer < nullPointer; nonNullPointer++)
+    /* for(nonNullPointer = 0; nonNullPointer < nullPointer; nonNullPointer++)
     {
         aux = ((*(*hashTable + nonNullPointer)));
         do
@@ -239,5 +240,24 @@ void colapseHashTable(words*** hashTable, unsigned long *hashTableSize)
             aux = aux->next;
         }while(aux != NULL);
 
+    } */
+}
+
+unsigned long amntOfHashTableElements(words** hashTable, unsigned long hashTableSize)
+{
+    unsigned long i, amountOfElements;
+    words* aux;
+
+    for(i = amountOfElements = 0UL; i < hashTableSize; i++)
+    {
+        aux = ((*(hashTable + i)));
+        do
+        {
+            printf("%s\n", aux->word);
+            ++amountOfElements;
+            aux = aux->next;
+        }while(aux != NULL);
     }
+
+    return amountOfElements;
 }

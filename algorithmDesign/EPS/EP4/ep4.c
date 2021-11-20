@@ -66,7 +66,7 @@ int main()
     
 
     for(wordSize = 0UL, line = 1UL; /* Inicializador */
-       (c = fgetc(file)) != EOF; /* Condição de parada */
+       c != EOF; /* Condição de parada */
        wordSize = (isalnum(c))?(wordSize + 1):(0), line = (c == '\n')?(line + 1):(line)) /* incrementos */
     {
         if(wordSize >= maxWordSize)
@@ -79,7 +79,7 @@ int main()
             }
         }
 
-        if(isalnum(c))
+        if(isalnum((c = fgetc(file))))
             *(wordParser + wordSize) = c;
         else
         {
@@ -90,9 +90,8 @@ int main()
     }
     fclose(file);
 
-    printf("%s\n", ((*(hashTable + 506))->word));
+    printf("%s\n", (((*(hashTable + 1293))->next)->word));
     colapseHashTable(&hashTable, &hashTableSize);
-    printf("%s\n", ((*(hashTable + 2))->word));
 
     /* Não se esqueca dos free's */
     return 0;
@@ -226,8 +225,12 @@ void colapseHashTable(words*** hashTable, unsigned long *hashTableSize)
     }
 
 
-    printf("%s\n", ((*(*hashTable + 1))->ocurr == NULL)?("yes"):("bruh"));
-    printf("%s\n", ((*(*hashTable + 1))->word));
+    /* printf("%s\n", ((*(*hashTable + 1293))->word)); */
+    
+    *hashTable = realloc(*hashTable, (nullPointer)*sizeof(words*));
+    *hashTableSize = nullPointer;
+    for(nonNullPointer = 0; nonNullPointer < nullPointer; nonNullPointer++)
+        printf("%s\n", ((*(*hashTable + nonNullPointer))->word));
 
     /* *hashTable = resizeHashTable(*hashTable, *hashTableSize, nullPointer);
     *hashTableSize = nullPointer; */

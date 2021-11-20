@@ -19,12 +19,12 @@ typedef struct wordCell
 typedef enum {FALSE, TRUE} boolean;
 
 void updateHashTable(char*, unsigned long, words***, unsigned long*, unsigned long);
-words** resizeHashTable(words**, unsigned long, unsigned long);
+void resizeHashTable(words***, unsigned long*, unsigned long);
 words* searchForWord(words*, char*);
 ocurrences* searchForLine(ocurrences*, unsigned long);
 void addOcurrence(words*, unsigned long);
 void addToHashTable(words**, unsigned long, char*, unsigned long, unsigned long);
-boolean compare(char*, char*);
+boolean compareWords(char*, char*);
 void colapseHashTable(words***, unsigned long*);
 unsigned long amntOfHashTableElements(words**, unsigned long);
 
@@ -112,13 +112,14 @@ void updateHashTable(char *word, unsigned long wordSize, words*** hashTable, uns
     {
         /* Aumenta o tamanho da tabela Hash e inicializa os ponteiros com o valor NULL */
         /* *hashTable = resizeHashTable(*hashTable, *hashTableSize, hashFunction + 1); */
-        *hashTable = realloc(*hashTable, (hashFunction + 1)*sizeof(words*));
+        /* *hashTable = realloc(*hashTable, (hashFunction + 1)*sizeof(words*));
         for(i = *hashTableSize; i <= hashFunction; ++i)
         {
             *(*hashTable + i) = malloc(sizeof(words));
             *(*hashTable + i) = NULL;
         }
-        *hashTableSize = hashFunction + 1;
+        *hashTableSize = hashFunction + 1; */
+        resizeHashTable(hashTable, hashTableSize, hashFunction + 1);
         addToHashTable(*hashTable, hashFunction, word, wordSize, line);
     }
     else
@@ -131,31 +132,33 @@ void updateHashTable(char *word, unsigned long wordSize, words*** hashTable, uns
             addToHashTable(*hashTable, hashFunction, word, wordSize, line);
 }
 
-words** resizeHashTable(words** hashTable,unsigned long oldSize, unsigned long newSize)
+void resizeHashTable(words*** hashTable,unsigned long *oldSize, unsigned long newSize)
 {
-    words** newHashTable = calloc(newSize, sizeof(words*));
-    unsigned long smallestSize = (oldSize < newSize)?(oldSize):(newSize);
+    unsigned long i;
 
-    while(0 < --smallestSize)
-        *(newHashTable + oldSize) = *(hashTable + oldSize);
-    *newHashTable = *hashTable;
+    *hashTable = realloc(*hashTable, (newSize)*sizeof(words*));
 
-    free(hashTable);
+    if(*oldSize < newSize)
+        for(i = *oldSize; i < newSize; ++i)
+        {
+            *(*hashTable + i) = malloc(sizeof(words));
+            *(*hashTable + i) = NULL;
+        }
 
-    return newHashTable;
+    *oldSize = newSize;
 }
 
 words* searchForWord(words* beggining, char *word)
 {
     words *target = NULL;
 
-    for(target = beggining; target != NULL && !compare(word, target->word); target = target->next)
+    for(target = beggining; target != NULL && !compareWords(word, target->word); target = target->next)
         ;
 
     return target;
 }
 
-boolean compare(char *word1, char *word2)
+boolean compareWords(char *word1, char *word2)
 {
     while(*word1 != '\0' && *word2 != '\0' && *word1 == *word2)
     {
@@ -229,8 +232,10 @@ void colapseHashTable(words*** hashTable, unsigned long *hashTableSize)
 
     /* printf("%s\n", ((*(*hashTable + 1293))->word)); */
     
-    *hashTable = realloc(*hashTable, (nullPointer)*sizeof(words*));
-    *hashTableSize = nullPointer;
+    resizeHashTable(hashTable, hashTableSize, nullPointer);
+
+    /* *hashTable = realloc(*hashTable, (nullPointer)*sizeof(words*));
+    *hashTableSize = nullPointer; */
     /* for(nonNullPointer = 0; nonNullPointer < nullPointer; nonNullPointer++)
     {
         aux = ((*(*hashTable + nonNullPointer)));

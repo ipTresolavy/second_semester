@@ -27,6 +27,8 @@ void addToHashTable(words**, unsigned long, char*, unsigned long, unsigned long)
 boolean compareWords(char*, char*);
 void colapseHashTable(words***, unsigned long*);
 unsigned long amntOfHashTableElements(words**, unsigned long);
+void solveCollisions(words***, unsigned long*, unsigned long);
+ 
 
 int main()
 {
@@ -92,8 +94,10 @@ int main()
     fclose(file);
 
     colapseHashTable(&hashTable, &hashTableSize);
-    printf("%lu\n", amntOfHashTableElements(hashTable, hashTableSize));
+    /* printf("%lu\n", amntOfHashTableElements(hashTable, hashTableSize)); */
+    solveCollisions(&hashTable, &hashTableSize, amntOfHashTableElements(hashTable, hashTableSize) - hashTableSize);
 
+    amntOfHashTableElements(hashTable, hashTableSize);
 
     /* Não se esqueca dos free's */
     return 0;
@@ -265,4 +269,28 @@ unsigned long amntOfHashTableElements(words** hashTable, unsigned long hashTable
     }
 
     return amountOfElements;
+}
+
+void solveCollisions(words*** hashTable, unsigned long* oldSize, unsigned long collisions)
+{
+    unsigned long i, j;
+    words* aux;
+
+    resizeHashTable(hashTable, oldSize, *oldSize + collisions);
+
+    for(i = 0UL, j = *oldSize - collisions; i < *oldSize - collisions; ++i)
+    {
+        aux = ((*(*hashTable + i)));
+        if(aux->next != NULL)
+            do
+            {
+                aux = aux->next;
+                *(*hashTable + j++) = aux;
+            
+            } while (j < *oldSize && aux->next != NULL);
+    }
+
+    for(i = 0; i < *oldSize; ++i)
+        (*(*hashTable + i))->next = NULL;
+
 }

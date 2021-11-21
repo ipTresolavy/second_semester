@@ -382,7 +382,6 @@ void printHashTable(words** hashTable, unsigned long hashTableSize)
         printOcurrencesRecursively((*hashTable)->ocurr);
         printf("\n");
     }
-    
 }
 
 void printOcurrencesRecursively(ocurrences* wordOcurrences)

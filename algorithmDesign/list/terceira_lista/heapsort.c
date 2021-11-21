@@ -14,8 +14,11 @@ v[0] <= v[1] <= ... <= v[n-1]
 #define reset "\e[0m"
 
 void rebaixa(int *, int, int, int); 
+/* void rebaixa(words **, unsigned long, unsigned long); */
 void MEUheapsort(int *, int);
+/* void MEUheapsort(words **, unsigned long); */
 void heapfica (int *, int); 
+/* void heapfica (words**, unsigned long);  */
 void printVector(int *vector, int m, int colourfulIndex);
 
 int main(){
@@ -51,6 +54,19 @@ void MEUheapsort(int * v, int n){
     printf("Posição 0 rebaixada para ");
     rebaixa (v, i, 0, n);
   }
+  /* 
+  unsigned long i;
+  words* aux;
+  
+  heapify(hashTable, hashTableSize);
+  for(i = hashTableSize - 1; i > 0; --i)
+  {
+    aux = *hashTable;
+    *hashTable = *(hashTable + i);
+    *(hashTable + i) = aux;
+    downgrade(hashTable, i, 0);
+  }
+   */
 }
 
 /*  2i -> 4i -> 8i -> ... -> 2ˆk i > n
@@ -73,14 +89,27 @@ void rebaixa (int *v, int n, int i, int n2){
       filho = 2*filho + 1;
     }
   }
-    if(i != 0)
-      printf("a posição %d", pai);
-    else
-      printf("o fim do heap");
-    if(i == 0)
-      printf(". Fim do heap eliminado \n(%d elementos restantes)", n);
-    printf("\n");
-    printVector(v, n2, pai);
+    /* 
+    words* aux;
+    unsigned long parent = position, child = 2*position + 1;
+    boolean ok = FALSE;
+
+    while(child < hashTableSize && !ok)
+    {
+        if(child + 1 < hashTableSize && strcmp(*(hashTable + child + 1)->word, *(hashTable + child)->word) > 0)
+            ++child;
+        if(strcmp(*(hashTable + parent)->word, *(hashTable + child)->word) > 0)
+            ok = TRUE;
+        else
+        {
+            aux = *(hashTable + parent);
+            *(hashTable + parent) = *(hashTable + child);
+            *(hashTable + child) = aux;
+            parent = child;
+            child = 2*child + 1;
+        }
+    }
+     */
 }
 
 
@@ -92,6 +121,12 @@ void heapfica (int *v, int n){
     printf("Posição %2d rebaixada para ", i);
     rebaixa(v, n, i, n);
   }
+  /* 
+  unsigned long i;
+
+  for(i = (hashTableSize-2)/2; i >= 0; --i)
+      downgrade(hashTable, hashTableSize, i);
+   */
 }
 
 void printVector(int *vector, int m, int colourfulIndex)

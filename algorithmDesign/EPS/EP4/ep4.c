@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 
 typedef struct ocurrenceCell
 {
@@ -24,11 +25,14 @@ words* searchForWord(words*, char*);
 ocurrences* searchForLine(ocurrences*, unsigned long);
 void addOcurrence(words*, unsigned long);
 void addToHashTable(words**, unsigned long, char*, unsigned long, unsigned long);
-boolean compareWords(char*, char*);
-void colapseHashTable(words***, unsigned long*);
+/* boolean compareWords(char*, char*); */
+void removeHashTableNulls(words***, unsigned long*);
 unsigned long amntOfHashTableElements(words**, unsigned long);
 void solveCollisions(words***, unsigned long*, unsigned long);
- 
+
+void downgrade(words **, unsigned long, unsigned long);
+void hashTableHeapsort(words **, unsigned long);
+void heapify (words**, unsigned long);
 
 int main()
 {
@@ -93,12 +97,12 @@ int main()
     }
     fclose(file);
 
-    colapseHashTable(&hashTable, &hashTableSize);
+    removeHashTableNulls(&hashTable, &hashTableSize);
     /* printf("%lu\n", amntOfHashTableElements(hashTable, hashTableSize)); */
     solveCollisions(&hashTable, &hashTableSize, amntOfHashTableElements(hashTable, hashTableSize) - hashTableSize);
 
+    hashTableHeapsort(hashTable, hashTableSize);
     amntOfHashTableElements(hashTable, hashTableSize);
-
     /* Não se esqueca dos free's */
     return 0;
 }
@@ -156,13 +160,14 @@ words* searchForWord(words* beggining, char *word)
 {
     words *target = NULL;
 
-    for(target = beggining; target != NULL && !compareWords(word, target->word); target = target->next)
+
+    for(target = beggining; target != NULL && strcmp(word, target->word) != 0/* !compareWords(word, target->word) */; target = target->next)
         ;
 
     return target;
 }
 
-boolean compareWords(char *word1, char *word2)
+/* boolean compareWords(char *word1, char *word2)
 {
     while(*word1 != '\0' && *word2 != '\0' && *word1 == *word2)
     {
@@ -171,7 +176,7 @@ boolean compareWords(char *word1, char *word2)
     }
 
     return (*word1 == '\0' && *word2 == '\0')?(TRUE):(FALSE);
-}
+} */
 
 ocurrences* searchForLine(ocurrences *beggining, unsigned long line)
 {
@@ -210,10 +215,10 @@ void addToHashTable(words **hashTable, unsigned long position, char *word, unsig
     *(hashTable + position) = newWord;
 }
 
-void colapseHashTable(words*** hashTable, unsigned long *hashTableSize)
+void removeHashTableNulls(words*** hashTable, unsigned long *hashTableSize)
 {
     unsigned long nonNullPointer = 0UL, 
-        nullPointer = 0UL; 
+            nullPointer = 0UL; 
 
     while(nonNullPointer < *hashTableSize && nullPointer < *hashTableSize)
     {
@@ -279,18 +284,65 @@ void solveCollisions(words*** hashTable, unsigned long* oldSize, unsigned long c
     resizeHashTable(hashTable, oldSize, *oldSize + collisions);
 
     for(i = 0UL, j = *oldSize - collisions; i < *oldSize - collisions; ++i)
-    {
-        aux = ((*(*hashTable + i)));
-        if(aux->next != NULL)
+        if(((*(*hashTable + i)))->next != NULL)
+        {
+            aux = ((*(*hashTable + i)));
             do
             {
                 aux = aux->next;
                 *(*hashTable + j++) = aux;
             
             } while (j < *oldSize && aux->next != NULL);
-    }
+        }
+    
 
     for(i = 0; i < *oldSize; ++i)
         (*(*hashTable + i))->next = NULL;
+}
 
+void hashTableHeapsort(words ** hashTable, unsigned long hashTableSize)
+{
+    unsigned long i;
+    words* aux;
+  
+    heapify(hashTable, hashTableSize);
+    for(i = hashTableSize - 1; i > 0; --i)
+    {
+        aux = *hashTable;
+        *hashTable = *(hashTable + i);
+        *(hashTable + i) = aux;
+        downgrade(hashTable, i, 0);
+    }
+}
+
+void downgrade(words ** hashTable, unsigned long hashTableSize, unsigned long position)
+{
+    words* aux;
+    unsigned long parent = position, child = 2*position + 1;
+    boolean ok = FALSE;
+
+    while(child < hashTableSize && !ok)
+    {
+        if(child + 1 < hashTableSize && strcmp((*(hashTable + child + 1))->word, (*(hashTable + child))->word) > 0)
+            ++child;
+        if(strcmp((*(hashTable + parent))->word, (*(hashTable + child))->word) > 0)
+            ok = TRUE;
+        else
+        {
+            aux = *(hashTable + parent);
+            *(hashTable + parent) = *(hashTable + child);
+            *(hashTable + child) = aux;
+            parent = child;
+            child = 2*child + 1;
+        }
+    }
+}
+
+void heapify (words** hashTable, unsigned long hashTableSize)
+{
+    unsigned long i;
+
+    for(i = (hashTableSize-2)/2; i > 0; --i)
+        downgrade(hashTable, hashTableSize, i);
+    downgrade(hashTable, hashTableSize, 0);
 }

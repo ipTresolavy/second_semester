@@ -26,13 +26,12 @@ words* searchForWord(words*, char*);
 ocurrences* searchForLine(ocurrences*, unsigned long);
 void addOcurrence(words*, unsigned long);
 void addToHashTable(words**, unsigned long, char*, unsigned long, unsigned long);
-/* boolean compareWords(char*, char*); */
 void removeHashTableNulls(words***, unsigned long*);
 unsigned long amntOfHashTableElements(words**, unsigned long);
 void solveCollisions(words***, unsigned long*, unsigned long);
 
-void downgrade(words **, unsigned long, unsigned long);
 void hashTableHeapsort(words **, unsigned long);
+void downgrade(words **, unsigned long, unsigned long);
 int caseInsensitiveStrcmp(const char *, const char *);
 void heapify (words**, unsigned long);
 
@@ -47,7 +46,7 @@ int main()
     char c, *fileName;
     char *wordParser;
 
-    /* printf("Digite o caminho até o arquivo: "); */
+    printf("Digite o caminho até o arquivo: ");
     for(wordSize = 0, fileName = malloc(sizeof(char)); (c = getchar()) != EOF && c != '\n'; ++wordSize)
     {
         fileName = realloc(fileName, wordSize + 1);
@@ -103,7 +102,6 @@ int main()
     fclose(file);
 
     removeHashTableNulls(&hashTable, &hashTableSize);
-    /* printf("%lu\n", amntOfHashTableElements(hashTable, hashTableSize)); */
     solveCollisions(&hashTable, &hashTableSize, amntOfHashTableElements(hashTable, hashTableSize) - hashTableSize);
 
     hashTableHeapsort(hashTable, hashTableSize);
@@ -125,15 +123,6 @@ void updateHashTable(char *word, unsigned long wordSize, words*** hashTable, uns
 
     if(hashFunction >= *hashTableSize)
     {
-        /* Aumenta o tamanho da tabela Hash e inicializa os ponteiros com o valor NULL */
-        /* *hashTable = resizeHashTable(*hashTable, *hashTableSize, hashFunction + 1); */
-        /* *hashTable = realloc(*hashTable, (hashFunction + 1)*sizeof(words*));
-        for(i = *hashTableSize; i <= hashFunction; ++i)
-        {
-            *(*hashTable + i) = malloc(sizeof(words));
-            *(*hashTable + i) = NULL;
-        }
-        *hashTableSize = hashFunction + 1; */
         resizeHashTable(hashTable, hashTableSize, hashFunction + 1);
         addToHashTable(*hashTable, hashFunction, word, wordSize, line);
     }
@@ -168,22 +157,11 @@ words* searchForWord(words* beggining, char *word)
     words *target = NULL;
 
 
-    for(target = beggining; target != NULL && strcmp(word, target->word) != 0/* !compareWords(word, target->word) */; target = target->next)
+    for(target = beggining; target != NULL && strcmp(word, target->word) != 0; target = target->next)
         ;
 
     return target;
 }
-
-/* boolean compareWords(char *word1, char *word2)
-{
-    while(*word1 != '\0' && *word2 != '\0' && *word1 == *word2)
-    {
-        ++word1;
-        ++word2;
-    }
-
-    return (*word1 == '\0' && *word2 == '\0')?(TRUE):(FALSE);
-} */
 
 ocurrences* searchForLine(ocurrences *beggining, unsigned long line)
 {
@@ -245,23 +223,7 @@ void removeHashTableNulls(words*** hashTable, unsigned long *hashTableSize)
         }
     }
 
-
-    /* printf("%s\n", ((*(*hashTable + 1293))->word)); */
-    
     resizeHashTable(hashTable, hashTableSize, nullPointer);
-
-    /* *hashTable = realloc(*hashTable, (nullPointer)*sizeof(words*));
-    *hashTableSize = nullPointer; */
-    /* for(nonNullPointer = 0; nonNullPointer < nullPointer; nonNullPointer++)
-    {
-        aux = ((*(*hashTable + nonNullPointer)));
-        do
-        {
-            printf("%s|", aux->word);
-            aux = aux->next;
-        }while(aux != NULL);
-
-    } */
 }
 
 unsigned long amntOfHashTableElements(words** hashTable, unsigned long hashTableSize)
@@ -274,7 +236,6 @@ unsigned long amntOfHashTableElements(words** hashTable, unsigned long hashTable
         aux = ((*(hashTable + i)));
         do
         {
-            /* printf("%s\n", aux->word); */
             ++amountOfElements;
             aux = aux->next;
         }while(aux != NULL);

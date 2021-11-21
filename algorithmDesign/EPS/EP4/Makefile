@@ -7,7 +7,7 @@ CC = gcc
 all: compAll
 
 compAll: ep4.o
-	$(CC) -o ep4_exec ep4.o
+	$(CC) -o ep4_exec ep4.o -lm
 
 ep4.o: ep4.c
 	$(CC) $(CFLAGS) ep4.c -c

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <math.h>
 
 typedef struct ocurrenceCell
 {
@@ -32,7 +33,11 @@ void solveCollisions(words***, unsigned long*, unsigned long);
 
 void downgrade(words **, unsigned long, unsigned long);
 void hashTableHeapsort(words **, unsigned long);
+int caseInsensitiveStrcmp(const char *, const char *);
 void heapify (words**, unsigned long);
+
+void printHashTable(words**, unsigned long);
+void printOcurrencesRecursively(ocurrences*);
 
 int main()
 {
@@ -74,7 +79,7 @@ int main()
 
     for(wordSize = 0UL, line = 1UL; /* Inicializador */
        c != EOF; /* Condição de parada */
-       wordSize = (isalnum(c))?(wordSize + 1):(0), line = (c == '\n')?(line + 1):(line)) /* incrementos */
+       wordSize = (isalpha(c))?(wordSize + 1):(0), line = (c == '\n')?(line + 1):(line)) /* incrementos */
     {
         if(wordSize >= maxWordSize)
         {
@@ -86,7 +91,7 @@ int main()
             }
         }
 
-        if(isalnum((c = fgetc(file))))
+        if(isalpha((c = fgetc(file))))
             *(wordParser + wordSize) = c;
         else
         {
@@ -103,6 +108,8 @@ int main()
 
     hashTableHeapsort(hashTable, hashTableSize);
     amntOfHashTableElements(hashTable, hashTableSize);
+
+    printHashTable(hashTable, hashTableSize);
     /* Não se esqueca dos free's */
     return 0;
 }
@@ -114,7 +121,7 @@ void updateHashTable(char *word, unsigned long wordSize, words*** hashTable, uns
     ocurrences *foundOcurrence;
 
     for(i = hashFunction = 0UL; i < wordSize; ++i)
-        hashFunction += ((*(word + i))%((*(word + i) <= '9')?('0'):((*(word + i) <= 'Z')?('A' + 10):('a' + 10))))*(wordSize - i);
+        hashFunction += ((*(word + i))%((*(word + i) <= 'Z')?('A' + 10):('a' + 10)))*(wordSize - i);
 
     if(hashFunction >= *hashTableSize)
     {
@@ -267,7 +274,7 @@ unsigned long amntOfHashTableElements(words** hashTable, unsigned long hashTable
         aux = ((*(hashTable + i)));
         do
         {
-            printf("%s\n", aux->word);
+            /* printf("%s\n", aux->word); */
             ++amountOfElements;
             aux = aux->next;
         }while(aux != NULL);
@@ -323,9 +330,9 @@ void downgrade(words ** hashTable, unsigned long hashTableSize, unsigned long po
 
     while(child < hashTableSize && !ok)
     {
-        if(child + 1 < hashTableSize && strcmp((*(hashTable + child + 1))->word, (*(hashTable + child))->word) > 0)
+        if(child + 1 < hashTableSize && caseInsensitiveStrcmp((*(hashTable + child + 1))->word, (*(hashTable + child))->word) > 0)
             ++child;
-        if(strcmp((*(hashTable + parent))->word, (*(hashTable + child))->word) > 0)
+        if(caseInsensitiveStrcmp((*(hashTable + parent))->word, (*(hashTable + child))->word) > 0)
             ok = TRUE;
         else
         {
@@ -338,6 +345,26 @@ void downgrade(words ** hashTable, unsigned long hashTableSize, unsigned long po
     }
 }
 
+int caseInsensitiveStrcmp(const char *p1, const char *p2)
+{
+  unsigned char *s1 = (unsigned char *) p1;
+  unsigned char *s2 = (unsigned char *) p2;
+  unsigned char c1, c2;
+ 
+  do
+  {
+      c1 = (unsigned char) toupper((int)*s1++);
+      c2 = (unsigned char) toupper((int)*s2++);
+      if (c1 == '\0' || c2 == '\0')
+      {
+            return c1 - c2;
+      }
+  }
+  while (c1 == c2);
+ 
+  return c1 - c2;
+}
+
 void heapify (words** hashTable, unsigned long hashTableSize)
 {
     unsigned long i;
@@ -345,4 +372,32 @@ void heapify (words** hashTable, unsigned long hashTableSize)
     for(i = (hashTableSize-2)/2; i > 0; --i)
         downgrade(hashTable, hashTableSize, i);
     downgrade(hashTable, hashTableSize, 0);
+}
+
+void printHashTable(words** hashTable, unsigned long hashTableSize)
+{
+    for(;hashTableSize > 0; ++hashTable, --hashTableSize)
+    {
+        printf("%s: ", (*hashTable)->word);
+        printOcurrencesRecursively((*hashTable)->ocurr);
+        printf("\n");
+    }
+    
+}
+
+void printOcurrencesRecursively(ocurrences* wordOcurrences)
+{
+    char *aux;
+    if(wordOcurrences->next != NULL)
+        printOcurrencesRecursively(wordOcurrences->next);
+    
+    if(wordOcurrences->numOfApp > 1)
+    {
+        aux = malloc((log10(wordOcurrences->numOfApp) + 1)*sizeof(char));
+        sprintf(aux, "%lu", wordOcurrences->numOfApp);
+        printf("%-lu(%s) ", wordOcurrences->line, aux);
+        free(aux);
+    }
+    else
+        printf("%lu ", wordOcurrences->line);
 }

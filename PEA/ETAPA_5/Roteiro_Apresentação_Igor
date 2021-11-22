@@ -1,0 +1,15 @@
+-- (Passo 1.a) --
+Só para relembrar as etapas passadas, esse gráfico mostra o quanto de redução mensal foi atingida pelas medidas tomadas na etapa 2. Nessa etapa, iremos determinar esses valores em termos de tonelada de CO2. Para tal, iremos converter tanto os gastos elétricos quanto os gastos químicos em seus respectivos valores de CO2 emitido equivalentes.  
+
+-- (Passo 2) --
+Para as próximas etapas, precisaremos calcular as emissões de CO2 provenientes de outros energéticos. Faremos isso somente para a etapa 1 e usaremos o mesmo resultado para a etapa 2, pois nem todos os alunos calcularam a redução das ações tomadas na etapa 2.
+
+A residência possui somente dois energéticos não elétricos: gasolina e GLP. Para o cálculo de emissões final, precisamos transformar seus gastos em valores de tCO2 equivalentes.
+
+Tendo em vista os dados sobre a gasolina e sobre o padrão de consumo da residência, chegamos ao valor de 0,03979 tCO2. É interessante notar que o consumo de gasolina da residência foi extremamente baixo por conta da baixa necessidade de transporte durante a pandemia o que, consequentemente, levou à uma emissão de CO2 mensal relativamente baixa.
+
+Para o GLP, o consumo em CO2 equivalente é ainda menor, de 0.009 toneladas de CO2 equivalente, pois sua quantidade de combustível equivalente é baixa.
+
+Tendo em mão esses dados, é possível calular o gasto total dos energéticos da residência, em toneladas de CO2 equivalente.
+
+-- (Fala do Izaque) --

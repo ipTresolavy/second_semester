@@ -1,0 +1,34 @@
+Digite o caminho até o arquivo: amava: 1(2) 2(3) 3 
+casou: 6 
+com: 6 
+convento: 4 
+de: 5 
+desastre: 5 
+e: 6 
+entrado: 7 
+Estados: 4 
+Fernandes: 6 
+ficou: 5 
+foi: 4 
+historia: 7 
+J: 6 
+Joao: 1 4 
+Joaquim: 2 6 
+Lili: 2 6 
+Maria: 2 5 
+morreu: 5 
+na: 7 
+nao: 3 7 
+ninguem: 3 
+o: 4 
+os: 4 
+para: 4(2) 5 
+Pinto: 6 
+que: 1 2(3) 3 7 
+Raimundo: 1 5 
+se: 6 
+suicidou: 6 
+Teresa: 1 4 
+tia: 5 
+tinha: 7 
+Unidos: 4 

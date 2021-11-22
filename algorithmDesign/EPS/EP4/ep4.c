@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
-#include <math.h>
 
 typedef struct ocurrenceCell
 {
@@ -37,6 +36,9 @@ void heapify (words**, unsigned long);
 
 void printHashTable(words**, unsigned long);
 void printOcurrencesRecursively(ocurrences*);
+
+void destroyHashTable(words**, unsigned long*);
+void destroyOcurrencesRecursively(ocurrences*);
 
 int main()
 {
@@ -99,6 +101,7 @@ int main()
                 updateHashTable(wordParser, wordSize, &hashTable, &hashTableSize, line);
         }
     }
+    free(wordParser);
     fclose(file);
 
     removeHashTableNulls(&hashTable, &hashTableSize);
@@ -109,6 +112,7 @@ int main()
 
     printHashTable(hashTable, hashTableSize);
     /* Não se esqueca dos free's */
+    destroyHashTable(hashTable, &hashTableSize);
     return 0;
 }
 
@@ -347,17 +351,29 @@ void printHashTable(words** hashTable, unsigned long hashTableSize)
 
 void printOcurrencesRecursively(ocurrences* wordOcurrences)
 {
-    char *aux;
     if(wordOcurrences->next != NULL)
         printOcurrencesRecursively(wordOcurrences->next);
     
     if(wordOcurrences->numOfApp > 1)
-    {
-        aux = malloc((log10(wordOcurrences->numOfApp) + 1)*sizeof(char));
-        sprintf(aux, "%lu", wordOcurrences->numOfApp);
-        printf("%-lu(%s) ", wordOcurrences->line, aux);
-        free(aux);
-    }
+        printf("%-lu(%-lu) ", wordOcurrences->line, wordOcurrences->numOfApp);
     else
-        printf("%lu ", wordOcurrences->line);
+        printf("%-lu ", wordOcurrences->line);
+}
+
+void destroyHashTable(words** hashTable, unsigned long* hashTableSize)
+{
+    for(;*hashTableSize > 0; ++hashTable, --(*hashTableSize))
+    {
+        free((*hashTable)->word);
+        destroyOcurrencesRecursively((*hashTable)->ocurr);
+        free(*hashTable);
+    }
+}
+
+void destroyOcurrencesRecursively(ocurrences* wordOcurrences)
+{
+    if(wordOcurrences->next != NULL)
+        destroyOcurrencesRecursively(wordOcurrences->next);
+
+    free(wordOcurrences);
 }

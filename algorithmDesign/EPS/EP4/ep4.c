@@ -1,3 +1,10 @@
+/**
+ * @file ep4.c
+ * @author Igor Pontes Tresolavy (tresolavy@usp.br)
+ * @brief EP4 da disciplina de MAC0122: índice remissivo de palavras em texto 
+ * @version 1.0
+ * @date 2021-11-22
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>

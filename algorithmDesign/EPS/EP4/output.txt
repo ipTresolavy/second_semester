@@ -1,34 +1,208 @@
-Digite o caminho até o arquivo: amava: 1(2) 2(3) 3 
-casou: 6 
-com: 6 
-convento: 4 
-de: 5 
-desastre: 5 
-e: 6 
-entrado: 7 
-Estados: 4 
-Fernandes: 6 
-ficou: 5 
-foi: 4 
-historia: 7 
-J: 6 
-Joao: 1 4 
-Joaquim: 2 6 
-Lili: 2 6 
-Maria: 2 5 
-morreu: 5 
-na: 7 
-nao: 3 7 
-ninguem: 3 
-o: 4 
-os: 4 
-para: 4(2) 5 
-Pinto: 6 
-que: 1 2(3) 3 7 
-Raimundo: 1 5 
-se: 6 
-suicidou: 6 
-Teresa: 1 4 
-tia: 5 
-tinha: 7 
-Unidos: 4 
+./ep4_exec
+Digite o caminho até o arquivo: a: 2(3) 18(4) 32 
+A: 2 
+actual: 18 
+actually: 32 
+adequately: 5 
+ago: 5 
+air: 18 
+al: 2 
+Algorithm: 2 
+algorithm: 5(2) 18 32(2) 
+algorithms: 18 
+also: 18 32 
+Also: 2 
+an: 32 
+and: 2(4) 18(3) 32(2) 
+another: 5 
+appeared: 32 
+are: 2 
+as: 2 
+at: 32 
+available: 2 
+be: 2 18(2) 
+been: 5 32 
+below: 18 
+berkeley: 18 
+bernstein: 5(2) 
+best: 2 32 
+better: 2 5 18 32 
+bits: 18 
+but: 32(2) 
+by: 5(2) 
+c: 5 10 12 13(2) 24 26 27 37 39 40 
+C: 32 
+cannot: 2 
+causing: 18 
+char: 7 21 34 
+checking: 32 
+cnews: 32 
+code: 32 
+collection: 2 
+comp: 5 
+comprehensive: 2 
+constant: 18 
+constants: 5 18 
+could: 32 
+created: 18 
+dan: 5 
+database: 18 
+db: 18 
+device: 18 
+different: 2 18 
+distribution: 2 18(2) 
+djb: 2 4 
+do: 2 18 
+domain: 18 
+duff: 18 
+E: 2 
+ed: 32 
+edition: 32 
+eg: 32 
+elsewhere: 18 
+et: 2 
+etc: 2 
+even: 18 
+excellent: 2 
+experimenting: 18 
+explained: 5 
+extreme: 32(2) 
+faster: 18(2) 
+favored: 5 
+Feb: 2 
+fewer: 18 
+first: 5 
+for: 2 18 
+found: 18 32 
+function: 2 18(2) 32(2) 
+Functions: 1 
+functions: 2(4) 
+gawk: 18 
+general: 18 
+good: 2 18(2) 
+graphing: 2 
+happens: 18 
+has: 2 5 32 
+Hash: 1 
+hash: 2(5) 5(2) 7 9 13(4) 15 18(2) 23 27(4) 29 32 34 36 40 42 
+hashing: 18 32 
+Hashing: 2 
+have: 2 32 
+i: 2 5(3) 18(3) 
+If: 2 
+in: 5 18(3) 32 
+included: 18 
+int: 10 24 36 37 
+is: 2 18(5) 32(4) 
+it: 2 5 18(2) 32(4) 
+It: 32(2) 
+its: 32 
+just: 2 
+k: 5 
+K: 2 32 
+keys: 2 18 
+know: 2 
+known: 2 
+Knuth: 32 
+lang: 5 
+least: 32 
+library: 18 
+like: 32 
+likely: 2 
+long: 6 9 19 23 33 
+lose: 31(2) 
+magic: 5 18 
+Many: 32 
+many: 2 5(2) 
+Mckenzie: 2 
+merit: 32 
+mixed: 32 
+much: 32 
+ndbm: 18 
+never: 5 
+not: 2 5 32 
+now: 5 32 
+number: 5 
+of: 2(4) 5(2) 18(4) 32 
+on: 2 
+one: 2(2) 18 
+or: 5 32 
+other: 5 
+otherwise: 32 
+out: 18(2) 
+picked: 18 
+PJW: 2 
+possible: 32 
+pp: 2 
+prime: 5 18 
+programmers: 32 
+public: 18 
+R: 2 32 
+reader: 32 
+reimplementation: 18 
+reported: 5 
+respectable: 32 
+results: 2 
+return: 15 29 42 
+s: 32 
+sacrificing: 32 
+scrambling: 18 
+sdbm: 17 18 20 
+Searching: 32 
+second: 32 
+see: 2(2) 18 32(2) 
+Selecting: 2 
+sets: 2 
+sigh: 32 
+simplicity: 32(2) 
+sizes: 2 
+sleepycat: 18 
+so: 32 
+some: 2 
+someday: 2 
+something: 32 
+Sorting: 32 
+SP: 2 
+speed: 2 
+splits: 18 
+st: 32 
+static: 19 
+str: 5 7 12 18 20 21 26 34 39 
+string: 2 
+stuck: 32 
+such: 2 
+table: 2 
+terrible: 32 
+test: 2 
+testing: 32 
+than: 5 
+the: 2(2) 5 18(5) 32(4) 
+there: 18 
+thin: 18 
+this: 5(2) 18(2) 32 
+This: 32(3) 
+to: 2(2) 18(3) 
+tpop: 2 32 
+turns: 18 
+understatement: 32 
+unsigned: 6 7 9 19 21 23 33 34 36 
+use: 32 
+used: 18(2) 
+uses: 5 
+version: 5 18(2) 
+visualiser: 2 
+wait: 2 
+want: 2 
+warned: 32 
+was: 5 18(3) 32 
+well: 2 18 
+what: 18 
+while: 12 18 26 39 
+why: 5 
+will: 2 
+with: 2 18(2) 32 
+without: 32(2) 
+works: 5 
+xor: 5 
+years: 5 
+you: 2(2) 

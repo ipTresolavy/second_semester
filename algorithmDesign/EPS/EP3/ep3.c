@@ -10,7 +10,7 @@
 #include <math.h>
 
 typedef enum {FALSE, TRUE} boolean;
-typedef struct /* Struct que guarda um vetor de flips e seu tamanho */   
+typedef struct /* Struct que guarda um vetor de flips e seu tamanho */
 {
     int* flipsVector;
     int amountOfFlips;
@@ -24,13 +24,13 @@ boolean checaPilha(int *, int);
 int main()
 {
     int i, *solucao, /* vetor que guarda, na posição solucao[0], a quantidade
-                        de flips e, ao longo do resto de seu corpo, 
+                        de flips e, ao longo do resto de seu corpo,
                         os flips em questão */
         pancakeStackSize, *pancakeStack, /* a pilha de panquecas e seu tamanho */
-        
-        /* máximos estipulados iniciais */ 
+
+        /* máximos estipulados iniciais */
         knownMax[20] = {0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 22};
-    
+
     flips *flipCandidate; /* utilizado nas iterações e backtracking do algoritmo */
 
     printf("Insira a quantidade de panquecas a serem ordenadas: ");
@@ -45,11 +45,12 @@ int main()
     flipCandidate = (flips *)malloc(sizeof(flips));
     flipCandidate->flipsVector = (int *)malloc((int)floor(18*pancakeStackSize/11)*sizeof(int));
     flipCandidate->amountOfFlips = 0;
-    
+
+
     solucao = (int *)malloc((1 + (int)floor(18*pancakeStackSize/11))*sizeof(int));
 
     if(pancakeStackSize < 20)
-       solucao[0] = 1 + knownMax[pancakeStackSize]; 
+       solucao[0] = 1 + knownMax[pancakeStackSize];
     else
         solucao[0] = 1 + (int)floor(18*pancakeStackSize/11);
 
@@ -61,14 +62,14 @@ int main()
     }
 
     ordenaPanquecas(pancakeStack, pancakeStackSize, flipCandidate, -1, solucao);
-    
+
     if(solucao[0] > 0)
-    {    
+    {
         printf("\n");
         for(i = 1; i - 1 < solucao[0]; ++i)
             printf("%2d ", solucao[i]);
         printf("\n");
-    } 
+    }
 
     free(pancakeStack);
     free(flipCandidate->flipsVector);
@@ -90,13 +91,13 @@ void ordenaPanquecas(int *stack, int stackSize, flips *candidatoAFlip, int posDo
                 {
                     flip(stack, i, stackSize); /* Flipa a posição */
                     candidatoAFlip->flipsVector[(candidatoAFlip->amountOfFlips)++] = i; /* Contabiliza e armazena o flip */
-                    
+
                     /* Recursão */
                     ordenaPanquecas(stack, stackSize, candidatoAFlip, candidatoAFlip->flipsVector[(candidatoAFlip->amountOfFlips) - 1], solucao);
-                    
+
                     flip(stack, i, stackSize); /* Desflipa a posição */
                     (candidatoAFlip->amountOfFlips)--; /* Descontabiliza o flip */
-                }  
+                }
         }
         else /* Se a pilha de panquecas estiver resolvida */
         {
@@ -128,7 +129,7 @@ boolean checaPilha(int * stack, int stackSize)
     for(; stackSize > 1; ++stack, --stackSize)
         if(*(stack + 1) > *(stack))
             return FALSE;
-    
+
     return TRUE;
 }
 

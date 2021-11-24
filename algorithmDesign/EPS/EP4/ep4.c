@@ -10,22 +10,25 @@
 #include <ctype.h>
 #include <string.h>
 
+/* célula da lista ligada de ocorrências de uma palavra */
 typedef struct ocurrenceCell
 {
-    unsigned long line;
-    unsigned long numOfApp;
-    struct ocurrenceCell *next;
+    unsigned long line;/* linha */
+    unsigned long numOfApp;/* número de aparições */
+    struct ocurrenceCell *next;/* próxima célula */
 } ocurrences;
 
+/* célula da lista ligada de uma palavra */
 typedef struct wordCell
 { 
-  char *word;
-  ocurrences *ocurr;
-  struct wordCell* next; 
+  char *word;/* palavra */
+  ocurrences *ocurr;/* lista ligada de ocorrências */
+  struct wordCell* next;/* pŕoxima palavra */
 } words;
 
 typedef enum {FALSE, TRUE} boolean;
 
+/* Funções da parte 1 */
 void updateHashTable(char*, unsigned long, words***, unsigned long*, unsigned long);
 void resizeHashTable(words***, unsigned long*, unsigned long);
 words* searchForWord(words*, char*);
@@ -35,139 +38,215 @@ void addToHashTable(words**, unsigned long, char*, unsigned long, unsigned long)
 void removeHashTableNulls(words***, unsigned long*);
 unsigned long amntOfHashTableElements(words**, unsigned long);
 void solveCollisions(words***, unsigned long*, unsigned long);
+/* ****************** */
 
+/* funções da parte 2 */
+    /* heapsort lexicográfico */
 void hashTableHeapsort(words **, unsigned long);
 void downgrade(words **, unsigned long, unsigned long);
 int caseInsensitiveStrcmp(const char *, const char *);
 void heapify (words**, unsigned long);
-
+    /* ******** */
 void printHashTable(words**, unsigned long);
 void printOcurrencesRecursively(ocurrences*);
-
 void destroyHashTable(words**, unsigned long*);
 void destroyOcurrencesRecursively(ocurrences*);
+/* ****************** */
 
 int main()
 {
-    FILE *file;
-    words **hashTable;
-    unsigned long hashTableSize, line, maxWordSize, wordSize;
-    char c, *fileName;
-    char *wordParser;
+    FILE *file;/* arquivo que será analisado */
+    words **hashTable;/* tabela hash de palavras */
 
+    unsigned long hashTableSize,/* tamanho da tabela hash */ 
+        line, /* linha sendo analisada */
+        maxWordSize, /* tamanho do vetor de caracteres de
+                        cada palavra do texto, que tem seu 
+                        valor atualizado caso uma palavra 
+                        com mais que 'maxWordSize' caracteres 
+                        seja encontrada. */
+        wordSize; /* tamanho da última palavra encontrada no
+                     texto, que será adicionada à tabela hash. */
+
+    char c, /* variável que guarda um caractere do texto por vez*/
+        *fileName, /* nome do arquivo a ser analisado */
+        *wordParser; /* vetor que guarda cada palavra do texto,
+                        para posterior adição à tabela hash */
+    
     printf("Digite o caminho até o arquivo: ");
     for(wordSize = 0, fileName = malloc(sizeof(char)); (c = getchar()) != EOF && c != '\n'; ++wordSize)
     {
+        /* realoca tamanho do vetor para cada caractere de entrada */
         fileName = realloc(fileName, wordSize + 1);
-        *(fileName + wordSize) = c;
+        *(fileName + wordSize) = c; /* adiciona caractere ao vetor */
     }
-    *(fileName + wordSize) = '\0';
+    *(fileName + wordSize) = '\0'; /* caractere nulo para sinalizar fim de string. */
+
 
     if((file = fopen(fileName, "r")) == NULL)
     {
-        printf("Erro ao abrir arquivo");
-        exit(1);
+        printf("Erro ao abrir arquivo.\n");
+        return EXIT_FAILURE;
     }
     else
     {
-        /* Libera espaço utilizado pela string "nome do arquivo" */
+        /* Libera espaço utilizado pela string "nome do arquivo", pois
+        não será mais necessária */
         free(fileName);
 
         /* Inicializa variáveis */
-        maxWordSize = wordSize;
+        maxWordSize = wordSize;/* tamanho do nome do arquivo é 
+                                  utilizado como tamanho incial
+                                  da string que será usada para
+                                  analisar cada palavra do texto */
         hashTableSize = 1;
 
-        /* Alocamento inicial de memória */
+        /* Alocamento inicial de memória e inicialização da tabela hash*/
         hashTable = malloc(sizeof(words*));
         *hashTable = malloc(sizeof(words));
         *hashTable = NULL;
+
+        /* Aloca espaço para o vetor de palavras no texto e a inicializa com 0's */
         wordParser = calloc(maxWordSize + 1, sizeof(char));
     }
-    
+
+
+    /* ------- PARTE 1 ------- */
 
     for(wordSize = 0UL, line = 1UL; /* Inicializador */
        c != EOF; /* Condição de parada */
        wordSize = (isalpha(c))?(wordSize + 1):(0), line = (c == '\n')?(line + 1):(line)) /* incrementos */
     {
+        /* se a palavra que está sendo analisada no momento for maior que o tamanho do vetor de caracteres 'wordParser' */
         if(wordSize >= maxWordSize)
         {
+            /* realoca e atualiza tamanho do vetor */
             wordParser = realloc(wordParser, sizeof(char)*((maxWordSize *= 2) + 1));
             if(wordParser == NULL)
             {
-                printf("realocamento de memória para palavra falhou");
-                exit(1);
+                printf("Realocamento de memória para palavra falhou.\n");
+                return EXIT_FAILURE;
             }
         }
 
-        if(isalpha((c = fgetc(file))))
-            *(wordParser + wordSize) = c;
-        else
+        if(isalpha((c = fgetc(file))))/* se o caracter for uma letra */
+            *(wordParser + wordSize) = c;/* adiciona ele ao vetor 'wordParser' */
+
+        else/* caso o caractere não seja uma letra */
         {
-            *(wordParser + wordSize) = '\0';
-            if(wordSize > 0)
+            *(wordParser + wordSize) = '\0';/* uma palavra foi encontrada, então uma string é criada 
+                                               adicionando '\0' ao fim de 'wordParser'
+                                            */
+            if(wordSize > 0)/* Se houver pelo menos uma letra na palavra */
                 updateHashTable(wordParser, wordSize, &hashTable, &hashTableSize, line);
         }
     }
-    free(wordParser);
-    fclose(file);
+    free(wordParser);/* Libera espaço utilizado pela string 'wordParser', pois
+                        não será mais necessária */
+    fclose(file);/* fecha arquivo analisado */
+
+    /* ------- FIM DA PARTE 1 ------- */
+
+    /* ------- PARTE 2 ------- */
 
     removeHashTableNulls(&hashTable, &hashTableSize);
     solveCollisions(&hashTable, &hashTableSize, amntOfHashTableElements(hashTable, hashTableSize) - hashTableSize);
 
+    /* printHashTable(hashTable, hashTableSize); */
+
     hashTableHeapsort(hashTable, hashTableSize);
     amntOfHashTableElements(hashTable, hashTableSize);
-
     printHashTable(hashTable, hashTableSize);
-    /* Não se esqueca dos free's */
+
+    /* ------- FIM DA PARTE 2 ------- */
+
     destroyHashTable(hashTable, &hashTableSize);
     return 0;
 }
 
 void updateHashTable(char *word, unsigned long wordSize, words*** hashTable, unsigned long *hashTableSize, unsigned long line)
+/* 
+subrotina que adiciona ocorrência na linha 'line' da palavra 'word', de tamanho 'wordSize', 
+na tabela hash 'hashTable', de tamanho 'hashTableSize'.
+*/
 {
-    unsigned long i, hashFunction;
-    words *foundWord;
-    ocurrences *foundOcurrence;
+    unsigned long i, hashFunction;/* variável que guarda o valor da função hash da palavra 'word' */
 
-    for(i = hashFunction = 0UL; i < wordSize; ++i)
-        hashFunction += ((*(word + i))%((*(word + i) <= 'Z')?('A' + 10):('a' + 10)))*(wordSize - i);
+    words *foundWord;/* ponteiro que aponta para a posição da palavra 'word' se ela já existir na tabela hash */
+    
+    ocurrences *foundOcurrence;/* ponteiro que aponta para ocorrência da palavra 'word' na linha 'line' se ela já existir na table hash */
 
-    if(hashFunction >= *hashTableSize)
+
+    for(i = hashFunction = 0UL; i < wordSize; ++i)/* calcula valor da função hash para a palavra 'word' */
+        hashFunction += ((*(word + i)) - ((*(word + i) <= 'Z')?('A'):('a')) + 1)*(wordSize - i);
+    /* 
+    mapeia letras para valores:
+    a e A -> 1
+    b e B -> 2
+    ...
+    */
+
+    if(hashFunction >= *hashTableSize)/* se o resultado da função hash for maior ou igual ao tamanho da tabela hash */
     {
-        resizeHashTable(hashTable, hashTableSize, hashFunction + 1);
-        addToHashTable(*hashTable, hashFunction, word, wordSize, line);
+        resizeHashTable(hashTable, hashTableSize, hashFunction + 1);/* aumenta o tamanho da tabela hash */
+        addToHashTable(*hashTable, hashFunction, word, wordSize, line);/* adiciona a palavra 'word' à posição 
+                                                                          'hashFunction' da tabela hash */
     }
-    else
+    else/* se o resultado da função hash for MENOR que a tabela hash */
+
+        /* se o vetor na posição não for nulo e se a palavra já existir na lista ligada na posição da tabela hash */
         if(*(*hashTable + hashFunction) != NULL && (foundWord = searchForWord(*(*hashTable + hashFunction), word)) != NULL)
+    
+            /* Se a palavra 'word' já tiver ocorrido na linha 'line' */
             if((foundOcurrence = searchForLine(foundWord->ocurr, line)) != NULL)
-                ++(foundOcurrence->numOfApp);
-            else
-                addOcurrence(foundWord, line);
-        else
-            addToHashTable(*hashTable, hashFunction, word, wordSize, line);
+                ++(foundOcurrence->numOfApp);/* adiciona uma ocorrência á linha */
+    
+            else/* Se a palavra NÃO tiver ocorrido na linha 'line' */
+                addOcurrence(foundWord, line);/* adiciona linha à lista ligada de ocorrências da palavra 'word' */
+    
+        else/* se o vetor na posição for nulo OU se a palavra NÃO existir na lista ligada na posição da tabela hash */
+            addToHashTable(*hashTable, hashFunction, word, wordSize, line);/* adiciona ocorrência na linha 'line' da nova palavra 'word', 
+                                                                              na posição 'hashFunction' da tabela hash */
 }
 
 void resizeHashTable(words*** hashTable,unsigned long *oldSize, unsigned long newSize)
+/* 
+subrotina que aumenta ou diminui o tamanho da tabela hash 'hashTable' de 'oldSize' para 'newSize'.
+*/
 {
     unsigned long i;
 
+    /* realoca novo tamanho da tabela hash */
     *hashTable = realloc(*hashTable, (newSize)*sizeof(words*));
 
+    /* se o realocamento falhar, encerra o programa */
+    if(*hashTable == NULL)
+    {
+        printf("realocamento de memória para tabela hash falhou.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    /* se o tamanho novo for maior que o antigo */
     if(*oldSize < newSize)
+        /* para cada nova posição, aloca espaço para uma célula de palavras e às inicializa com um vetor nulo  */
         for(i = *oldSize; i < newSize; ++i)
         {
             *(*hashTable + i) = malloc(sizeof(words));
             *(*hashTable + i) = NULL;
         }
 
-    *oldSize = newSize;
+    *oldSize = newSize;/* atualiza tamanho da tabela hash */
 }
 
 words* searchForWord(words* beggining, char *word)
+/* 
+função que procura palavra 'word' em uma lista ligada de palavras e retorna ponteiro
+para posição, caso a encontre, ou NULL, caso a palavra ainda não tenha ocorrido no texto. 
+*/
 {
     words *target = NULL;
 
-
+    /* strcmp: compara duas strings */
     for(target = beggining; target != NULL && strcmp(word, target->word) != 0; target = target->next)
         ;
 
@@ -175,6 +254,11 @@ words* searchForWord(words* beggining, char *word)
 }
 
 ocurrences* searchForLine(ocurrences *beggining, unsigned long line)
+/* 
+função que procura ocorrência de uma palavra na linha 'line' em uma lista ligada de ocorrências 
+e retorna ponteiro para a ocorrência, caso a encontre, ou NULL, caso a palavra ainda não tenha 
+ocorrido na linha. 
+*/
 {
     ocurrences* target = NULL;
 
@@ -185,64 +269,105 @@ ocurrences* searchForLine(ocurrences *beggining, unsigned long line)
 }
 
 void addOcurrence(words* word, unsigned long line)
+/* 
+subrotina que adiciona ocorrência de palavra 'word' na linha 'line'
+*/
 {
     ocurrences* newOcurrence = malloc(sizeof(ocurrences));
 
+    /* inicializa valores da ocorrência */
     newOcurrence->line = line;
     newOcurrence->numOfApp = 1;
+
+    /* adiciona a ocorrência ao INÍCIO da lista ligada de ocorrências */
     newOcurrence->next = word->ocurr;
     word->ocurr = newOcurrence;
 }
 
 void addToHashTable(words **hashTable, unsigned long position, char *word, unsigned long wordSize, unsigned long line)
+/* 
+subrotina que adiciona primeira ocorrência da palavra 'word', de 'wordSize' caracteres de comprimento, na linha 'line', 
+na posição 'position' da tabela hash 'hashTable' 
+*/
 {
     words* newWord = malloc(sizeof(words));
     unsigned long i;
 
     newWord->ocurr = NULL;
-    addOcurrence(newWord, line);
+    addOcurrence(newWord, line);/* adiciona primeira ocorrência de palavra */
     
+    /* copia palavra 'word' para a nova célula da lista ligada de palavras*/
     newWord->word = malloc((wordSize + 1)*sizeof(char));
     for(i = 0UL; i < wordSize; ++i)
         *(newWord->word + i) = *(word + i);
     *(newWord->word + wordSize) = '\0';
 
+    /* adiciona nova palavra ao INÍCIO da lista ligada de palavras */
     newWord->next = *(hashTable + position);
     *(hashTable + position) = newWord;
 }
 
 void removeHashTableNulls(words*** hashTable, unsigned long *hashTableSize)
+/* 
+subrotina que remove posições da tabela 'hashTable', de tamanho 'hashTableSize', que contém vetores nulos,
+e diminui tamanho da tabela para que contenha somente vetores não nulos que apontam para listas
+ligadas de palavras.
+*/
 {
-    unsigned long nonNullPointer = 0UL, 
-            nullPointer = 0UL; 
+    unsigned long nonNullPointerPosition = 0UL, 
+            nullPointerPosition = 0UL; 
 
-    while(nonNullPointer < *hashTableSize && nullPointer < *hashTableSize)
+    /* enquanto a tabela hash não tiver sido completamente analisada */
+    while(nonNullPointerPosition < *hashTableSize && nullPointerPosition < *hashTableSize)
     {
-        while(nullPointer < *hashTableSize && *(*hashTable + nullPointer) != NULL)
-            ++nullPointer;
+        /* encontra a primeira posição com vetor nulo, partindo da última posição encontrada ou do início da tabela */
+        while(nullPointerPosition < *hashTableSize && *(*hashTable + nullPointerPosition) != NULL)
+            ++nullPointerPosition;
 
-        nonNullPointer = nullPointer + 1;
+        nonNullPointerPosition = nullPointerPosition + 1;
 
-        while(nonNullPointer < *hashTableSize && *(*hashTable + nonNullPointer) == NULL)
-            ++nonNullPointer;
+        /* encontra a primeira posição com vetor não nulo, a partir da última posição com vetor nulo */
+        while(nonNullPointerPosition < *hashTableSize && *(*hashTable + nonNullPointerPosition) == NULL)
+            ++nonNullPointerPosition;
     
-        if(nonNullPointer < *hashTableSize && nullPointer < *hashTableSize)
+        /* move o vetor não nulo para a posição com vetor nulo */
+        if(nonNullPointerPosition < *hashTableSize && nullPointerPosition < *hashTableSize)
         {    
-            *(*hashTable + nullPointer) = *(*hashTable + nonNullPointer);
-            *(*hashTable + nonNullPointer) = NULL;
-            ++nullPointer;
+            *(*hashTable + nullPointerPosition) = *(*hashTable + nonNullPointerPosition);
+            *(*hashTable + nonNullPointerPosition) = NULL;
+            ++nullPointerPosition;
         }
     }
 
-    resizeHashTable(hashTable, hashTableSize, nullPointer);
+    /* 
+    ao final das iterações, as últimas ('hashTableSize' - 'nullPointerPosition') posições 
+    da tabela hash 'hashTable' terão somente elementos nulos. Portanto, pode-se eliminar as
+    últimas posições.
+    */
+
+    /* diminui tamanho da tabela hash 'hashTable' */
+    resizeHashTable(hashTable, hashTableSize, nullPointerPosition);
 }
 
 unsigned long amntOfHashTableElements(words** hashTable, unsigned long hashTableSize)
+/* 
+função que conta a quantidade de elementos na tabela hash 'hashTable', 
+de tamanho 'hashTableSize', incluindo elementos "colididos".
+*/
 {
     unsigned long i, amountOfElements;
     words* aux;
 
+    /* 
+    enquanto todas as listas ligadas contidas na tabela hash 
+    'hashTable' não tiverem sido analisadas. 
+    */
     for(i = amountOfElements = 0UL; i < hashTableSize; i++)
+    /* 
+    conta todos os elementos da lista ligada presentes 
+    na posição 'i' da table hash 'hashTable', para todas 
+    as posições da tabela 
+    */
     {
         aux = ((*(hashTable + i)));
         do
@@ -256,12 +381,22 @@ unsigned long amntOfHashTableElements(words** hashTable, unsigned long hashTable
 }
 
 void solveCollisions(words*** hashTable, unsigned long* oldSize, unsigned long collisions)
+/* 
+subrotina que resolve todas as colisões presentes na tabela hash 'hashTable' 
+aumentando o tamanho da tabela e movendo-as para o seu fim.
+*/
 {
     unsigned long i, j;
     words* aux;
 
+    /* caso não haja colisões, nada é feito */
+    if(collisions == 0)
+        return;
+
+    /* aumenta tamanho da tabela para suportar as colisões */
     resizeHashTable(hashTable, oldSize, *oldSize + collisions);
 
+    /* move as colisões para o fim da tabela */
     for(i = 0UL, j = *oldSize - collisions; i < *oldSize - collisions; ++i)
         if(((*(*hashTable + i)))->next != NULL)
         {
@@ -274,12 +409,20 @@ void solveCollisions(words*** hashTable, unsigned long* oldSize, unsigned long c
             } while (j < *oldSize && aux->next != NULL);
         }
     
-
+    /* 
+    remove ponteiros que apontam para as colisões, transformando 
+    a tabela hash 'hashTable' em um vetor linear de ponteiros para
+    listas ligadas de somente uma palavra. 
+    */
     for(i = 0; i < *oldSize; ++i)
         (*(*hashTable + i))->next = NULL;
 }
 
 void hashTableHeapsort(words ** hashTable, unsigned long hashTableSize)
+/* 
+subrotina que ordena lexicograficamente, isso é, alfabeticamente, 
+a tabela hash 'hashTable' utilizando um algoritmo de heapsort.
+*/
 {
     unsigned long i;
     words* aux;
@@ -295,6 +438,10 @@ void hashTableHeapsort(words ** hashTable, unsigned long hashTableSize)
 }
 
 void downgrade(words ** hashTable, unsigned long hashTableSize, unsigned long position)
+/* 
+subrotina que rebaixa o elemento na posição 'position' da tabela hash 'hashTable' 
+para uma posição na qual ambos seus filhos sejam lexicograficamente inferiores a si.
+*/
 {
     words* aux;
     unsigned long parent = position, child = 2*position + 1;
@@ -318,6 +465,10 @@ void downgrade(words ** hashTable, unsigned long hashTableSize, unsigned long po
 }
 
 int caseInsensitiveStrcmp(const char *p1, const char *p2)
+/* 
+diferente da função strcmp da biblioteca string.h, esta função
+não leva em consideração letras maiúsculas e minúsculas das palavras
+*/
 {
   unsigned char *s1 = (unsigned char *) p1;
   unsigned char *s2 = (unsigned char *) p2;
@@ -338,6 +489,9 @@ int caseInsensitiveStrcmp(const char *p1, const char *p2)
 }
 
 void heapify (words** hashTable, unsigned long hashTableSize)
+/* 
+subrotina que efetivamente transforma a tabela hash 'hashTable' em um heap  
+*/
 {
     unsigned long i;
 
@@ -347,6 +501,9 @@ void heapify (words** hashTable, unsigned long hashTableSize)
 }
 
 void printHashTable(words** hashTable, unsigned long hashTableSize)
+/* subrotina que imprime a tabela hash 'hashTable'; imprime cada palavra 
+incluindo suas listas de ocorrências, em ordem alfabética e crescente, respectivamente 
+*/
 {
     for(;hashTableSize > 0; ++hashTable, --hashTableSize)
     {
@@ -357,6 +514,11 @@ void printHashTable(words** hashTable, unsigned long hashTableSize)
 }
 
 void printOcurrencesRecursively(ocurrences* wordOcurrences)
+/* 
+subrotina que imprime recursivamente uma lista ligada de ocorrências, pois 
+o programa insere ocorrências no início de cada lista, de forma que
+as listas ligadas de ocorrências sempre estarão em ordem descrescente.
+*/
 {
     if(wordOcurrences->next != NULL)
         printOcurrencesRecursively(wordOcurrences->next);
@@ -368,6 +530,10 @@ void printOcurrencesRecursively(ocurrences* wordOcurrences)
 }
 
 void destroyHashTable(words** hashTable, unsigned long* hashTableSize)
+/* 
+subrotina que destrói todos os elementos da tabela hash 'hashTable', 
+liberando a memória previamente alocada para os mesmos.
+*/
 {
     for(;*hashTableSize > 0; ++hashTable, --(*hashTableSize))
     {
@@ -378,6 +544,10 @@ void destroyHashTable(words** hashTable, unsigned long* hashTableSize)
 }
 
 void destroyOcurrencesRecursively(ocurrences* wordOcurrences)
+/* 
+subrotina que destrói todos os elementos de uma lista ligada de ocorrências
+recursivamente. 
+*/
 {
     if(wordOcurrences->next != NULL)
         destroyOcurrencesRecursively(wordOcurrences->next);

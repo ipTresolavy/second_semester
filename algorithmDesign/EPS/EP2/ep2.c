@@ -3,9 +3,7 @@
  * @author Igor Pontes Tresolavy (tresolavy@usp.br)
  * @brief Segundo EP da disciplina de MAC0122
  * @version 1.0
- * @date 2021-10-28
- * 
- * 
+ * @date 2021-10-28 
  */
 
 #include <stdio.h>
@@ -13,12 +11,12 @@
 #include <math.h>
 #include "pilha.h"
 
-/* 
+/*
 
 Uma breve explicação sobre as funções pagTab, pagVal, pagValFinal e tabClass:
 
-As funções pag se referem à Pagoda Function ou Função Pagode. Elas se utilizam 
-de uma relação presente nos tabuleiros do tipo de problema de Resta Um do EP 
+As funções pag se referem à Pagoda Function ou Função Pagode. Elas se utilizam
+de uma relação presente nos tabuleiros do tipo de problema de Resta Um do EP
 para tomar conclusões acerca de quais movimentos são permitidos e quais não são.
 
 De maneira simplificada, o método consiste em atribuir valores para cada célula
@@ -32,9 +30,9 @@ impedir movimentos que diminuam o valor pagoda do tabuleiro para menos do que o
 valor final.
 
 A função tabClass, por sua vez, divide as diagonais do tabuleiro em 6 grupos, 3
-para as diagonais descendentes e 3 para as ascendentes. 
+para as diagonais descendentes e 3 para as ascendentes.
 
-A paridade da quantidade T de peças total no tabuleiro menos a quantidade de 
+A paridade da quantidade T de peças total no tabuleiro menos a quantidade de
 peças Ni em cada diagonal, para i entre 0 e 5, deve permanecer a mesma entre
 todos os estados do tabuleiro. Portanto se o conjunto de T - Ni para um tabuleiro
 incial é {Par, Ímpar, Par, Par, Ímpar, Ímpar}, por exemplo, o do estado final
@@ -118,16 +116,16 @@ boolean restaUm(int** tab, int m, int n)
     if(!(qntdBuracos = scanMatrix(tab, m, n, -1, buracos)))
         possivel = FALSE;/* caso não haja nenhum, o tabuleiro é impossível */
 
-    /* 
+    /*
     *pagodaValue guarda o valor pagoda do tabuleiro para cada estado possível. Há
     um estado para cada movimento (scanMatrix(tab, m, n, 1, pilhaAux) - qntdBuracos)
-    mais o estado incial (+1).    
+    mais o estado incial (+1).
     */
     pagodaValue = (long double *)malloc((qntdEstados = scanMatrix(tab, m, n, 1, pilhaAux) - qntdBuracos + 1)*sizeof(long double));
     pagodaTab = (long double **)malloc(m*sizeof(long double *));
     for(i = 0; i < m; ++i)
         pagodaTab[i] = (long double *)malloc(n*sizeof(long double));
-    
+
     /* preenche *pagodaTab com base no último buraco encontrado*/
     if(!pilhaVazia(buracos))
         pagTab(tab, pagodaTab, m, n, topoDaPilha(buracos));
@@ -138,8 +136,8 @@ boolean restaUm(int** tab, int m, int n)
     if(!tabClass(tab, m, n, qntdEstados + qntdBuracos - 1, qntdBuracos))
         possivel = FALSE;
 
-    /* 
-    inicializa *pagodaValue com o valor pagoda do estado inicial 
+    /*
+    inicializa *pagodaValue com o valor pagoda do estado inicial
     e inicializa finalpagodaValue com o valor pagoda final
     */
     estado = 0;
@@ -149,7 +147,7 @@ boolean restaUm(int** tab, int m, int n)
 
     /* inicializa a peça candidata a ser movida. */
     pcAMover.l = pcAMover.c = pcAMover.cDest = pcAMover.lDest = pcAMover.dir = 0;
-    
+
     /* enquanto nenhuma solução for encontrada ou todas as possibilidades forem testadas */
     while(!achou && possivel)
     {
@@ -207,7 +205,7 @@ boolean restaUm(int** tab, int m, int n)
 
             while (!pilhaVazia(movs))
                 empilha(pilhaAux, desempilha(movs));/* inverte a pilha *movs na pilha *pilhaAux */
-            
+
             while(!pilhaVazia(pilhaAux))/* imprime a pilha *pilhaAux */
             {
                 printf("%d:%d-%d:%d\n", (topoDaPilha(pilhaAux)).l, (topoDaPilha(pilhaAux)).c, (topoDaPilha(pilhaAux)).lDest, (topoDaPilha(pilhaAux)).cDest );
@@ -233,13 +231,13 @@ void pagTab(int** tab, long double** pagodaTab, int m, int n, item buraco)
     const long double x = (sqrt(5) - 1)/2;/* (razão áurea) - 1 */
     int i, j;
 
-    for(i = 0; i < m; ++i )        
+    for(i = 0; i < m; ++i )
         for(j = 0; j < n; ++j)
             if(tab[i][j] != 0)
                 pagodaTab[i][j] = pow(x, abs(buraco.c - j) + abs(buraco.l - i));
                 /* x elevado à Distância Manhattan da célula tab[i][j] até o buraco*/
             else
-                pagodaTab[i][j] = 0;    
+                pagodaTab[i][j] = 0;
 }
 
 long double pagVal(int** tab, long double** pagodaTab, int m, int n)
@@ -247,7 +245,7 @@ long double pagVal(int** tab, long double** pagodaTab, int m, int n)
     int i, j;
     long double pagodaValue;
 
-    for(i = 0, pagodaValue = 0.0F; i < m; ++i)        
+    for(i = 0, pagodaValue = 0.0F; i < m; ++i)
         for(j = 0; j < n; ++j)
             if(tab[i][j] > 0)
                 pagodaValue += pagodaTab[i][j];
@@ -272,12 +270,12 @@ long double pagValFinal(long double** pagodaTab, pilha buracos)
 
 boolean tabClass(int** tab, int m, int n, int qntdPecas, int qntdPecasFinal)
 {
-    /* 
+    /*
     valor máximo de uma subtração entre as coordenadas i e j de uma
     matrix m x n sempre será igual a max{m, n}
     */
-    int i, j, maxSub = (m > n)?(m):(n), 
-        startDiagonalClasses[] = {0, 0, 0, 0, 0, 0},/* guarda os valores iniciais das 6 classes */ 
+    int i, j, maxSub = (m > n)?(m):(n),
+        startDiagonalClasses[] = {0, 0, 0, 0, 0, 0},/* guarda os valores iniciais das 6 classes */
         endDiagonalClasses[] = {0, 0, 0, 0, 0, 0};/* guarda os valores finais das 6 classes */
 
     for(i = 0; i < m; ++i)
@@ -292,7 +290,7 @@ boolean tabClass(int** tab, int m, int n, int qntdPecas, int qntdPecasFinal)
                 endDiagonalClasses[(i + j)%3] += 1;
                 endDiagonalClasses[3 + (maxSub + (i - j))%3] += 1;
             }
-        
+
     for(i = 0; i < 6; ++i)
     {
         startDiagonalClasses[i] = (qntdPecas - startDiagonalClasses[i])%2;
@@ -306,8 +304,8 @@ boolean tabClass(int** tab, int m, int n, int qntdPecas, int qntdPecasFinal)
 
 boolean movPermitido(int** tab, int m, int n, item* peca)
 {
-    /* 
-    "item *peca" não é uma pilha, e sim um struct. 
+    /*
+    "item *peca" não é uma pilha, e sim um struct.
     Portanto, acessa-se seus valores da maneira abaixo
     */
     while(peca->dir < 4)
@@ -378,7 +376,7 @@ boolean checaTabuleiro(int** tab, int m, int n, pilha buracos)
 {
     int i, j;
 
-    /* 
+    /*
     como os buracos estão ordenados de (0, 0) até (m - 1, n - 1),
     seus valores podem ser verificados de (m - 1, n - 1) até (0, 0)
     */
@@ -397,7 +395,7 @@ boolean checaTabuleiro(int** tab, int m, int n, pilha buracos)
 
 void backtrackTabuleiro(int** tab, item peca)/* retorna as peças que foram retiradas anteriormente */
 {
-    /* 
+    /*
     recoloca as peças que foram retiradas pelo último movimento 
     e libera o espaço ocupado no mesmo movimento
     */
@@ -405,7 +403,7 @@ void backtrackTabuleiro(int** tab, item peca)/* retorna as peças que foram reti
     tab[peca.l][peca.c] = 1;
 
     switch (peca.dir)
-    {    
+    {
     case 0:/* volta de cima */
         tab[peca.l - 1][peca.c] = 1;
         break;

@@ -10,6 +10,8 @@
 #include <ctype.h>
 #include <string.h>
 
+#define SEED 0xbc9f1d34
+
 /* célula da lista ligada de ocorrências de uma palavra */
 typedef struct ocurrenceCell
 {
@@ -30,6 +32,8 @@ typedef enum {FALSE, TRUE} boolean;
 
 /* Funções da parte 1 */
 void updateHashTable(char*, unsigned long, words***, unsigned long*, unsigned long);
+unsigned int scramble(unsigned int k);
+unsigned int murmurHash(const char* key, unsigned long len, unsigned int seed);
 void resizeHashTable(words***, unsigned long*, unsigned long);
 words* searchForWord(words*, char*);
 ocurrences* searchForLine(ocurrences*, unsigned long);
@@ -105,7 +109,6 @@ int main()
         hashTable = malloc(sizeof(words*));
         *hashTable = malloc(sizeof(words));
         *hashTable = NULL;
-
         /* Aloca espaço para o vetor de palavras no texto e a inicializa com 0's */
         wordParser = calloc(maxWordSize + 1, sizeof(char));
     }
@@ -152,10 +155,9 @@ int main()
     removeHashTableNulls(&hashTable, &hashTableSize);
     solveCollisions(&hashTable, &hashTableSize, amntOfHashTableElements(hashTable, hashTableSize) - hashTableSize);
 
-    /* printHashTable(hashTable, hashTableSize); */
 
     hashTableHeapsort(hashTable, hashTableSize);
-    amntOfHashTableElements(hashTable, hashTableSize);
+    /* amntOfHashTableElements(hashTable, hashTableSize); */
     printHashTable(hashTable, hashTableSize);
 
     /* ------- FIM DA PARTE 2 ------- */
@@ -170,22 +172,14 @@ subrotina que adiciona ocorrência na linha 'line' da palavra 'word', de tamanho
 na tabela hash 'hashTable', de tamanho 'hashTableSize'.
 */
 {
-    unsigned long i, hashFunction;/* variável que guarda o valor da função hash da palavra 'word' */
+    unsigned int hashFunction;/* variável que guarda o valor da função hash da palavra 'word' */
 
     words *foundWord;/* ponteiro que aponta para a posição da palavra 'word' se ela já existir na tabela hash */
     
     ocurrences *foundOcurrence;/* ponteiro que aponta para ocorrência da palavra 'word' na linha 'line' se ela já existir na table hash */
 
-
-    for(i = hashFunction = 0UL; i < wordSize; ++i)/* calcula valor da função hash para a palavra 'word' */
-        hashFunction += ((*(word + i)) - ((*(word + i) <= 'Z')?('A'):('a')) + 1)*(wordSize - i);
-    /* 
-    mapeia letras para valores:
-    a e A -> 1
-    b e B -> 2
-    ...
-    */
-
+    hashFunction = murmurHash(word, wordSize, SEED)%100000;
+    
     if(hashFunction >= *hashTableSize)/* se o resultado da função hash for maior ou igual ao tamanho da tabela hash */
     {
         resizeHashTable(hashTable, hashTableSize, hashFunction + 1);/* aumenta o tamanho da tabela hash */
@@ -207,6 +201,43 @@ na tabela hash 'hashTable', de tamanho 'hashTableSize'.
         else/* se o vetor na posição for nulo OU se a palavra NÃO existir na lista ligada na posição da tabela hash */
             addToHashTable(*hashTable, hashFunction, word, wordSize, line);/* adiciona ocorrência na linha 'line' da nova palavra 'word', 
                                                                               na posição 'hashFunction' da tabela hash */
+}
+
+unsigned int scramble(unsigned int k) {
+    k *= 0xcc9e2d51;
+    k = (k << 15) | (k >> 17);
+    k *= 0x1b873593;
+    return k;
+}
+
+unsigned int murmurHash(const char* key, unsigned long len, unsigned int seed)
+{
+	unsigned int h = seed;
+    unsigned int k;
+    unsigned long i;
+    /* Read in groups of 4. */
+    for (i = len >> 2; i; i--) {
+        memcpy(&k, key, sizeof(unsigned int));
+        key += sizeof(unsigned int);
+        h ^= scramble(k);
+        h = (h << 13) | (h >> 19);
+        h = h * 5 + 0xe6546b64;
+    }
+    /* Read the rest. */
+    k = 0;
+    for (i = len & 3; i; i--) {
+        k <<= 8;
+        k |= key[i - 1];
+    }
+    h ^= scramble(k);
+    /* Finalize. */
+	h ^= len;
+	h ^= h >> 16;
+	h *= 0x85ebca6b;
+	h ^= h >> 13;
+	h *= 0xc2b2ae35;
+	h ^= h >> 16;
+	return h;
 }
 
 void resizeHashTable(words*** hashTable,unsigned long *oldSize, unsigned long newSize)
@@ -388,6 +419,7 @@ aumentando o tamanho da tabela e movendo-as para o seu fim.
 {
     unsigned long i, j;
     words* aux;
+
 
     /* caso não haja colisões, nada é feito */
     if(collisions == 0)

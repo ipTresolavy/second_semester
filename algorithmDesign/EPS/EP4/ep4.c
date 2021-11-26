@@ -10,6 +10,7 @@
 #include <ctype.h>
 #include <string.h>
 
+#define HASH_TABLE_MAX_SIZE 100000
 #define SEED 0xbc9f1d34
 
 /* célula da lista ligada de ocorrências de uma palavra */
@@ -30,21 +31,21 @@ typedef struct wordCell
 
 typedef enum {FALSE, TRUE} boolean;
 
-/* Funções da parte 1 */
+/* funções e subrotinas da parte 1 */
 void updateHashTable(char*, unsigned long, words***, unsigned long*, unsigned long);
-unsigned int scramble(unsigned int k);
-unsigned int murmurHash(const char* key, unsigned long len, unsigned int seed);
+unsigned int scramble(unsigned int);
+unsigned int murmurHash(const char*, unsigned long, unsigned int);
 void resizeHashTable(words***, unsigned long*, unsigned long);
 words* searchForWord(words*, char*);
 ocurrences* searchForLine(ocurrences*, unsigned long);
 void addOcurrence(words*, unsigned long);
 void addToHashTable(words**, unsigned long, char*, unsigned long, unsigned long);
+/* ****************** */
+
+/* funções e subrotinas da parte 2 */
 void removeHashTableNulls(words***, unsigned long*);
 unsigned long amntOfHashTableElements(words**, unsigned long);
 void solveCollisions(words***, unsigned long*, unsigned long);
-/* ****************** */
-
-/* funções da parte 2 */
     /* heapsort lexicográfico */
 void hashTableHeapsort(words **, unsigned long);
 void downgrade(words **, unsigned long, unsigned long);
@@ -109,7 +110,8 @@ int main()
         hashTable = malloc(sizeof(words*));
         *hashTable = malloc(sizeof(words));
         *hashTable = NULL;
-        /* Aloca espaço para o vetor de palavras no texto e a inicializa com 0's */
+
+        /* Aloca espaço para o vetor de palavras no texto e o inicializa com 0s */
         wordParser = calloc(maxWordSize + 1, sizeof(char));
     }
 
@@ -118,9 +120,10 @@ int main()
 
     for(wordSize = 0UL, line = 1UL; /* Inicializador */
        c != EOF; /* Condição de parada */
-       wordSize = (isalpha(c))?(wordSize + 1):(0), line = (c == '\n')?(line + 1):(line)) /* incrementos */
+       wordSize = (isalpha(c))?(wordSize + 1):(0), line += (c == '\n')?(1):(0)) /* incrementos */
     {
-        /* se a palavra que está sendo analisada no momento for maior que o tamanho do vetor de caracteres 'wordParser' */
+        /* se a palavra que está sendo analisada no momento for maior que o tamanho do 
+        vetor de caracteres 'wordParser' */
         if(wordSize >= maxWordSize)
         {
             /* realoca e atualiza tamanho do vetor */
@@ -135,7 +138,7 @@ int main()
         if(isalpha((c = fgetc(file))))/* se o caracter for uma letra */
             *(wordParser + wordSize) = c;/* adiciona ele ao vetor 'wordParser' */
 
-        else/* caso o caractere não seja uma letra */
+        else/* caso o caractere não seja uma letra ASCII */
         {
             *(wordParser + wordSize) = '\0';/* uma palavra foi encontrada, então uma string é criada 
                                                adicionando '\0' ao fim de 'wordParser'
@@ -154,14 +157,12 @@ int main()
 
     removeHashTableNulls(&hashTable, &hashTableSize);
     solveCollisions(&hashTable, &hashTableSize, amntOfHashTableElements(hashTable, hashTableSize) - hashTableSize);
-
-
     hashTableHeapsort(hashTable, hashTableSize);
-    /* amntOfHashTableElements(hashTable, hashTableSize); */
     printHashTable(hashTable, hashTableSize);
 
     /* ------- FIM DA PARTE 2 ------- */
 
+    /* desaloca espaço alocado para a tabela hash e zera 'hashTableSize' */
     destroyHashTable(hashTable, &hashTableSize);
     return 0;
 }
@@ -172,14 +173,12 @@ subrotina que adiciona ocorrência na linha 'line' da palavra 'word', de tamanho
 na tabela hash 'hashTable', de tamanho 'hashTableSize'.
 */
 {
-    unsigned int hashFunction;/* variável que guarda o valor da função hash da palavra 'word' */
-
     words *foundWord;/* ponteiro que aponta para a posição da palavra 'word' se ela já existir na tabela hash */
     
     ocurrences *foundOcurrence;/* ponteiro que aponta para ocorrência da palavra 'word' na linha 'line' se ela já existir na table hash */
-
-    hashFunction = murmurHash(word, wordSize, SEED)%100000;
     
+    unsigned int hashFunction = murmurHash(word, wordSize, SEED)%HASH_TABLE_MAX_SIZE;/* função Hash da palavra 'word' */
+
     if(hashFunction >= *hashTableSize)/* se o resultado da função hash for maior ou igual ao tamanho da tabela hash */
     {
         resizeHashTable(hashTable, hashTableSize, hashFunction + 1);/* aumenta o tamanho da tabela hash */
@@ -203,7 +202,13 @@ na tabela hash 'hashTable', de tamanho 'hashTableSize'.
                                                                               na posição 'hashFunction' da tabela hash */
 }
 
-unsigned int scramble(unsigned int k) {
+unsigned int scramble(unsigned int k) 
+/* 
+- Multiplica grupo de 4 bytes por c1; 
+- Rotaciona r1 bits de grupo do resultado para a esquerda; 
+- Multiplica resultado por c2; 
+*/
+{
     k *= 0xcc9e2d51;
     k = (k << 15) | (k >> 17);
     k *= 0x1b873593;
@@ -215,28 +220,54 @@ unsigned int murmurHash(const char* key, unsigned long len, unsigned int seed)
 	unsigned int h = seed;
     unsigned int k;
     unsigned long i;
-    /* Read in groups of 4. */
-    for (i = len >> 2; i; i--) {
+
+    /* 
+    - Multiplica grupo de 4 bytes por c1; 
+    - Rotaciona r1 bits de grupo do resultado para a esquerda; 
+    - Multiplica resultado por c2; 
+    - Atribui à Seed valor da operação lógica OU EXCLUSIVO de Seed com valor do resultado; 
+    - Rotaciona r2 bits de Seed para a esquerda; 
+    - Atribui à Seed valor da multiplicação aritmética de Seed por m, somado à n. 
+    */
+    for (i = len >> 2; i > 0; i--) 
+    {
         memcpy(&k, key, sizeof(unsigned int));
         key += sizeof(unsigned int);
         h ^= scramble(k);
         h = (h << 13) | (h >> 19);
         h = h * 5 + 0xe6546b64;
     }
-    /* Read the rest. */
+
+    /* 
+    - “Arrasta” (logical shift) bytes restantes 8 bits para a esquerda; 
+    - Atribui à resultado valor da operação lógica OU com bytes restantes;  
+    */
     k = 0;
-    for (i = len & 3; i; i--) {
+    for (i = len & 3; i > 0; i--) 
+    {
         k <<= 8;
         k |= key[i - 1];
     }
+
+    /* 
+    - Atribui à Seed o valor da operação lógica OU EXCLUSIVO de Seed com o resultado anterior; 
+    - Atribui à Seed o valor da operação lógica OU EXCLUSIVO de Seed com o valor de Len; 
+    - Atribui à Seed o valor da operação lógica OU EXCLUSIVO de Seed com o valor de Seed “arrastado” (logical shift) 16 bits para a direita; 
+    - Multiplica Seed por 0x85ebca6b; 
+    - Atribui à Seed o valor da operação lógica OU EXCLUSIVO de Seed com o valor de Seed “arrastado” (logical shift) 13 bits para a direita; 
+    - Multiplica Seed por 0xc2b2ae35; 
+    - Atribui à Seed o valor da operação lógica OU EXCLUSIVO de Seed com o valor de Seed “arrastado” (logical shift) 16 bits para a direita. 
+    - Retorna Seed; 
+    */
+
     h ^= scramble(k);
-    /* Finalize. */
 	h ^= len;
 	h ^= h >> 16;
 	h *= 0x85ebca6b;
 	h ^= h >> 13;
 	h *= 0xc2b2ae35;
 	h ^= h >> 16;
+
 	return h;
 }
 

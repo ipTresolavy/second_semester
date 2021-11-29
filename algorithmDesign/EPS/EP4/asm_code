@@ -1,0 +1,1745 @@
+
+ep4_exec:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+0000000000001000 <_init>:
+    1000:	f3 0f 1e fa          	endbr64 
+    1004:	48 83 ec 08          	sub    $0x8,%rsp
+    1008:	48 8b 05 d9 3f 00 00 	mov    0x3fd9(%rip),%rax        # 4fe8 <__gmon_start__>
+    100f:	48 85 c0             	test   %rax,%rax
+    1012:	74 02                	je     1016 <_init+0x16>
+    1014:	ff d0                	callq  *%rax
+    1016:	48 83 c4 08          	add    $0x8,%rsp
+    101a:	c3                   	retq   
+
+Disassembly of section .plt:
+
+0000000000001020 <.plt>:
+    1020:	ff 35 2a 3f 00 00    	pushq  0x3f2a(%rip)        # 4f50 <_GLOBAL_OFFSET_TABLE_+0x8>
+    1026:	f2 ff 25 2b 3f 00 00 	bnd jmpq *0x3f2b(%rip)        # 4f58 <_GLOBAL_OFFSET_TABLE_+0x10>
+    102d:	0f 1f 00             	nopl   (%rax)
+    1030:	f3 0f 1e fa          	endbr64 
+    1034:	68 00 00 00 00       	pushq  $0x0
+    1039:	f2 e9 e1 ff ff ff    	bnd jmpq 1020 <.plt>
+    103f:	90                   	nop
+    1040:	f3 0f 1e fa          	endbr64 
+    1044:	68 01 00 00 00       	pushq  $0x1
+    1049:	f2 e9 d1 ff ff ff    	bnd jmpq 1020 <.plt>
+    104f:	90                   	nop
+    1050:	f3 0f 1e fa          	endbr64 
+    1054:	68 02 00 00 00       	pushq  $0x2
+    1059:	f2 e9 c1 ff ff ff    	bnd jmpq 1020 <.plt>
+    105f:	90                   	nop
+    1060:	f3 0f 1e fa          	endbr64 
+    1064:	68 03 00 00 00       	pushq  $0x3
+    1069:	f2 e9 b1 ff ff ff    	bnd jmpq 1020 <.plt>
+    106f:	90                   	nop
+    1070:	f3 0f 1e fa          	endbr64 
+    1074:	68 04 00 00 00       	pushq  $0x4
+    1079:	f2 e9 a1 ff ff ff    	bnd jmpq 1020 <.plt>
+    107f:	90                   	nop
+    1080:	f3 0f 1e fa          	endbr64 
+    1084:	68 05 00 00 00       	pushq  $0x5
+    1089:	f2 e9 91 ff ff ff    	bnd jmpq 1020 <.plt>
+    108f:	90                   	nop
+    1090:	f3 0f 1e fa          	endbr64 
+    1094:	68 06 00 00 00       	pushq  $0x6
+    1099:	f2 e9 81 ff ff ff    	bnd jmpq 1020 <.plt>
+    109f:	90                   	nop
+    10a0:	f3 0f 1e fa          	endbr64 
+    10a4:	68 07 00 00 00       	pushq  $0x7
+    10a9:	f2 e9 71 ff ff ff    	bnd jmpq 1020 <.plt>
+    10af:	90                   	nop
+    10b0:	f3 0f 1e fa          	endbr64 
+    10b4:	68 08 00 00 00       	pushq  $0x8
+    10b9:	f2 e9 61 ff ff ff    	bnd jmpq 1020 <.plt>
+    10bf:	90                   	nop
+    10c0:	f3 0f 1e fa          	endbr64 
+    10c4:	68 09 00 00 00       	pushq  $0x9
+    10c9:	f2 e9 51 ff ff ff    	bnd jmpq 1020 <.plt>
+    10cf:	90                   	nop
+    10d0:	f3 0f 1e fa          	endbr64 
+    10d4:	68 0a 00 00 00       	pushq  $0xa
+    10d9:	f2 e9 41 ff ff ff    	bnd jmpq 1020 <.plt>
+    10df:	90                   	nop
+    10e0:	f3 0f 1e fa          	endbr64 
+    10e4:	68 0b 00 00 00       	pushq  $0xb
+    10e9:	f2 e9 31 ff ff ff    	bnd jmpq 1020 <.plt>
+    10ef:	90                   	nop
+    10f0:	f3 0f 1e fa          	endbr64 
+    10f4:	68 0c 00 00 00       	pushq  $0xc
+    10f9:	f2 e9 21 ff ff ff    	bnd jmpq 1020 <.plt>
+    10ff:	90                   	nop
+    1100:	f3 0f 1e fa          	endbr64 
+    1104:	68 0d 00 00 00       	pushq  $0xd
+    1109:	f2 e9 11 ff ff ff    	bnd jmpq 1020 <.plt>
+    110f:	90                   	nop
+    1110:	f3 0f 1e fa          	endbr64 
+    1114:	68 0e 00 00 00       	pushq  $0xe
+    1119:	f2 e9 01 ff ff ff    	bnd jmpq 1020 <.plt>
+    111f:	90                   	nop
+
+Disassembly of section .plt.got:
+
+0000000000001120 <__cxa_finalize@plt>:
+    1120:	f3 0f 1e fa          	endbr64 
+    1124:	f2 ff 25 cd 3e 00 00 	bnd jmpq *0x3ecd(%rip)        # 4ff8 <__cxa_finalize@GLIBC_2.2.5>
+    112b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+Disassembly of section .plt.sec:
+
+0000000000001130 <__ctype_toupper_loc@plt>:
+    1130:	f3 0f 1e fa          	endbr64 
+    1134:	f2 ff 25 25 3e 00 00 	bnd jmpq *0x3e25(%rip)        # 4f60 <__ctype_toupper_loc@GLIBC_2.3>
+    113b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+0000000000001140 <free@plt>:
+    1140:	f3 0f 1e fa          	endbr64 
+    1144:	f2 ff 25 1d 3e 00 00 	bnd jmpq *0x3e1d(%rip)        # 4f68 <free@GLIBC_2.2.5>
+    114b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+0000000000001150 <fclose@plt>:
+    1150:	f3 0f 1e fa          	endbr64 
+    1154:	f2 ff 25 15 3e 00 00 	bnd jmpq *0x3e15(%rip)        # 4f70 <fclose@GLIBC_2.2.5>
+    115b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+0000000000001160 <__stack_chk_fail@plt>:
+    1160:	f3 0f 1e fa          	endbr64 
+    1164:	f2 ff 25 0d 3e 00 00 	bnd jmpq *0x3e0d(%rip)        # 4f78 <__stack_chk_fail@GLIBC_2.4>
+    116b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+0000000000001170 <memset@plt>:
+    1170:	f3 0f 1e fa          	endbr64 
+    1174:	f2 ff 25 05 3e 00 00 	bnd jmpq *0x3e05(%rip)        # 4f80 <memset@GLIBC_2.2.5>
+    117b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+0000000000001180 <fgetc@plt>:
+    1180:	f3 0f 1e fa          	endbr64 
+    1184:	f2 ff 25 fd 3d 00 00 	bnd jmpq *0x3dfd(%rip)        # 4f88 <fgetc@GLIBC_2.2.5>
+    118b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+0000000000001190 <calloc@plt>:
+    1190:	f3 0f 1e fa          	endbr64 
+    1194:	f2 ff 25 f5 3d 00 00 	bnd jmpq *0x3df5(%rip)        # 4f90 <calloc@GLIBC_2.2.5>
+    119b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+00000000000011a0 <strcmp@plt>:
+    11a0:	f3 0f 1e fa          	endbr64 
+    11a4:	f2 ff 25 ed 3d 00 00 	bnd jmpq *0x3ded(%rip)        # 4f98 <strcmp@GLIBC_2.2.5>
+    11ab:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+00000000000011b0 <malloc@plt>:
+    11b0:	f3 0f 1e fa          	endbr64 
+    11b4:	f2 ff 25 e5 3d 00 00 	bnd jmpq *0x3de5(%rip)        # 4fa0 <malloc@GLIBC_2.2.5>
+    11bb:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+00000000000011c0 <realloc@plt>:
+    11c0:	f3 0f 1e fa          	endbr64 
+    11c4:	f2 ff 25 dd 3d 00 00 	bnd jmpq *0x3ddd(%rip)        # 4fa8 <realloc@GLIBC_2.2.5>
+    11cb:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+00000000000011d0 <__printf_chk@plt>:
+    11d0:	f3 0f 1e fa          	endbr64 
+    11d4:	f2 ff 25 d5 3d 00 00 	bnd jmpq *0x3dd5(%rip)        # 4fb0 <__printf_chk@GLIBC_2.3.4>
+    11db:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+00000000000011e0 <fopen@plt>:
+    11e0:	f3 0f 1e fa          	endbr64 
+    11e4:	f2 ff 25 cd 3d 00 00 	bnd jmpq *0x3dcd(%rip)        # 4fb8 <fopen@GLIBC_2.2.5>
+    11eb:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+00000000000011f0 <exit@plt>:
+    11f0:	f3 0f 1e fa          	endbr64 
+    11f4:	f2 ff 25 c5 3d 00 00 	bnd jmpq *0x3dc5(%rip)        # 4fc0 <exit@GLIBC_2.2.5>
+    11fb:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+0000000000001200 <getc@plt>:
+    1200:	f3 0f 1e fa          	endbr64 
+    1204:	f2 ff 25 bd 3d 00 00 	bnd jmpq *0x3dbd(%rip)        # 4fc8 <getc@GLIBC_2.2.5>
+    120b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+0000000000001210 <__ctype_b_loc@plt>:
+    1210:	f3 0f 1e fa          	endbr64 
+    1214:	f2 ff 25 b5 3d 00 00 	bnd jmpq *0x3db5(%rip)        # 4fd0 <__ctype_b_loc@GLIBC_2.3>
+    121b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+Disassembly of section .text:
+
+0000000000001220 <main>:
+void destroyHashTable(words**, unsigned long*);
+void destroyOcurrencesRecursively(ocurrences*);
+/* ****************** */
+
+int main()
+{
+    1220:	f3 0f 1e fa          	endbr64 
+    1224:	41 57                	push   %r15
+}
+
+__fortify_function int
+printf (const char *__restrict __fmt, ...)
+{
+  return __printf_chk (__USE_FORTIFY_LEVEL - 1, __fmt, __va_arg_pack ());
+    1226:	48 8d 35 13 1e 00 00 	lea    0x1e13(%rip),%rsi        # 3040 <_IO_stdin_used+0x40>
+    122d:	bf 01 00 00 00       	mov    $0x1,%edi
+    1232:	41 56                	push   %r14
+    1234:	41 55                	push   %r13
+    1236:	41 54                	push   %r12
+        *fileName, /* nome do arquivo a ser analisado */
+        *wordParser; /* vetor que guarda cada palavra do texto,
+                        para posterior adição à tabela hash */
+    
+    printf("Digite o caminho até o arquivo: ");
+    for(wordSize = 0, fileName = malloc(sizeof(char)); (c = getchar()) != EOF && c != '\n'; ++wordSize)
+    1238:	45 31 e4             	xor    %r12d,%r12d
+{
+    123b:	55                   	push   %rbp
+    123c:	53                   	push   %rbx
+    123d:	48 83 ec 48          	sub    $0x48,%rsp
+    1241:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
+    1248:	00 00 
+    124a:	48 89 44 24 38       	mov    %rax,0x38(%rsp)
+    124f:	31 c0                	xor    %eax,%eax
+    1251:	e8 7a ff ff ff       	callq  11d0 <__printf_chk@plt>
+    for(wordSize = 0, fileName = malloc(sizeof(char)); (c = getchar()) != EOF && c != '\n'; ++wordSize)
+    1256:	bf 01 00 00 00       	mov    $0x1,%edi
+    125b:	e8 50 ff ff ff       	callq  11b0 <malloc@plt>
+    1260:	48 89 c5             	mov    %rax,%rbp
+    1263:	eb 25                	jmp    128a <main+0x6a>
+    1265:	0f 1f 00             	nopl   (%rax)
+    1268:	3c 0a                	cmp    $0xa,%al
+    126a:	0f 84 46 01 00 00    	je     13b6 <main+0x196>
+    {
+        /* realoca tamanho do vetor para cada caractere de entrada */
+        fileName = realloc(fileName, wordSize + 1);
+    1270:	4d 8d 6c 24 01       	lea    0x1(%r12),%r13
+    1275:	48 89 ef             	mov    %rbp,%rdi
+    1278:	4c 89 ee             	mov    %r13,%rsi
+    127b:	e8 40 ff ff ff       	callq  11c0 <realloc@plt>
+        *(fileName + wordSize) = c; /* adiciona caractere ao vetor */
+    1280:	42 88 1c 20          	mov    %bl,(%rax,%r12,1)
+        fileName = realloc(fileName, wordSize + 1);
+    1284:	48 89 c5             	mov    %rax,%rbp
+    for(wordSize = 0, fileName = malloc(sizeof(char)); (c = getchar()) != EOF && c != '\n'; ++wordSize)
+    1287:	4d 89 ec             	mov    %r13,%r12
+
+/* Read a character from stdin.  */
+__STDIO_INLINE int
+getchar (void)
+{
+  return getc (stdin);
+    128a:	48 8b 3d 7f 3d 00 00 	mov    0x3d7f(%rip),%rdi        # 5010 <stdin@@GLIBC_2.2.5>
+    1291:	e8 6a ff ff ff       	callq  1200 <getc@plt>
+    1296:	89 c3                	mov    %eax,%ebx
+    1298:	3c ff                	cmp    $0xff,%al
+    129a:	75 cc                	jne    1268 <main+0x48>
+    }
+    *(fileName + wordSize) = '\0'; /* caractere nulo para sinalizar fim de string. */
+    129c:	42 c6 44 25 00 00    	movb   $0x0,0x0(%rbp,%r12,1)
+
+
+    if((file = fopen(fileName, "r")) == NULL)
+    12a2:	48 8d 35 05 1e 00 00 	lea    0x1e05(%rip),%rsi        # 30ae <_IO_stdin_used+0xae>
+    12a9:	48 89 ef             	mov    %rbp,%rdi
+    12ac:	e8 2f ff ff ff       	callq  11e0 <fopen@plt>
+    12b1:	49 89 c6             	mov    %rax,%r14
+    12b4:	48 85 c0             	test   %rax,%rax
+    12b7:	0f 84 28 02 00 00    	je     14e5 <main+0x2c5>
+    }
+    else
+    {
+        /* Libera espaço utilizado pela string "nome do arquivo", pois
+        não será mais necessária */
+        free(fileName);
+    12bd:	48 89 ef             	mov    %rbp,%rdi
+    12c0:	e8 7b fe ff ff       	callq  1140 <free@plt>
+                                  da string que será usada para
+                                  analisar cada palavra do texto */
+        hashTableSize = 1;
+
+        /* Alocamento inicial de memória e inicialização da tabela hash*/
+        hashTable = malloc(sizeof(words*));
+    12c5:	bf 08 00 00 00       	mov    $0x8,%edi
+        hashTableSize = 1;
+    12ca:	48 c7 44 24 30 01 00 	movq   $0x1,0x30(%rsp)
+    12d1:	00 00 
+        hashTable = malloc(sizeof(words*));
+    12d3:	e8 d8 fe ff ff       	callq  11b0 <malloc@plt>
+        *hashTable = malloc(sizeof(words));
+        *hashTable = NULL;
+
+        /* Aloca espaço para o vetor de palavras no texto e o inicializa com 0s */
+        wordParser = calloc(maxWordSize + 1, sizeof(char));
+    12d8:	49 8d 7c 24 01       	lea    0x1(%r12),%rdi
+    12dd:	be 01 00 00 00       	mov    $0x1,%esi
+        *hashTable = NULL;
+    12e2:	48 c7 00 00 00 00 00 	movq   $0x0,(%rax)
+        hashTable = malloc(sizeof(words*));
+    12e9:	48 89 44 24 28       	mov    %rax,0x28(%rsp)
+        wordParser = calloc(maxWordSize + 1, sizeof(char));
+    12ee:	e8 9d fe ff ff       	callq  1190 <calloc@plt>
+    12f3:	49 89 c7             	mov    %rax,%r15
+                                            */
+            if(wordSize > 0)/* Se houver pelo menos uma letra na palavra */
+                updateHashTable(wordParser, wordSize, &hashTable, &hashTableSize, line);
+        }
+    }
+    free(wordParser);/* Libera espaço utilizado pela string 'wordParser', pois
+    12f6:	4c 89 ff             	mov    %r15,%rdi
+
+    /* ------- FIM DA PARTE 1 ------- */
+
+    /* ------- PARTE 2 ------- */
+
+    removeHashTableNulls(&hashTable, &hashTableSize);
+    12f9:	4c 8d 6c 24 30       	lea    0x30(%rsp),%r13
+    free(wordParser);/* Libera espaço utilizado pela string 'wordParser', pois
+    12fe:	e8 3d fe ff ff       	callq  1140 <free@plt>
+    fclose(file);/* fecha arquivo analisado */
+    1303:	4c 89 f7             	mov    %r14,%rdi
+    removeHashTableNulls(&hashTable, &hashTableSize);
+    1306:	4c 8d 74 24 28       	lea    0x28(%rsp),%r14
+    fclose(file);/* fecha arquivo analisado */
+    130b:	e8 40 fe ff ff       	callq  1150 <fclose@plt>
+    removeHashTableNulls(&hashTable, &hashTableSize);
+    1310:	4c 89 ee             	mov    %r13,%rsi
+    1313:	4c 89 f7             	mov    %r14,%rdi
+    1316:	e8 75 07 00 00       	callq  1a90 <removeHashTableNulls>
+    solveCollisions(&hashTable, &hashTableSize, amntOfHashTableElements(hashTable, hashTableSize) - hashTableSize);
+    131b:	48 8b 6c 24 30       	mov    0x30(%rsp),%rbp
+    1320:	4c 8b 64 24 28       	mov    0x28(%rsp),%r12
+
+    /* 
+    enquanto todas as listas ligadas contidas na tabela hash 
+    'hashTable' não tiverem sido analisadas. 
+    */
+    for(i = amountOfElements = 0UL; i < hashTableSize; i++)
+    1325:	48 85 ed             	test   %rbp,%rbp
+    1328:	74 46                	je     1370 <main+0x150>
+    132a:	4c 89 e1             	mov    %r12,%rcx
+    132d:	49 8d 34 ec          	lea    (%r12,%rbp,8),%rsi
+    1331:	31 d2                	xor    %edx,%edx
+    1333:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+    conta todos os elementos da lista ligada presentes 
+    na posição 'i' da table hash 'hashTable', para todas 
+    as posições da tabela 
+    */
+    {
+        aux = ((*(hashTable + i)));
+    1338:	48 8b 01             	mov    (%rcx),%rax
+    133b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+        do
+        {
+            ++amountOfElements;
+            aux = aux->next;
+    1340:	48 8b 40 10          	mov    0x10(%rax),%rax
+            ++amountOfElements;
+    1344:	48 83 c2 01          	add    $0x1,%rdx
+        }while(aux != NULL);
+    1348:	48 85 c0             	test   %rax,%rax
+    134b:	75 f3                	jne    1340 <main+0x120>
+    for(i = amountOfElements = 0UL; i < hashTableSize; i++)
+    134d:	48 83 c1 08          	add    $0x8,%rcx
+    1351:	48 39 ce             	cmp    %rcx,%rsi
+    1354:	75 e2                	jne    1338 <main+0x118>
+    unsigned long i, j;
+    words* aux;
+
+
+    /* caso não haja colisões, nada é feito */
+    if(collisions == 0)
+    1356:	48 29 ea             	sub    %rbp,%rdx
+    1359:	74 15                	je     1370 <main+0x150>
+    135b:	4c 89 ee             	mov    %r13,%rsi
+    135e:	4c 89 f7             	mov    %r14,%rdi
+    1361:	e8 fa 03 00 00       	callq  1760 <solveCollisions.part.0>
+    1366:	48 8b 6c 24 30       	mov    0x30(%rsp),%rbp
+    136b:	4c 8b 64 24 28       	mov    0x28(%rsp),%r12
+    hashTableHeapsort(hashTable, hashTableSize);
+    1370:	48 89 ee             	mov    %rbp,%rsi
+    1373:	4c 89 e7             	mov    %r12,%rdi
+    1376:	e8 a5 09 00 00       	callq  1d20 <hashTableHeapsort>
+    printHashTable(hashTable, hashTableSize);
+    137b:	48 89 ee             	mov    %rbp,%rsi
+    137e:	4c 89 e7             	mov    %r12,%rdi
+    1381:	e8 ba 0a 00 00       	callq  1e40 <printHashTable>
+    destroyHashTable(hashTable, &hashTableSize);
+    1386:	4c 89 ee             	mov    %r13,%rsi
+    1389:	4c 89 e7             	mov    %r12,%rdi
+    138c:	e8 af 0b 00 00       	callq  1f40 <destroyHashTable>
+    return 0;
+    1391:	31 c0                	xor    %eax,%eax
+}
+    1393:	48 8b 54 24 38       	mov    0x38(%rsp),%rdx
+    1398:	64 48 2b 14 25 28 00 	sub    %fs:0x28,%rdx
+    139f:	00 00 
+    13a1:	0f 85 5b 01 00 00    	jne    1502 <main+0x2e2>
+    13a7:	48 83 c4 48          	add    $0x48,%rsp
+    13ab:	5b                   	pop    %rbx
+    13ac:	5d                   	pop    %rbp
+    13ad:	41 5c                	pop    %r12
+    13af:	41 5d                	pop    %r13
+    13b1:	41 5e                	pop    %r14
+    13b3:	41 5f                	pop    %r15
+    13b5:	c3                   	retq   
+    *(fileName + wordSize) = '\0'; /* caractere nulo para sinalizar fim de string. */
+    13b6:	42 c6 44 25 00 00    	movb   $0x0,0x0(%rbp,%r12,1)
+    if((file = fopen(fileName, "r")) == NULL)
+    13bc:	48 8d 35 eb 1c 00 00 	lea    0x1ceb(%rip),%rsi        # 30ae <_IO_stdin_used+0xae>
+    13c3:	48 89 ef             	mov    %rbp,%rdi
+    13c6:	e8 15 fe ff ff       	callq  11e0 <fopen@plt>
+    13cb:	49 89 c6             	mov    %rax,%r14
+    13ce:	48 85 c0             	test   %rax,%rax
+    13d1:	0f 84 0e 01 00 00    	je     14e5 <main+0x2c5>
+        free(fileName);
+    13d7:	48 89 ef             	mov    %rbp,%rdi
+        wordParser = calloc(maxWordSize + 1, sizeof(char));
+    13da:	31 db                	xor    %ebx,%ebx
+        free(fileName);
+    13dc:	e8 5f fd ff ff       	callq  1140 <free@plt>
+        hashTable = malloc(sizeof(words*));
+    13e1:	bf 08 00 00 00       	mov    $0x8,%edi
+        hashTableSize = 1;
+    13e6:	48 c7 44 24 30 01 00 	movq   $0x1,0x30(%rsp)
+    13ed:	00 00 
+        hashTable = malloc(sizeof(words*));
+    13ef:	e8 bc fd ff ff       	callq  11b0 <malloc@plt>
+        wordParser = calloc(maxWordSize + 1, sizeof(char));
+    13f4:	49 8d 7c 24 01       	lea    0x1(%r12),%rdi
+    13f9:	be 01 00 00 00       	mov    $0x1,%esi
+        *hashTable = NULL;
+    13fe:	48 c7 00 00 00 00 00 	movq   $0x0,(%rax)
+        hashTable = malloc(sizeof(words*));
+    1405:	48 89 44 24 28       	mov    %rax,0x28(%rsp)
+        wordParser = calloc(maxWordSize + 1, sizeof(char));
+    140a:	e8 81 fd ff ff       	callq  1190 <calloc@plt>
+    140f:	48 c7 44 24 10 01 00 	movq   $0x1,0x10(%rsp)
+    1416:	00 00 
+    1418:	49 89 c7             	mov    %rax,%r15
+                updateHashTable(wordParser, wordSize, &hashTable, &hashTableSize, line);
+    141b:	48 8d 44 24 30       	lea    0x30(%rsp),%rax
+    1420:	48 89 44 24 18       	mov    %rax,0x18(%rsp)
+    1425:	eb 3a                	jmp    1461 <main+0x241>
+    1427:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+    142e:	00 00 
+            *(wordParser + wordSize) = c;/* adiciona ele ao vetor 'wordParser' */
+    1430:	40 88 29             	mov    %bpl,(%rcx)
+       wordSize = (isalpha(c))?(wordSize + 1):(0), line += (c == '\n')?(1):(0)) /* incrementos */
+    1433:	49 8b 55 00          	mov    0x0(%r13),%rdx
+    1437:	48 83 c3 01          	add    $0x1,%rbx
+    143b:	f6 44 42 01 04       	testb  $0x4,0x1(%rdx,%rax,2)
+    1440:	b8 00 00 00 00       	mov    $0x0,%eax
+    1445:	48 0f 44 d8          	cmove  %rax,%rbx
+    1449:	31 c0                	xor    %eax,%eax
+    144b:	40 80 fd 0a          	cmp    $0xa,%bpl
+    144f:	0f 94 c0             	sete   %al
+    1452:	48 01 44 24 10       	add    %rax,0x10(%rsp)
+       c != EOF; /* Condição de parada */
+    1457:	40 80 fd ff          	cmp    $0xff,%bpl
+    145b:	0f 84 95 fe ff ff    	je     12f6 <main+0xd6>
+        if(wordSize >= maxWordSize)
+    1461:	4c 39 e3             	cmp    %r12,%rbx
+    1464:	72 1c                	jb     1482 <main+0x262>
+            wordParser = realloc(wordParser, sizeof(char)*((maxWordSize *= 2) + 1));
+    1466:	4d 01 e4             	add    %r12,%r12
+    1469:	4c 89 ff             	mov    %r15,%rdi
+    146c:	49 8d 74 24 01       	lea    0x1(%r12),%rsi
+    1471:	e8 4a fd ff ff       	callq  11c0 <realloc@plt>
+    1476:	49 89 c7             	mov    %rax,%r15
+            if(wordParser == NULL)
+    1479:	48 85 c0             	test   %rax,%rax
+    147c:	0f 84 85 00 00 00    	je     1507 <main+0x2e7>
+        if(isalpha((c = fgetc(file))))/* se o caracter for uma letra */
+    1482:	e8 89 fd ff ff       	callq  1210 <__ctype_b_loc@plt>
+    1487:	4c 89 f7             	mov    %r14,%rdi
+    148a:	48 8b 10             	mov    (%rax),%rdx
+    148d:	49 89 c5             	mov    %rax,%r13
+    1490:	48 89 54 24 08       	mov    %rdx,0x8(%rsp)
+    1495:	e8 e6 fc ff ff       	callq  1180 <fgetc@plt>
+    149a:	48 8b 54 24 08       	mov    0x8(%rsp),%rdx
+            *(wordParser + wordSize) = c;/* adiciona ele ao vetor 'wordParser' */
+    149f:	49 8d 0c 1f          	lea    (%r15,%rbx,1),%rcx
+        if(isalpha((c = fgetc(file))))/* se o caracter for uma letra */
+    14a3:	89 c5                	mov    %eax,%ebp
+    14a5:	48 0f be c0          	movsbq %al,%rax
+    14a9:	f6 44 42 01 04       	testb  $0x4,0x1(%rdx,%rax,2)
+    14ae:	75 80                	jne    1430 <main+0x210>
+            *(wordParser + wordSize) = '\0';/* uma palavra foi encontrada, então uma string é criada 
+    14b0:	c6 01 00             	movb   $0x0,(%rcx)
+            if(wordSize > 0)/* Se houver pelo menos uma letra na palavra */
+    14b3:	48 85 db             	test   %rbx,%rbx
+    14b6:	0f 84 77 ff ff ff    	je     1433 <main+0x213>
+                updateHashTable(wordParser, wordSize, &hashTable, &hashTableSize, line);
+    14bc:	4c 8b 44 24 10       	mov    0x10(%rsp),%r8
+    14c1:	48 8b 4c 24 18       	mov    0x18(%rsp),%rcx
+    14c6:	48 89 de             	mov    %rbx,%rsi
+    14c9:	4c 89 ff             	mov    %r15,%rdi
+    14cc:	48 8d 54 24 28       	lea    0x28(%rsp),%rdx
+    14d1:	48 89 44 24 08       	mov    %rax,0x8(%rsp)
+    14d6:	e8 85 04 00 00       	callq  1960 <updateHashTable>
+    14db:	48 8b 44 24 08       	mov    0x8(%rsp),%rax
+    14e0:	e9 4e ff ff ff       	jmpq   1433 <main+0x213>
+    14e5:	48 8d 35 c4 1b 00 00 	lea    0x1bc4(%rip),%rsi        # 30b0 <_IO_stdin_used+0xb0>
+    14ec:	bf 01 00 00 00       	mov    $0x1,%edi
+    14f1:	31 c0                	xor    %eax,%eax
+    14f3:	e8 d8 fc ff ff       	callq  11d0 <__printf_chk@plt>
+        return EXIT_FAILURE;
+    14f8:	b8 01 00 00 00       	mov    $0x1,%eax
+    14fd:	e9 91 fe ff ff       	jmpq   1393 <main+0x173>
+}
+    1502:	e8 59 fc ff ff       	callq  1160 <__stack_chk_fail@plt>
+    1507:	48 8d 35 5a 1b 00 00 	lea    0x1b5a(%rip),%rsi        # 3068 <_IO_stdin_used+0x68>
+    150e:	bf 01 00 00 00       	mov    $0x1,%edi
+    1513:	31 c0                	xor    %eax,%eax
+    1515:	e8 b6 fc ff ff       	callq  11d0 <__printf_chk@plt>
+                return EXIT_FAILURE;
+    151a:	b8 01 00 00 00       	mov    $0x1,%eax
+    151f:	e9 6f fe ff ff       	jmpq   1393 <main+0x173>
+    1524:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+    152b:	00 00 00 
+    152e:	66 90                	xchg   %ax,%ax
+
+0000000000001530 <_start>:
+    1530:	f3 0f 1e fa          	endbr64 
+    1534:	31 ed                	xor    %ebp,%ebp
+    1536:	49 89 d1             	mov    %rdx,%r9
+    1539:	5e                   	pop    %rsi
+    153a:	48 89 e2             	mov    %rsp,%rdx
+    153d:	48 83 e4 f0          	and    $0xfffffffffffffff0,%rsp
+    1541:	50                   	push   %rax
+    1542:	54                   	push   %rsp
+    1543:	4c 8d 05 66 0b 00 00 	lea    0xb66(%rip),%r8        # 20b0 <__libc_csu_fini>
+    154a:	48 8d 0d ef 0a 00 00 	lea    0xaef(%rip),%rcx        # 2040 <__libc_csu_init>
+    1551:	48 8d 3d c8 fc ff ff 	lea    -0x338(%rip),%rdi        # 1220 <main>
+    1558:	ff 15 82 3a 00 00    	callq  *0x3a82(%rip)        # 4fe0 <__libc_start_main@GLIBC_2.2.5>
+    155e:	f4                   	hlt    
+    155f:	90                   	nop
+
+0000000000001560 <deregister_tm_clones>:
+    1560:	48 8d 3d a9 3a 00 00 	lea    0x3aa9(%rip),%rdi        # 5010 <stdin@@GLIBC_2.2.5>
+    1567:	48 8d 05 a2 3a 00 00 	lea    0x3aa2(%rip),%rax        # 5010 <stdin@@GLIBC_2.2.5>
+    156e:	48 39 f8             	cmp    %rdi,%rax
+    1571:	74 15                	je     1588 <deregister_tm_clones+0x28>
+    1573:	48 8b 05 5e 3a 00 00 	mov    0x3a5e(%rip),%rax        # 4fd8 <_ITM_deregisterTMCloneTable>
+    157a:	48 85 c0             	test   %rax,%rax
+    157d:	74 09                	je     1588 <deregister_tm_clones+0x28>
+    157f:	ff e0                	jmpq   *%rax
+    1581:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+    1588:	c3                   	retq   
+    1589:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+0000000000001590 <register_tm_clones>:
+    1590:	48 8d 3d 79 3a 00 00 	lea    0x3a79(%rip),%rdi        # 5010 <stdin@@GLIBC_2.2.5>
+    1597:	48 8d 35 72 3a 00 00 	lea    0x3a72(%rip),%rsi        # 5010 <stdin@@GLIBC_2.2.5>
+    159e:	48 29 fe             	sub    %rdi,%rsi
+    15a1:	48 89 f0             	mov    %rsi,%rax
+    15a4:	48 c1 ee 3f          	shr    $0x3f,%rsi
+    15a8:	48 c1 f8 03          	sar    $0x3,%rax
+    15ac:	48 01 c6             	add    %rax,%rsi
+    15af:	48 d1 fe             	sar    %rsi
+    15b2:	74 14                	je     15c8 <register_tm_clones+0x38>
+    15b4:	48 8b 05 35 3a 00 00 	mov    0x3a35(%rip),%rax        # 4ff0 <_ITM_registerTMCloneTable>
+    15bb:	48 85 c0             	test   %rax,%rax
+    15be:	74 08                	je     15c8 <register_tm_clones+0x38>
+    15c0:	ff e0                	jmpq   *%rax
+    15c2:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+    15c8:	c3                   	retq   
+    15c9:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+00000000000015d0 <__do_global_dtors_aux>:
+    15d0:	f3 0f 1e fa          	endbr64 
+    15d4:	80 3d 3d 3a 00 00 00 	cmpb   $0x0,0x3a3d(%rip)        # 5018 <completed.0>
+    15db:	75 2b                	jne    1608 <__do_global_dtors_aux+0x38>
+    15dd:	55                   	push   %rbp
+    15de:	48 83 3d 12 3a 00 00 	cmpq   $0x0,0x3a12(%rip)        # 4ff8 <__cxa_finalize@GLIBC_2.2.5>
+    15e5:	00 
+    15e6:	48 89 e5             	mov    %rsp,%rbp
+    15e9:	74 0c                	je     15f7 <__do_global_dtors_aux+0x27>
+    15eb:	48 8b 3d 16 3a 00 00 	mov    0x3a16(%rip),%rdi        # 5008 <__dso_handle>
+    15f2:	e8 29 fb ff ff       	callq  1120 <__cxa_finalize@plt>
+    15f7:	e8 64 ff ff ff       	callq  1560 <deregister_tm_clones>
+    15fc:	c6 05 15 3a 00 00 01 	movb   $0x1,0x3a15(%rip)        # 5018 <completed.0>
+    1603:	5d                   	pop    %rbp
+    1604:	c3                   	retq   
+    1605:	0f 1f 00             	nopl   (%rax)
+    1608:	c3                   	retq   
+    1609:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+0000000000001610 <frame_dummy>:
+    1610:	f3 0f 1e fa          	endbr64 
+    1614:	e9 77 ff ff ff       	jmpq   1590 <register_tm_clones>
+    1619:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+0000000000001620 <scramble>:
+{
+    1620:	f3 0f 1e fa          	endbr64 
+    k *= 0xcc9e2d51;
+    1624:	69 c7 51 2d 9e cc    	imul   $0xcc9e2d51,%edi,%eax
+    k = (k << 15) | (k >> 17);
+    162a:	c1 c0 0f             	rol    $0xf,%eax
+    k *= 0x1b873593;
+    162d:	69 c0 93 35 87 1b    	imul   $0x1b873593,%eax,%eax
+}
+    1633:	c3                   	retq   
+    1634:	66 66 2e 0f 1f 84 00 	data16 nopw %cs:0x0(%rax,%rax,1)
+    163b:	00 00 00 00 
+    163f:	90                   	nop
+
+0000000000001640 <murmurHash>:
+{
+    1640:	f3 0f 1e fa          	endbr64 
+    for (i = len >> 2; i > 0; i--) 
+    1644:	48 89 f0             	mov    %rsi,%rax
+{
+    1647:	48 89 f1             	mov    %rsi,%rcx
+    for (i = len >> 2; i > 0; i--) 
+    164a:	48 c1 e8 02          	shr    $0x2,%rax
+    164e:	0f 84 8c 00 00 00    	je     16e0 <murmurHash+0xa0>
+    1654:	4c 8d 04 87          	lea    (%rdi,%rax,4),%r8
+    1658:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+    165f:	00 
+        memcpy(&k, key, sizeof(unsigned int));
+    1660:	8b 07                	mov    (%rdi),%eax
+        key += sizeof(unsigned int);
+    1662:	48 83 c7 04          	add    $0x4,%rdi
+    k *= 0xcc9e2d51;
+    1666:	69 c0 51 2d 9e cc    	imul   $0xcc9e2d51,%eax,%eax
+    k = (k << 15) | (k >> 17);
+    166c:	c1 c0 0f             	rol    $0xf,%eax
+    k *= 0x1b873593;
+    166f:	69 c0 93 35 87 1b    	imul   $0x1b873593,%eax,%eax
+        h ^= scramble(k);
+    1675:	31 d0                	xor    %edx,%eax
+        h = (h << 13) | (h >> 19);
+    1677:	c1 c0 0d             	rol    $0xd,%eax
+        h = h * 5 + 0xe6546b64;
+    167a:	8d 94 80 64 6b 54 e6 	lea    -0x19ab949c(%rax,%rax,4),%edx
+    for (i = len >> 2; i > 0; i--) 
+    1681:	4c 39 c7             	cmp    %r8,%rdi
+    1684:	75 da                	jne    1660 <murmurHash+0x20>
+    for (i = len & 3; i > 0; i--) 
+    1686:	48 89 ce             	mov    %rcx,%rsi
+    1689:	31 c0                	xor    %eax,%eax
+    168b:	83 e6 03             	and    $0x3,%esi
+    168e:	74 22                	je     16b2 <murmurHash+0x72>
+        k |= key[i - 1];
+    1690:	48 83 ee 01          	sub    $0x1,%rsi
+        k <<= 8;
+    1694:	c1 e0 08             	shl    $0x8,%eax
+        k |= key[i - 1];
+    1697:	41 0f be 3c 30       	movsbl (%r8,%rsi,1),%edi
+    169c:	09 f8                	or     %edi,%eax
+    for (i = len & 3; i > 0; i--) 
+    169e:	48 85 f6             	test   %rsi,%rsi
+    16a1:	75 ed                	jne    1690 <murmurHash+0x50>
+    k *= 0xcc9e2d51;
+    16a3:	69 c0 51 2d 9e cc    	imul   $0xcc9e2d51,%eax,%eax
+    k = (k << 15) | (k >> 17);
+    16a9:	c1 c0 0f             	rol    $0xf,%eax
+    k *= 0x1b873593;
+    16ac:	69 c0 93 35 87 1b    	imul   $0x1b873593,%eax,%eax
+	h ^= len;
+    16b2:	31 ca                	xor    %ecx,%edx
+    16b4:	31 c2                	xor    %eax,%edx
+	h ^= h >> 16;
+    16b6:	89 d0                	mov    %edx,%eax
+    16b8:	c1 e8 10             	shr    $0x10,%eax
+    16bb:	31 d0                	xor    %edx,%eax
+	h *= 0x85ebca6b;
+    16bd:	69 c0 6b ca eb 85    	imul   $0x85ebca6b,%eax,%eax
+	h ^= h >> 13;
+    16c3:	89 c2                	mov    %eax,%edx
+    16c5:	c1 ea 0d             	shr    $0xd,%edx
+    16c8:	31 c2                	xor    %eax,%edx
+	h *= 0xc2b2ae35;
+    16ca:	69 d2 35 ae b2 c2    	imul   $0xc2b2ae35,%edx,%edx
+	h ^= h >> 16;
+    16d0:	89 d0                	mov    %edx,%eax
+    16d2:	c1 e8 10             	shr    $0x10,%eax
+    16d5:	31 d0                	xor    %edx,%eax
+}
+    16d7:	c3                   	retq   
+    16d8:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+    16df:	00 
+    for (i = len >> 2; i > 0; i--) 
+    16e0:	49 89 f8             	mov    %rdi,%r8
+    16e3:	eb a1                	jmp    1686 <murmurHash+0x46>
+    16e5:	66 66 2e 0f 1f 84 00 	data16 nopw %cs:0x0(%rax,%rax,1)
+    16ec:	00 00 00 00 
+
+00000000000016f0 <resizeHashTable>:
+{
+    16f0:	f3 0f 1e fa          	endbr64 
+    16f4:	41 54                	push   %r12
+    16f6:	49 89 fc             	mov    %rdi,%r12
+    16f9:	55                   	push   %rbp
+    16fa:	48 89 f5             	mov    %rsi,%rbp
+    *hashTable = realloc(*hashTable, (newSize)*sizeof(words*));
+    16fd:	48 8d 34 d5 00 00 00 	lea    0x0(,%rdx,8),%rsi
+    1704:	00 
+{
+    1705:	53                   	push   %rbx
+    *hashTable = realloc(*hashTable, (newSize)*sizeof(words*));
+    1706:	48 8b 3f             	mov    (%rdi),%rdi
+{
+    1709:	48 89 d3             	mov    %rdx,%rbx
+    *hashTable = realloc(*hashTable, (newSize)*sizeof(words*));
+    170c:	e8 af fa ff ff       	callq  11c0 <realloc@plt>
+    1711:	49 89 04 24          	mov    %rax,(%r12)
+    if(*hashTable == NULL)
+    1715:	48 85 c0             	test   %rax,%rax
+    1718:	74 27                	je     1741 <resizeHashTable+0x51>
+    if(*oldSize < newSize)
+    171a:	48 8b 4d 00          	mov    0x0(%rbp),%rcx
+    171e:	48 39 d9             	cmp    %rbx,%rcx
+    1721:	73 15                	jae    1738 <resizeHashTable+0x48>
+            *(*hashTable + i) = NULL;
+    1723:	48 89 da             	mov    %rbx,%rdx
+    1726:	48 8d 3c c8          	lea    (%rax,%rcx,8),%rdi
+    172a:	31 f6                	xor    %esi,%esi
+    172c:	48 29 ca             	sub    %rcx,%rdx
+    172f:	48 c1 e2 03          	shl    $0x3,%rdx
+    1733:	e8 38 fa ff ff       	callq  1170 <memset@plt>
+    *oldSize = newSize;/* atualiza tamanho da tabela hash */
+    1738:	48 89 5d 00          	mov    %rbx,0x0(%rbp)
+}
+    173c:	5b                   	pop    %rbx
+    173d:	5d                   	pop    %rbp
+    173e:	41 5c                	pop    %r12
+    1740:	c3                   	retq   
+    1741:	bf 01 00 00 00       	mov    $0x1,%edi
+    1746:	48 8d 35 bb 18 00 00 	lea    0x18bb(%rip),%rsi        # 3008 <_IO_stdin_used+0x8>
+    174d:	e8 7e fa ff ff       	callq  11d0 <__printf_chk@plt>
+        exit(EXIT_FAILURE);
+    1752:	bf 01 00 00 00       	mov    $0x1,%edi
+    1757:	e8 94 fa ff ff       	callq  11f0 <exit@plt>
+    175c:	0f 1f 40 00          	nopl   0x0(%rax)
+
+0000000000001760 <solveCollisions.part.0>:
+void solveCollisions(words*** hashTable, unsigned long* oldSize, unsigned long collisions)
+    1760:	41 54                	push   %r12
+    1762:	49 89 fc             	mov    %rdi,%r12
+    1765:	55                   	push   %rbp
+    1766:	48 89 f5             	mov    %rsi,%rbp
+    1769:	53                   	push   %rbx
+    176a:	48 89 d3             	mov    %rdx,%rbx
+        return;
+
+    /* aumenta tamanho da tabela para suportar as colisões */
+    resizeHashTable(hashTable, oldSize, *oldSize + collisions);
+    176d:	48 03 16             	add    (%rsi),%rdx
+    1770:	e8 7b ff ff ff       	callq  16f0 <resizeHashTable>
+
+    /* move as colisões para o fim da tabela */
+    for(i = 0UL, j = *oldSize - collisions; i < *oldSize - collisions; ++i)
+    1775:	48 8b 4d 00          	mov    0x0(%rbp),%rcx
+    1779:	48 89 ca             	mov    %rcx,%rdx
+    177c:	48 29 da             	sub    %rbx,%rdx
+    177f:	74 37                	je     17b8 <solveCollisions.part.0+0x58>
+        if(((*(*hashTable + i)))->next != NULL)
+    1781:	49 8b 34 24          	mov    (%r12),%rsi
+    1785:	49 89 f0             	mov    %rsi,%r8
+    1788:	4c 8d 0c d6          	lea    (%rsi,%rdx,8),%r9
+    178c:	0f 1f 40 00          	nopl   0x0(%rax)
+    1790:	49 8b 00             	mov    (%r8),%rax
+    1793:	eb 11                	jmp    17a6 <solveCollisions.part.0+0x46>
+    1795:	0f 1f 00             	nopl   (%rax)
+        {
+            aux = ((*(*hashTable + i)));
+            do
+            {
+                aux = aux->next;
+                *(*hashTable + j++) = aux;
+    1798:	48 83 c2 01          	add    $0x1,%rdx
+    179c:	48 89 44 d6 f8       	mov    %rax,-0x8(%rsi,%rdx,8)
+            
+            } while (j < *oldSize && aux->next != NULL);
+    17a1:	48 39 d1             	cmp    %rdx,%rcx
+    17a4:	76 09                	jbe    17af <solveCollisions.part.0+0x4f>
+        if(((*(*hashTable + i)))->next != NULL)
+    17a6:	48 8b 40 10          	mov    0x10(%rax),%rax
+    17aa:	48 85 c0             	test   %rax,%rax
+    17ad:	75 e9                	jne    1798 <solveCollisions.part.0+0x38>
+    for(i = 0UL, j = *oldSize - collisions; i < *oldSize - collisions; ++i)
+    17af:	49 83 c0 08          	add    $0x8,%r8
+    17b3:	4d 39 c8             	cmp    %r9,%r8
+    17b6:	75 d8                	jne    1790 <solveCollisions.part.0+0x30>
+    /* 
+    remove ponteiros que apontam para as colisões, transformando 
+    a tabela hash 'hashTable' em um vetor linear de ponteiros para
+    listas ligadas de somente uma palavra. 
+    */
+    for(i = 0; i < *oldSize; ++i)
+    17b8:	48 85 c9             	test   %rcx,%rcx
+    17bb:	74 1f                	je     17dc <solveCollisions.part.0+0x7c>
+    17bd:	49 8b 04 24          	mov    (%r12),%rax
+    17c1:	48 8d 0c c8          	lea    (%rax,%rcx,8),%rcx
+    17c5:	0f 1f 00             	nopl   (%rax)
+        (*(*hashTable + i))->next = NULL;
+    17c8:	48 8b 10             	mov    (%rax),%rdx
+    for(i = 0; i < *oldSize; ++i)
+    17cb:	48 83 c0 08          	add    $0x8,%rax
+        (*(*hashTable + i))->next = NULL;
+    17cf:	48 c7 42 10 00 00 00 	movq   $0x0,0x10(%rdx)
+    17d6:	00 
+    for(i = 0; i < *oldSize; ++i)
+    17d7:	48 39 c8             	cmp    %rcx,%rax
+    17da:	75 ec                	jne    17c8 <solveCollisions.part.0+0x68>
+}
+    17dc:	5b                   	pop    %rbx
+    17dd:	5d                   	pop    %rbp
+    17de:	41 5c                	pop    %r12
+    17e0:	c3                   	retq   
+    17e1:	66 66 2e 0f 1f 84 00 	data16 nopw %cs:0x0(%rax,%rax,1)
+    17e8:	00 00 00 00 
+    17ec:	0f 1f 40 00          	nopl   0x0(%rax)
+
+00000000000017f0 <searchForWord>:
+{
+    17f0:	f3 0f 1e fa          	endbr64 
+    for(target = beggining; target != NULL && strcmp(word, target->word) != 0; target = target->next)
+    17f4:	48 85 ff             	test   %rdi,%rdi
+    17f7:	74 48                	je     1841 <searchForWord+0x51>
+{
+    17f9:	55                   	push   %rbp
+    17fa:	48 89 f5             	mov    %rsi,%rbp
+    17fd:	53                   	push   %rbx
+    17fe:	48 89 fb             	mov    %rdi,%rbx
+    1801:	48 83 ec 08          	sub    $0x8,%rsp
+    1805:	eb 12                	jmp    1819 <searchForWord+0x29>
+    1807:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+    180e:	00 00 
+    for(target = beggining; target != NULL && strcmp(word, target->word) != 0; target = target->next)
+    1810:	48 8b 5b 10          	mov    0x10(%rbx),%rbx
+    1814:	48 85 db             	test   %rbx,%rbx
+    1817:	74 1f                	je     1838 <searchForWord+0x48>
+    1819:	48 8b 33             	mov    (%rbx),%rsi
+    181c:	48 89 ef             	mov    %rbp,%rdi
+    181f:	e8 7c f9 ff ff       	callq  11a0 <strcmp@plt>
+    1824:	85 c0                	test   %eax,%eax
+    1826:	75 e8                	jne    1810 <searchForWord+0x20>
+}
+    1828:	48 83 c4 08          	add    $0x8,%rsp
+    182c:	48 89 d8             	mov    %rbx,%rax
+    182f:	5b                   	pop    %rbx
+    1830:	5d                   	pop    %rbp
+    1831:	c3                   	retq   
+    1832:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+    1838:	48 83 c4 08          	add    $0x8,%rsp
+    183c:	31 c0                	xor    %eax,%eax
+    183e:	5b                   	pop    %rbx
+    183f:	5d                   	pop    %rbp
+    1840:	c3                   	retq   
+    for(target = beggining; target != NULL && strcmp(word, target->word) != 0; target = target->next)
+    1841:	31 c0                	xor    %eax,%eax
+}
+    1843:	c3                   	retq   
+    1844:	66 66 2e 0f 1f 84 00 	data16 nopw %cs:0x0(%rax,%rax,1)
+    184b:	00 00 00 00 
+    184f:	90                   	nop
+
+0000000000001850 <searchForLine>:
+{
+    1850:	f3 0f 1e fa          	endbr64 
+    1854:	eb 13                	jmp    1869 <searchForLine+0x19>
+    1856:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+    185d:	00 00 00 
+    for(target = beggining; target != NULL && target->line != line; target = target->next)
+    1860:	48 39 37             	cmp    %rsi,(%rdi)
+    1863:	74 13                	je     1878 <searchForLine+0x28>
+    1865:	48 8b 7f 10          	mov    0x10(%rdi),%rdi
+    1869:	48 85 ff             	test   %rdi,%rdi
+    186c:	75 f2                	jne    1860 <searchForLine+0x10>
+    186e:	31 c0                	xor    %eax,%eax
+}
+    1870:	c3                   	retq   
+    1871:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+    1878:	48 89 f8             	mov    %rdi,%rax
+    187b:	c3                   	retq   
+    187c:	0f 1f 40 00          	nopl   0x0(%rax)
+
+0000000000001880 <addOcurrence>:
+{
+    1880:	f3 0f 1e fa          	endbr64 
+    1884:	55                   	push   %rbp
+    1885:	48 89 f5             	mov    %rsi,%rbp
+    1888:	53                   	push   %rbx
+    1889:	48 89 fb             	mov    %rdi,%rbx
+    ocurrences* newOcurrence = malloc(sizeof(ocurrences));
+    188c:	bf 18 00 00 00       	mov    $0x18,%edi
+{
+    1891:	48 83 ec 08          	sub    $0x8,%rsp
+    ocurrences* newOcurrence = malloc(sizeof(ocurrences));
+    1895:	e8 16 f9 ff ff       	callq  11b0 <malloc@plt>
+    newOcurrence->next = word->ocurr;
+    189a:	48 8b 53 08          	mov    0x8(%rbx),%rdx
+    newOcurrence->line = line;
+    189e:	48 89 28             	mov    %rbp,(%rax)
+    newOcurrence->numOfApp = 1;
+    18a1:	48 c7 40 08 01 00 00 	movq   $0x1,0x8(%rax)
+    18a8:	00 
+    newOcurrence->next = word->ocurr;
+    18a9:	48 89 50 10          	mov    %rdx,0x10(%rax)
+    word->ocurr = newOcurrence;
+    18ad:	48 89 43 08          	mov    %rax,0x8(%rbx)
+}
+    18b1:	48 83 c4 08          	add    $0x8,%rsp
+    18b5:	5b                   	pop    %rbx
+    18b6:	5d                   	pop    %rbp
+    18b7:	c3                   	retq   
+    18b8:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+    18bf:	00 
+
+00000000000018c0 <addToHashTable>:
+{
+    18c0:	f3 0f 1e fa          	endbr64 
+    18c4:	41 57                	push   %r15
+    18c6:	4d 89 c7             	mov    %r8,%r15
+    18c9:	41 56                	push   %r14
+    18cb:	49 89 f6             	mov    %rsi,%r14
+    18ce:	41 55                	push   %r13
+    18d0:	49 89 fd             	mov    %rdi,%r13
+    words* newWord = malloc(sizeof(words));
+    18d3:	bf 18 00 00 00       	mov    $0x18,%edi
+{
+    18d8:	41 54                	push   %r12
+    18da:	49 89 d4             	mov    %rdx,%r12
+    18dd:	55                   	push   %rbp
+    18de:	48 89 cd             	mov    %rcx,%rbp
+    18e1:	53                   	push   %rbx
+    18e2:	48 83 ec 08          	sub    $0x8,%rsp
+    words* newWord = malloc(sizeof(words));
+    18e6:	e8 c5 f8 ff ff       	callq  11b0 <malloc@plt>
+    ocurrences* newOcurrence = malloc(sizeof(ocurrences));
+    18eb:	bf 18 00 00 00       	mov    $0x18,%edi
+    words* newWord = malloc(sizeof(words));
+    18f0:	48 89 c3             	mov    %rax,%rbx
+    ocurrences* newOcurrence = malloc(sizeof(ocurrences));
+    18f3:	e8 b8 f8 ff ff       	callq  11b0 <malloc@plt>
+    newWord->word = malloc((wordSize + 1)*sizeof(char));
+    18f8:	48 8d 7d 01          	lea    0x1(%rbp),%rdi
+    newOcurrence->line = line;
+    18fc:	4c 89 38             	mov    %r15,(%rax)
+    newOcurrence->numOfApp = 1;
+    18ff:	48 c7 40 08 01 00 00 	movq   $0x1,0x8(%rax)
+    1906:	00 
+    newOcurrence->next = word->ocurr;
+    1907:	48 c7 40 10 00 00 00 	movq   $0x0,0x10(%rax)
+    190e:	00 
+    word->ocurr = newOcurrence;
+    190f:	48 89 43 08          	mov    %rax,0x8(%rbx)
+    newWord->word = malloc((wordSize + 1)*sizeof(char));
+    1913:	e8 98 f8 ff ff       	callq  11b0 <malloc@plt>
+    1918:	48 89 03             	mov    %rax,(%rbx)
+    for(i = 0UL; i < wordSize; ++i)
+    191b:	48 85 ed             	test   %rbp,%rbp
+    191e:	74 1c                	je     193c <addToHashTable+0x7c>
+    1920:	31 d2                	xor    %edx,%edx
+    1922:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+        *(newWord->word + i) = *(word + i);
+    1928:	41 0f b6 0c 14       	movzbl (%r12,%rdx,1),%ecx
+    192d:	88 0c 10             	mov    %cl,(%rax,%rdx,1)
+    for(i = 0UL; i < wordSize; ++i)
+    1930:	48 83 c2 01          	add    $0x1,%rdx
+    *(newWord->word + wordSize) = '\0';
+    1934:	48 8b 03             	mov    (%rbx),%rax
+    for(i = 0UL; i < wordSize; ++i)
+    1937:	48 39 d5             	cmp    %rdx,%rbp
+    193a:	75 ec                	jne    1928 <addToHashTable+0x68>
+    *(newWord->word + wordSize) = '\0';
+    193c:	c6 04 28 00          	movb   $0x0,(%rax,%rbp,1)
+    newWord->next = *(hashTable + position);
+    1940:	4b 8d 44 f5 00       	lea    0x0(%r13,%r14,8),%rax
+    1945:	48 8b 10             	mov    (%rax),%rdx
+    *(hashTable + position) = newWord;
+    1948:	48 89 18             	mov    %rbx,(%rax)
+    newWord->next = *(hashTable + position);
+    194b:	48 89 53 10          	mov    %rdx,0x10(%rbx)
+}
+    194f:	48 83 c4 08          	add    $0x8,%rsp
+    1953:	5b                   	pop    %rbx
+    1954:	5d                   	pop    %rbp
+    1955:	41 5c                	pop    %r12
+    1957:	41 5d                	pop    %r13
+    1959:	41 5e                	pop    %r14
+    195b:	41 5f                	pop    %r15
+    195d:	c3                   	retq   
+    195e:	66 90                	xchg   %ax,%ax
+
+0000000000001960 <updateHashTable>:
+{
+    1960:	f3 0f 1e fa          	endbr64 
+    1964:	41 57                	push   %r15
+    1966:	49 89 c9             	mov    %rcx,%r9
+    1969:	41 56                	push   %r14
+    196b:	49 89 fe             	mov    %rdi,%r14
+    196e:	41 55                	push   %r13
+    1970:	41 54                	push   %r12
+    1972:	49 89 f4             	mov    %rsi,%r12
+    1975:	55                   	push   %rbp
+    1976:	4c 89 c5             	mov    %r8,%rbp
+    1979:	53                   	push   %rbx
+    197a:	48 89 d3             	mov    %rdx,%rbx
+    unsigned int hashFunction = murmurHash(word, wordSize, SEED)%HASH_TABLE_MAX_SIZE;/* função Hash da palavra 'word' */
+    197d:	ba 34 1d 9f bc       	mov    $0xbc9f1d34,%edx
+{
+    1982:	48 83 ec 08          	sub    $0x8,%rsp
+    unsigned int hashFunction = murmurHash(word, wordSize, SEED)%HASH_TABLE_MAX_SIZE;/* função Hash da palavra 'word' */
+    1986:	e8 b5 fc ff ff       	callq  1640 <murmurHash>
+    198b:	89 c2                	mov    %eax,%edx
+    198d:	c1 ea 05             	shr    $0x5,%edx
+    1990:	48 69 d2 c5 5a 7c 0a 	imul   $0xa7c5ac5,%rdx,%rdx
+    1997:	48 c1 ea 27          	shr    $0x27,%rdx
+    199b:	69 ca a0 86 01 00    	imul   $0x186a0,%edx,%ecx
+    19a1:	29 c8                	sub    %ecx,%eax
+    19a3:	41 89 c5             	mov    %eax,%r13d
+    if(hashFunction >= *hashTableSize)/* se o resultado da função hash for maior ou igual ao tamanho da tabela hash */
+    19a6:	4d 3b 29             	cmp    (%r9),%r13
+    19a9:	73 55                	jae    1a00 <updateHashTable+0xa0>
+        if(*(*hashTable + hashFunction) != NULL && (foundWord = searchForWord(*(*hashTable + hashFunction), word)) != NULL)
+    19ab:	4c 8b 3b             	mov    (%rbx),%r15
+    19ae:	4b 8b 1c ef          	mov    (%r15,%r13,8),%rbx
+    19b2:	48 85 db             	test   %rbx,%rbx
+    19b5:	74 21                	je     19d8 <updateHashTable+0x78>
+    19b7:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+    19be:	00 00 
+    for(target = beggining; target != NULL && strcmp(word, target->word) != 0; target = target->next)
+    19c0:	48 8b 33             	mov    (%rbx),%rsi
+    19c3:	4c 89 f7             	mov    %r14,%rdi
+    19c6:	e8 d5 f7 ff ff       	callq  11a0 <strcmp@plt>
+    19cb:	85 c0                	test   %eax,%eax
+    19cd:	74 59                	je     1a28 <updateHashTable+0xc8>
+    19cf:	48 8b 5b 10          	mov    0x10(%rbx),%rbx
+    19d3:	48 85 db             	test   %rbx,%rbx
+    19d6:	75 e8                	jne    19c0 <updateHashTable+0x60>
+            addToHashTable(*hashTable, hashFunction, word, wordSize, line);/* adiciona ocorrência na linha 'line' da nova palavra 'word', 
+    19d8:	49 89 e8             	mov    %rbp,%r8
+    19db:	4c 89 e1             	mov    %r12,%rcx
+    19de:	4c 89 f2             	mov    %r14,%rdx
+    19e1:	4c 89 ee             	mov    %r13,%rsi
+    19e4:	4c 89 ff             	mov    %r15,%rdi
+}
+    19e7:	48 83 c4 08          	add    $0x8,%rsp
+    19eb:	5b                   	pop    %rbx
+    19ec:	5d                   	pop    %rbp
+    19ed:	41 5c                	pop    %r12
+    19ef:	41 5d                	pop    %r13
+    19f1:	41 5e                	pop    %r14
+    19f3:	41 5f                	pop    %r15
+            addToHashTable(*hashTable, hashFunction, word, wordSize, line);/* adiciona ocorrência na linha 'line' da nova palavra 'word', 
+    19f5:	e9 c6 fe ff ff       	jmpq   18c0 <addToHashTable>
+    19fa:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+    1a00:	4c 89 ea             	mov    %r13,%rdx
+        resizeHashTable(hashTable, hashTableSize, hashFunction + 1);/* aumenta o tamanho da tabela hash */
+    1a03:	4c 89 ce             	mov    %r9,%rsi
+    1a06:	48 89 df             	mov    %rbx,%rdi
+    1a09:	83 c2 01             	add    $0x1,%edx
+    1a0c:	e8 df fc ff ff       	callq  16f0 <resizeHashTable>
+        addToHashTable(*hashTable, hashFunction, word, wordSize, line);/* adiciona a palavra 'word' à posição 
+    1a11:	48 8b 3b             	mov    (%rbx),%rdi
+    1a14:	49 89 e8             	mov    %rbp,%r8
+    1a17:	4c 89 e1             	mov    %r12,%rcx
+    1a1a:	4c 89 f2             	mov    %r14,%rdx
+    1a1d:	4c 89 ee             	mov    %r13,%rsi
+    1a20:	eb c5                	jmp    19e7 <updateHashTable+0x87>
+    1a22:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+            if((foundOcurrence = searchForLine(foundWord->ocurr, line)) != NULL)
+    1a28:	4c 8b 63 08          	mov    0x8(%rbx),%r12
+    for(target = beggining; target != NULL && target->line != line; target = target->next)
+    1a2c:	4c 89 e0             	mov    %r12,%rax
+    1a2f:	4d 85 e4             	test   %r12,%r12
+    1a32:	75 15                	jne    1a49 <updateHashTable+0xe9>
+    1a34:	eb 32                	jmp    1a68 <updateHashTable+0x108>
+    1a36:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+    1a3d:	00 00 00 
+    1a40:	48 8b 40 10          	mov    0x10(%rax),%rax
+    1a44:	48 85 c0             	test   %rax,%rax
+    1a47:	74 1f                	je     1a68 <updateHashTable+0x108>
+    1a49:	48 39 28             	cmp    %rbp,(%rax)
+    1a4c:	75 f2                	jne    1a40 <updateHashTable+0xe0>
+                ++(foundOcurrence->numOfApp);/* adiciona uma ocorrência á linha */
+    1a4e:	48 83 40 08 01       	addq   $0x1,0x8(%rax)
+}
+    1a53:	48 83 c4 08          	add    $0x8,%rsp
+    1a57:	5b                   	pop    %rbx
+    1a58:	5d                   	pop    %rbp
+    1a59:	41 5c                	pop    %r12
+    1a5b:	41 5d                	pop    %r13
+    1a5d:	41 5e                	pop    %r14
+    1a5f:	41 5f                	pop    %r15
+    1a61:	c3                   	retq   
+    1a62:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+    ocurrences* newOcurrence = malloc(sizeof(ocurrences));
+    1a68:	bf 18 00 00 00       	mov    $0x18,%edi
+    1a6d:	e8 3e f7 ff ff       	callq  11b0 <malloc@plt>
+    newOcurrence->line = line;
+    1a72:	48 89 28             	mov    %rbp,(%rax)
+    newOcurrence->numOfApp = 1;
+    1a75:	48 c7 40 08 01 00 00 	movq   $0x1,0x8(%rax)
+    1a7c:	00 
+    newOcurrence->next = word->ocurr;
+    1a7d:	4c 89 60 10          	mov    %r12,0x10(%rax)
+    word->ocurr = newOcurrence;
+    1a81:	48 89 43 08          	mov    %rax,0x8(%rbx)
+}
+    1a85:	eb cc                	jmp    1a53 <updateHashTable+0xf3>
+    1a87:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+    1a8e:	00 00 
+
+0000000000001a90 <removeHashTableNulls>:
+{
+    1a90:	f3 0f 1e fa          	endbr64 
+    while(nonNullPointerPosition < *hashTableSize && nullPointerPosition < *hashTableSize)
+    1a94:	48 8b 0e             	mov    (%rsi),%rcx
+{
+    1a97:	49 89 f9             	mov    %rdi,%r9
+            nullPointerPosition = 0UL; 
+    1a9a:	31 d2                	xor    %edx,%edx
+    1a9c:	45 31 c0             	xor    %r8d,%r8d
+    while(nonNullPointerPosition < *hashTableSize && nullPointerPosition < *hashTableSize)
+    1a9f:	48 85 c9             	test   %rcx,%rcx
+    1aa2:	74 6b                	je     1b0f <removeHashTableNulls+0x7f>
+    1aa4:	0f 1f 40 00          	nopl   0x0(%rax)
+        while(nullPointerPosition < *hashTableSize && *(*hashTable + nullPointerPosition) != NULL)
+    1aa8:	48 39 d1             	cmp    %rdx,%rcx
+    1aab:	0f 86 b0 00 00 00    	jbe    1b61 <removeHashTableNulls+0xd1>
+    1ab1:	49 8b 39             	mov    (%r9),%rdi
+    1ab4:	eb 13                	jmp    1ac9 <removeHashTableNulls+0x39>
+    1ab6:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+    1abd:	00 00 00 
+    1ac0:	48 39 d1             	cmp    %rdx,%rcx
+    1ac3:	0f 84 87 00 00 00    	je     1b50 <removeHashTableNulls+0xc0>
+    1ac9:	48 8b 04 d7          	mov    (%rdi,%rdx,8),%rax
+    1acd:	49 89 d0             	mov    %rdx,%r8
+            ++nullPointerPosition;
+    1ad0:	48 8d 52 01          	lea    0x1(%rdx),%rdx
+        while(nullPointerPosition < *hashTableSize && *(*hashTable + nullPointerPosition) != NULL)
+    1ad4:	48 85 c0             	test   %rax,%rax
+    1ad7:	75 e7                	jne    1ac0 <removeHashTableNulls+0x30>
+        nonNullPointerPosition = nullPointerPosition + 1;
+    1ad9:	49 8d 50 01          	lea    0x1(%r8),%rdx
+        while(nonNullPointerPosition < *hashTableSize && *(*hashTable + nonNullPointerPosition) == NULL)
+    1add:	48 39 ca             	cmp    %rcx,%rdx
+    1ae0:	73 7a                	jae    1b5c <removeHashTableNulls+0xcc>
+    1ae2:	49 8b 39             	mov    (%r9),%rdi
+    1ae5:	48 89 d0             	mov    %rdx,%rax
+    1ae8:	eb 0f                	jmp    1af9 <removeHashTableNulls+0x69>
+    1aea:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+            ++nonNullPointerPosition;
+    1af0:	48 83 c0 01          	add    $0x1,%rax
+        while(nonNullPointerPosition < *hashTableSize && *(*hashTable + nonNullPointerPosition) == NULL)
+    1af4:	48 39 c8             	cmp    %rcx,%rax
+    1af7:	73 07                	jae    1b00 <removeHashTableNulls+0x70>
+    1af9:	48 83 3c c7 00       	cmpq   $0x0,(%rdi,%rax,8)
+    1afe:	74 f0                	je     1af0 <removeHashTableNulls+0x60>
+        if(nonNullPointerPosition < *hashTableSize && nullPointerPosition < *hashTableSize)
+    1b00:	4c 39 c0             	cmp    %r8,%rax
+    1b03:	4c 89 c7             	mov    %r8,%rdi
+    1b06:	48 0f 43 f8          	cmovae %rax,%rdi
+    1b0a:	48 39 f9             	cmp    %rdi,%rcx
+    1b0d:	77 11                	ja     1b20 <removeHashTableNulls+0x90>
+    resizeHashTable(hashTable, hashTableSize, nullPointerPosition);
+    1b0f:	4c 89 c2             	mov    %r8,%rdx
+    1b12:	4c 89 cf             	mov    %r9,%rdi
+    1b15:	e9 d6 fb ff ff       	jmpq   16f0 <resizeHashTable>
+    1b1a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+            *(*hashTable + nullPointerPosition) = *(*hashTable + nonNullPointerPosition);
+    1b20:	4d 8b 11             	mov    (%r9),%r10
+    while(nonNullPointerPosition < *hashTableSize && nullPointerPosition < *hashTableSize)
+    1b23:	48 39 c2             	cmp    %rax,%rdx
+            *(*hashTable + nullPointerPosition) = *(*hashTable + nonNullPointerPosition);
+    1b26:	49 8d 3c c2          	lea    (%r10,%rax,8),%rdi
+    while(nonNullPointerPosition < *hashTableSize && nullPointerPosition < *hashTableSize)
+    1b2a:	48 0f 43 c2          	cmovae %rdx,%rax
+            *(*hashTable + nullPointerPosition) = *(*hashTable + nonNullPointerPosition);
+    1b2e:	4c 8b 1f             	mov    (%rdi),%r11
+    1b31:	4f 89 1c c2          	mov    %r11,(%r10,%r8,8)
+            *(*hashTable + nonNullPointerPosition) = NULL;
+    1b35:	48 c7 07 00 00 00 00 	movq   $0x0,(%rdi)
+    while(nonNullPointerPosition < *hashTableSize && nullPointerPosition < *hashTableSize)
+    1b3c:	48 39 c1             	cmp    %rax,%rcx
+    1b3f:	0f 87 63 ff ff ff    	ja     1aa8 <removeHashTableNulls+0x18>
+        nonNullPointerPosition = nullPointerPosition + 1;
+    1b45:	49 89 d0             	mov    %rdx,%r8
+    1b48:	eb c5                	jmp    1b0f <removeHashTableNulls+0x7f>
+    1b4a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+    1b50:	49 89 c8             	mov    %rcx,%r8
+    1b53:	49 8d 50 01          	lea    0x1(%r8),%rdx
+        while(nonNullPointerPosition < *hashTableSize && *(*hashTable + nonNullPointerPosition) == NULL)
+    1b57:	48 39 ca             	cmp    %rcx,%rdx
+    1b5a:	72 86                	jb     1ae2 <removeHashTableNulls+0x52>
+    1b5c:	48 89 d0             	mov    %rdx,%rax
+    1b5f:	eb 9f                	jmp    1b00 <removeHashTableNulls+0x70>
+        while(nullPointerPosition < *hashTableSize && *(*hashTable + nullPointerPosition) != NULL)
+    1b61:	49 89 d0             	mov    %rdx,%r8
+    1b64:	e9 70 ff ff ff       	jmpq   1ad9 <removeHashTableNulls+0x49>
+    1b69:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+0000000000001b70 <amntOfHashTableElements>:
+{
+    1b70:	f3 0f 1e fa          	endbr64 
+    for(i = amountOfElements = 0UL; i < hashTableSize; i++)
+    1b74:	48 85 f6             	test   %rsi,%rsi
+    1b77:	74 29                	je     1ba2 <amntOfHashTableElements+0x32>
+    1b79:	48 8d 14 f7          	lea    (%rdi,%rsi,8),%rdx
+    1b7d:	45 31 c0             	xor    %r8d,%r8d
+        aux = ((*(hashTable + i)));
+    1b80:	48 8b 07             	mov    (%rdi),%rax
+    1b83:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+            aux = aux->next;
+    1b88:	48 8b 40 10          	mov    0x10(%rax),%rax
+            ++amountOfElements;
+    1b8c:	49 83 c0 01          	add    $0x1,%r8
+        }while(aux != NULL);
+    1b90:	48 85 c0             	test   %rax,%rax
+    1b93:	75 f3                	jne    1b88 <amntOfHashTableElements+0x18>
+    for(i = amountOfElements = 0UL; i < hashTableSize; i++)
+    1b95:	48 83 c7 08          	add    $0x8,%rdi
+    1b99:	48 39 d7             	cmp    %rdx,%rdi
+    1b9c:	75 e2                	jne    1b80 <amntOfHashTableElements+0x10>
+}
+    1b9e:	4c 89 c0             	mov    %r8,%rax
+    1ba1:	c3                   	retq   
+    for(i = amountOfElements = 0UL; i < hashTableSize; i++)
+    1ba2:	45 31 c0             	xor    %r8d,%r8d
+}
+    1ba5:	4c 89 c0             	mov    %r8,%rax
+    1ba8:	c3                   	retq   
+    1ba9:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+0000000000001bb0 <solveCollisions>:
+{
+    1bb0:	f3 0f 1e fa          	endbr64 
+    if(collisions == 0)
+    1bb4:	48 85 d2             	test   %rdx,%rdx
+    1bb7:	75 07                	jne    1bc0 <solveCollisions+0x10>
+}
+    1bb9:	c3                   	retq   
+    1bba:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+    1bc0:	e9 9b fb ff ff       	jmpq   1760 <solveCollisions.part.0>
+    1bc5:	66 66 2e 0f 1f 84 00 	data16 nopw %cs:0x0(%rax,%rax,1)
+    1bcc:	00 00 00 00 
+
+0000000000001bd0 <caseInsensitiveStrcmp>:
+int caseInsensitiveStrcmp(const char *p1, const char *p2)
+/* 
+diferente da função strcmp da biblioteca string.h, esta função
+não leva em consideração letras maiúsculas e minúsculas das palavras
+*/
+{
+    1bd0:	f3 0f 1e fa          	endbr64 
+    1bd4:	55                   	push   %rbp
+    1bd5:	48 89 fd             	mov    %rdi,%rbp
+    1bd8:	53                   	push   %rbx
+    1bd9:	48 89 f3             	mov    %rsi,%rbx
+    1bdc:	48 83 ec 08          	sub    $0x8,%rsp
+}
+
+__extern_inline int
+__NTH (toupper (int __c))
+{
+  return __c >= -128 && __c < 256 ? (*__ctype_toupper_loc ())[__c] : __c;
+    1be0:	e8 4b f5 ff ff       	callq  1130 <__ctype_toupper_loc@plt>
+    1be5:	4c 8b 00             	mov    (%rax),%r8
+    1be8:	31 c0                	xor    %eax,%eax
+    1bea:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+    1bf0:	0f b6 54 05 00       	movzbl 0x0(%rbp,%rax,1),%edx
+    1bf5:	0f b6 0c 03          	movzbl (%rbx,%rax,1),%ecx
+    1bf9:	41 8b 14 90          	mov    (%r8,%rdx,4),%edx
+    1bfd:	41 8b 0c 88          	mov    (%r8,%rcx,4),%ecx
+ 
+  do
+  {
+      c1 = (unsigned char) toupper((int)*s1++);
+      c2 = (unsigned char) toupper((int)*s2++);
+      if (c1 == '\0' || c2 == '\0')
+    1c01:	84 d2                	test   %dl,%dl
+    1c03:	74 0c                	je     1c11 <caseInsensitiveStrcmp+0x41>
+    1c05:	84 c9                	test   %cl,%cl
+    1c07:	74 08                	je     1c11 <caseInsensitiveStrcmp+0x41>
+      {
+            return c1 - c2;
+      }
+  }
+  while (c1 == c2);
+    1c09:	48 83 c0 01          	add    $0x1,%rax
+    1c0d:	38 d1                	cmp    %dl,%cl
+    1c0f:	74 df                	je     1bf0 <caseInsensitiveStrcmp+0x20>
+ 
+  return c1 - c2;
+}
+    1c11:	48 83 c4 08          	add    $0x8,%rsp
+  return c1 - c2;
+    1c15:	0f b6 c2             	movzbl %dl,%eax
+    1c18:	0f b6 c9             	movzbl %cl,%ecx
+    1c1b:	29 c8                	sub    %ecx,%eax
+}
+    1c1d:	5b                   	pop    %rbx
+    1c1e:	5d                   	pop    %rbp
+    1c1f:	c3                   	retq   
+
+0000000000001c20 <downgrade>:
+{
+    1c20:	f3 0f 1e fa          	endbr64 
+    1c24:	41 57                	push   %r15
+    1c26:	41 56                	push   %r14
+    1c28:	41 55                	push   %r13
+    1c2a:	49 89 f5             	mov    %rsi,%r13
+    1c2d:	41 54                	push   %r12
+    1c2f:	55                   	push   %rbp
+    1c30:	53                   	push   %rbx
+    unsigned long parent = position, child = 2*position + 1;
+    1c31:	48 8d 5c 12 01       	lea    0x1(%rdx,%rdx,1),%rbx
+{
+    1c36:	48 83 ec 38          	sub    $0x38,%rsp
+    1c3a:	48 89 7c 24 08       	mov    %rdi,0x8(%rsp)
+        if(caseInsensitiveStrcmp((*(hashTable + parent))->word, (*(hashTable + child))->word) > 0)
+    1c3f:	48 8b 44 24 08       	mov    0x8(%rsp),%rax
+    1c44:	48 8d 04 d0          	lea    (%rax,%rdx,8),%rax
+    1c48:	48 89 44 24 10       	mov    %rax,0x10(%rsp)
+    1c4d:	31 c0                	xor    %eax,%eax
+    1c4f:	eb 2b                	jmp    1c7c <downgrade+0x5c>
+    1c51:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+    1c58:	48 8b 44 24 10       	mov    0x10(%rsp),%rax
+    1c5d:	48 89 ee             	mov    %rbp,%rsi
+    1c60:	4c 8b 38             	mov    (%rax),%r15
+    1c63:	49 8b 3f             	mov    (%r15),%rdi
+    1c66:	e8 65 ff ff ff       	callq  1bd0 <caseInsensitiveStrcmp>
+    1c6b:	41 89 c0             	mov    %eax,%r8d
+            ok = TRUE;
+    1c6e:	b8 01 00 00 00       	mov    $0x1,%eax
+        if(caseInsensitiveStrcmp((*(hashTable + parent))->word, (*(hashTable + child))->word) > 0)
+    1c73:	45 85 c0             	test   %r8d,%r8d
+    1c76:	0f 8e 84 00 00 00    	jle    1d00 <downgrade+0xe0>
+    while(child < hashTableSize && !ok)
+    1c7c:	4c 39 eb             	cmp    %r13,%rbx
+    1c7f:	73 6f                	jae    1cf0 <downgrade+0xd0>
+    1c81:	85 c0                	test   %eax,%eax
+    1c83:	75 6b                	jne    1cf0 <downgrade+0xd0>
+        if(child + 1 < hashTableSize && caseInsensitiveStrcmp((*(hashTable + child + 1))->word, (*(hashTable + child))->word) > 0)
+    1c85:	48 8b 4c 24 08       	mov    0x8(%rsp),%rcx
+    1c8a:	48 8d 04 dd 00 00 00 	lea    0x0(,%rbx,8),%rax
+    1c91:	00 
+    1c92:	4c 8d 7b 01          	lea    0x1(%rbx),%r15
+    1c96:	4c 8d 24 01          	lea    (%rcx,%rax,1),%r12
+    1c9a:	4d 8b 34 24          	mov    (%r12),%r14
+    1c9e:	49 8b 2e             	mov    (%r14),%rbp
+    1ca1:	4d 39 ef             	cmp    %r13,%r15
+    1ca4:	73 b2                	jae    1c58 <downgrade+0x38>
+    1ca6:	4c 8d 44 01 08       	lea    0x8(%rcx,%rax,1),%r8
+    1cab:	48 89 ee             	mov    %rbp,%rsi
+    1cae:	4d 8b 08             	mov    (%r8),%r9
+    1cb1:	4c 89 44 24 28       	mov    %r8,0x28(%rsp)
+    1cb6:	49 8b 39             	mov    (%r9),%rdi
+    1cb9:	4c 89 4c 24 20       	mov    %r9,0x20(%rsp)
+    1cbe:	48 89 7c 24 18       	mov    %rdi,0x18(%rsp)
+    1cc3:	e8 08 ff ff ff       	callq  1bd0 <caseInsensitiveStrcmp>
+    1cc8:	48 8b 7c 24 18       	mov    0x18(%rsp),%rdi
+    1ccd:	4c 8b 4c 24 20       	mov    0x20(%rsp),%r9
+    1cd2:	4c 8b 44 24 28       	mov    0x28(%rsp),%r8
+    1cd7:	85 c0                	test   %eax,%eax
+    1cd9:	48 0f 4f ef          	cmovg  %rdi,%rbp
+    1cdd:	4d 0f 4f f1          	cmovg  %r9,%r14
+    1ce1:	49 0f 4f df          	cmovg  %r15,%rbx
+    1ce5:	4d 0f 4f e0          	cmovg  %r8,%r12
+    1ce9:	e9 6a ff ff ff       	jmpq   1c58 <downgrade+0x38>
+    1cee:	66 90                	xchg   %ax,%ax
+}
+    1cf0:	48 83 c4 38          	add    $0x38,%rsp
+    1cf4:	5b                   	pop    %rbx
+    1cf5:	5d                   	pop    %rbp
+    1cf6:	41 5c                	pop    %r12
+    1cf8:	41 5d                	pop    %r13
+    1cfa:	41 5e                	pop    %r14
+    1cfc:	41 5f                	pop    %r15
+    1cfe:	c3                   	retq   
+    1cff:	90                   	nop
+            *(hashTable + parent) = *(hashTable + child);
+    1d00:	48 8b 44 24 10       	mov    0x10(%rsp),%rax
+            child = 2*child + 1;
+    1d05:	48 89 da             	mov    %rbx,%rdx
+    1d08:	48 8d 5c 1b 01       	lea    0x1(%rbx,%rbx,1),%rbx
+            *(hashTable + parent) = *(hashTable + child);
+    1d0d:	4c 89 30             	mov    %r14,(%rax)
+            *(hashTable + child) = aux;
+    1d10:	4d 89 3c 24          	mov    %r15,(%r12)
+            child = 2*child + 1;
+    1d14:	e9 26 ff ff ff       	jmpq   1c3f <downgrade+0x1f>
+    1d19:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+0000000000001d20 <hashTableHeapsort>:
+{
+    1d20:	f3 0f 1e fa          	endbr64 
+    1d24:	41 54                	push   %r12
+subrotina que efetivamente transforma a tabela hash 'hashTable' em um heap  
+*/
+{
+    unsigned long i;
+
+    for(i = (hashTableSize-2)/2; i > 0; --i)
+    1d26:	4c 8d 66 fe          	lea    -0x2(%rsi),%r12
+    1d2a:	49 d1 ec             	shr    %r12
+{
+    1d2d:	55                   	push   %rbp
+    1d2e:	48 89 fd             	mov    %rdi,%rbp
+    1d31:	53                   	push   %rbx
+    1d32:	48 89 f3             	mov    %rsi,%rbx
+    for(i = (hashTableSize-2)/2; i > 0; --i)
+    1d35:	74 3b                	je     1d72 <hashTableHeapsort+0x52>
+    1d37:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+    1d3e:	00 00 
+        downgrade(hashTable, hashTableSize, i);
+    1d40:	4c 89 e2             	mov    %r12,%rdx
+    1d43:	48 89 de             	mov    %rbx,%rsi
+    1d46:	48 89 ef             	mov    %rbp,%rdi
+    1d49:	e8 d2 fe ff ff       	callq  1c20 <downgrade>
+    for(i = (hashTableSize-2)/2; i > 0; --i)
+    1d4e:	49 83 ec 01          	sub    $0x1,%r12
+    1d52:	75 ec                	jne    1d40 <hashTableHeapsort+0x20>
+    1d54:	eb 1c                	jmp    1d72 <hashTableHeapsort+0x52>
+    1d56:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+    1d5d:	00 00 00 
+        aux = *hashTable;
+    1d60:	48 8b 45 00          	mov    0x0(%rbp),%rax
+        *hashTable = *(hashTable + i);
+    1d64:	48 8b 54 dd 00       	mov    0x0(%rbp,%rbx,8),%rdx
+    1d69:	48 89 55 00          	mov    %rdx,0x0(%rbp)
+        *(hashTable + i) = aux;
+    1d6d:	48 89 44 dd 00       	mov    %rax,0x0(%rbp,%rbx,8)
+    downgrade(hashTable, hashTableSize, 0);
+    1d72:	31 d2                	xor    %edx,%edx
+    1d74:	48 89 de             	mov    %rbx,%rsi
+    1d77:	48 89 ef             	mov    %rbp,%rdi
+    1d7a:	e8 a1 fe ff ff       	callq  1c20 <downgrade>
+    for(i = hashTableSize - 1; i > 0; --i)
+    1d7f:	48 83 eb 01          	sub    $0x1,%rbx
+    1d83:	75 db                	jne    1d60 <hashTableHeapsort+0x40>
+}
+    1d85:	5b                   	pop    %rbx
+    1d86:	5d                   	pop    %rbp
+    1d87:	41 5c                	pop    %r12
+    1d89:	c3                   	retq   
+    1d8a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+0000000000001d90 <heapify>:
+{
+    1d90:	f3 0f 1e fa          	endbr64 
+    1d94:	41 54                	push   %r12
+    1d96:	49 89 fc             	mov    %rdi,%r12
+    1d99:	55                   	push   %rbp
+    1d9a:	48 89 f5             	mov    %rsi,%rbp
+    1d9d:	53                   	push   %rbx
+    for(i = (hashTableSize-2)/2; i > 0; --i)
+    1d9e:	48 8d 5e fe          	lea    -0x2(%rsi),%rbx
+    1da2:	48 d1 eb             	shr    %rbx
+    1da5:	74 1d                	je     1dc4 <heapify+0x34>
+    1da7:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+    1dae:	00 00 
+        downgrade(hashTable, hashTableSize, i);
+    1db0:	48 89 da             	mov    %rbx,%rdx
+    1db3:	48 89 ee             	mov    %rbp,%rsi
+    1db6:	4c 89 e7             	mov    %r12,%rdi
+    1db9:	e8 62 fe ff ff       	callq  1c20 <downgrade>
+    for(i = (hashTableSize-2)/2; i > 0; --i)
+    1dbe:	48 83 eb 01          	sub    $0x1,%rbx
+    1dc2:	75 ec                	jne    1db0 <heapify+0x20>
+}
+    1dc4:	5b                   	pop    %rbx
+    downgrade(hashTable, hashTableSize, 0);
+    1dc5:	48 89 ee             	mov    %rbp,%rsi
+    1dc8:	4c 89 e7             	mov    %r12,%rdi
+}
+    1dcb:	5d                   	pop    %rbp
+    downgrade(hashTable, hashTableSize, 0);
+    1dcc:	31 d2                	xor    %edx,%edx
+}
+    1dce:	41 5c                	pop    %r12
+    downgrade(hashTable, hashTableSize, 0);
+    1dd0:	e9 4b fe ff ff       	jmpq   1c20 <downgrade>
+    1dd5:	66 66 2e 0f 1f 84 00 	data16 nopw %cs:0x0(%rax,%rax,1)
+    1ddc:	00 00 00 00 
+
+0000000000001de0 <printOcurrencesRecursively>:
+/* 
+subrotina que imprime recursivamente uma lista ligada de ocorrências, pois 
+o programa insere ocorrências no início de cada lista, de forma que
+as listas ligadas de ocorrências sempre estarão em ordem descrescente.
+*/
+{
+    1de0:	f3 0f 1e fa          	endbr64 
+    1de4:	53                   	push   %rbx
+    1de5:	48 89 fb             	mov    %rdi,%rbx
+    if(wordOcurrences->next != NULL)
+    1de8:	48 8b 7f 10          	mov    0x10(%rdi),%rdi
+    1dec:	48 85 ff             	test   %rdi,%rdi
+    1def:	74 05                	je     1df6 <printOcurrencesRecursively+0x16>
+        printOcurrencesRecursively(wordOcurrences->next);
+    1df1:	e8 ea ff ff ff       	callq  1de0 <printOcurrencesRecursively>
+    
+    if(wordOcurrences->numOfApp > 1)
+    1df6:	48 8b 4b 08          	mov    0x8(%rbx),%rcx
+        printf("%-lu(%-lu) ", wordOcurrences->line, wordOcurrences->numOfApp);
+    1dfa:	48 8b 13             	mov    (%rbx),%rdx
+    if(wordOcurrences->numOfApp > 1)
+    1dfd:	48 83 f9 01          	cmp    $0x1,%rcx
+    1e01:	76 1d                	jbe    1e20 <printOcurrencesRecursively+0x40>
+    1e03:	48 8d 35 8d 12 00 00 	lea    0x128d(%rip),%rsi        # 3097 <_IO_stdin_used+0x97>
+    1e0a:	bf 01 00 00 00       	mov    $0x1,%edi
+    1e0f:	31 c0                	xor    %eax,%eax
+    else
+        printf("%-lu ", wordOcurrences->line);
+}
+    1e11:	5b                   	pop    %rbx
+    1e12:	e9 b9 f3 ff ff       	jmpq   11d0 <__printf_chk@plt>
+    1e17:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+    1e1e:	00 00 
+    1e20:	48 8d 35 7c 12 00 00 	lea    0x127c(%rip),%rsi        # 30a3 <_IO_stdin_used+0xa3>
+    1e27:	bf 01 00 00 00       	mov    $0x1,%edi
+    1e2c:	31 c0                	xor    %eax,%eax
+    1e2e:	5b                   	pop    %rbx
+    1e2f:	e9 9c f3 ff ff       	jmpq   11d0 <__printf_chk@plt>
+    1e34:	66 66 2e 0f 1f 84 00 	data16 nopw %cs:0x0(%rax,%rax,1)
+    1e3b:	00 00 00 00 
+    1e3f:	90                   	nop
+
+0000000000001e40 <printHashTable>:
+{
+    1e40:	f3 0f 1e fa          	endbr64 
+    for(;hashTableSize > 0; ++hashTable, --hashTableSize)
+    1e44:	48 85 f6             	test   %rsi,%rsi
+    1e47:	74 77                	je     1ec0 <printHashTable+0x80>
+{
+    1e49:	41 55                	push   %r13
+    1e4b:	4c 8d 2d 57 12 00 00 	lea    0x1257(%rip),%r13        # 30a9 <_IO_stdin_used+0xa9>
+    1e52:	41 54                	push   %r12
+    1e54:	4c 8d 25 6b 12 00 00 	lea    0x126b(%rip),%r12        # 30c6 <_IO_stdin_used+0xc6>
+    1e5b:	55                   	push   %rbp
+    1e5c:	48 89 f5             	mov    %rsi,%rbp
+    1e5f:	53                   	push   %rbx
+    1e60:	48 89 fb             	mov    %rdi,%rbx
+    1e63:	48 83 ec 08          	sub    $0x8,%rsp
+    1e67:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+    1e6e:	00 00 
+        printf("%s: ", (*hashTable)->word);
+    1e70:	48 8b 03             	mov    (%rbx),%rax
+    1e73:	4c 89 ee             	mov    %r13,%rsi
+    1e76:	bf 01 00 00 00       	mov    $0x1,%edi
+    for(;hashTableSize > 0; ++hashTable, --hashTableSize)
+    1e7b:	48 83 c3 08          	add    $0x8,%rbx
+    1e7f:	48 8b 10             	mov    (%rax),%rdx
+    1e82:	31 c0                	xor    %eax,%eax
+    1e84:	e8 47 f3 ff ff       	callq  11d0 <__printf_chk@plt>
+        printOcurrencesRecursively((*hashTable)->ocurr);
+    1e89:	48 8b 43 f8          	mov    -0x8(%rbx),%rax
+    1e8d:	48 8b 78 08          	mov    0x8(%rax),%rdi
+    1e91:	e8 4a ff ff ff       	callq  1de0 <printOcurrencesRecursively>
+    1e96:	4c 89 e6             	mov    %r12,%rsi
+    1e99:	bf 01 00 00 00       	mov    $0x1,%edi
+    1e9e:	31 c0                	xor    %eax,%eax
+    1ea0:	e8 2b f3 ff ff       	callq  11d0 <__printf_chk@plt>
+    for(;hashTableSize > 0; ++hashTable, --hashTableSize)
+    1ea5:	48 83 ed 01          	sub    $0x1,%rbp
+    1ea9:	75 c5                	jne    1e70 <printHashTable+0x30>
+}
+    1eab:	48 83 c4 08          	add    $0x8,%rsp
+    1eaf:	5b                   	pop    %rbx
+    1eb0:	5d                   	pop    %rbp
+    1eb1:	41 5c                	pop    %r12
+    1eb3:	41 5d                	pop    %r13
+    1eb5:	c3                   	retq   
+    1eb6:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+    1ebd:	00 00 00 
+    1ec0:	c3                   	retq   
+    1ec1:	66 66 2e 0f 1f 84 00 	data16 nopw %cs:0x0(%rax,%rax,1)
+    1ec8:	00 00 00 00 
+    1ecc:	0f 1f 40 00          	nopl   0x0(%rax)
+
+0000000000001ed0 <destroyOcurrencesRecursively>:
+void destroyOcurrencesRecursively(ocurrences* wordOcurrences)
+/* 
+subrotina que destrói todos os elementos de uma lista ligada de ocorrências
+recursivamente. 
+*/
+{
+    1ed0:	f3 0f 1e fa          	endbr64 
+    1ed4:	41 56                	push   %r14
+    1ed6:	41 55                	push   %r13
+    1ed8:	41 54                	push   %r12
+    1eda:	55                   	push   %rbp
+    1edb:	48 89 fd             	mov    %rdi,%rbp
+    1ede:	48 83 ec 08          	sub    $0x8,%rsp
+    if(wordOcurrences->next != NULL)
+    1ee2:	4c 8b 67 10          	mov    0x10(%rdi),%r12
+    1ee6:	4d 85 e4             	test   %r12,%r12
+    1ee9:	74 39                	je     1f24 <destroyOcurrencesRecursively+0x54>
+    1eeb:	4d 8b 6c 24 10       	mov    0x10(%r12),%r13
+    1ef0:	4d 85 ed             	test   %r13,%r13
+    1ef3:	74 27                	je     1f1c <destroyOcurrencesRecursively+0x4c>
+    1ef5:	4d 8b 75 10          	mov    0x10(%r13),%r14
+    1ef9:	4d 85 f6             	test   %r14,%r14
+    1efc:	74 16                	je     1f14 <destroyOcurrencesRecursively+0x44>
+    1efe:	49 8b 7e 10          	mov    0x10(%r14),%rdi
+    1f02:	48 85 ff             	test   %rdi,%rdi
+    1f05:	74 05                	je     1f0c <destroyOcurrencesRecursively+0x3c>
+        destroyOcurrencesRecursively(wordOcurrences->next);
+    1f07:	e8 c4 ff ff ff       	callq  1ed0 <destroyOcurrencesRecursively>
+
+    free(wordOcurrences);
+    1f0c:	4c 89 f7             	mov    %r14,%rdi
+    1f0f:	e8 2c f2 ff ff       	callq  1140 <free@plt>
+    1f14:	4c 89 ef             	mov    %r13,%rdi
+    1f17:	e8 24 f2 ff ff       	callq  1140 <free@plt>
+    1f1c:	4c 89 e7             	mov    %r12,%rdi
+    1f1f:	e8 1c f2 ff ff       	callq  1140 <free@plt>
+    1f24:	48 83 c4 08          	add    $0x8,%rsp
+    free(wordOcurrences);
+    1f28:	48 89 ef             	mov    %rbp,%rdi
+    1f2b:	5d                   	pop    %rbp
+    1f2c:	41 5c                	pop    %r12
+    1f2e:	41 5d                	pop    %r13
+    1f30:	41 5e                	pop    %r14
+    free(wordOcurrences);
+    1f32:	e9 09 f2 ff ff       	jmpq   1140 <free@plt>
+    1f37:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+    1f3e:	00 00 
+
+0000000000001f40 <destroyHashTable>:
+{
+    1f40:	f3 0f 1e fa          	endbr64 
+    for(;*hashTableSize > 0; ++hashTable, --(*hashTableSize))
+    1f44:	48 83 3e 00          	cmpq   $0x0,(%rsi)
+    1f48:	0f 84 e2 00 00 00    	je     2030 <destroyHashTable+0xf0>
+{
+    1f4e:	41 57                	push   %r15
+    1f50:	41 56                	push   %r14
+    1f52:	41 55                	push   %r13
+    1f54:	49 89 f5             	mov    %rsi,%r13
+    1f57:	41 54                	push   %r12
+    1f59:	55                   	push   %rbp
+    1f5a:	53                   	push   %rbx
+    1f5b:	48 89 fb             	mov    %rdi,%rbx
+    1f5e:	48 83 ec 18          	sub    $0x18,%rsp
+    1f62:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+        free((*hashTable)->word);
+    1f68:	48 8b 03             	mov    (%rbx),%rax
+    1f6b:	48 8b 38             	mov    (%rax),%rdi
+    1f6e:	e8 cd f1 ff ff       	callq  1140 <free@plt>
+        destroyOcurrencesRecursively((*hashTable)->ocurr);
+    1f73:	48 8b 03             	mov    (%rbx),%rax
+    1f76:	4c 8b 60 08          	mov    0x8(%rax),%r12
+    if(wordOcurrences->next != NULL)
+    1f7a:	49 8b 6c 24 10       	mov    0x10(%r12),%rbp
+    1f7f:	48 85 ed             	test   %rbp,%rbp
+    1f82:	74 74                	je     1ff8 <destroyHashTable+0xb8>
+    1f84:	4c 8b 75 10          	mov    0x10(%rbp),%r14
+    1f88:	4d 85 f6             	test   %r14,%r14
+    1f8b:	74 63                	je     1ff0 <destroyHashTable+0xb0>
+    1f8d:	4d 8b 7e 10          	mov    0x10(%r14),%r15
+    1f91:	4d 85 ff             	test   %r15,%r15
+    1f94:	74 52                	je     1fe8 <destroyHashTable+0xa8>
+    1f96:	4d 8b 47 10          	mov    0x10(%r15),%r8
+    1f9a:	4d 85 c0             	test   %r8,%r8
+    1f9d:	74 41                	je     1fe0 <destroyHashTable+0xa0>
+    1f9f:	4d 8b 48 10          	mov    0x10(%r8),%r9
+    1fa3:	4d 85 c9             	test   %r9,%r9
+    1fa6:	74 30                	je     1fd8 <destroyHashTable+0x98>
+    1fa8:	49 8b 79 10          	mov    0x10(%r9),%rdi
+    1fac:	48 85 ff             	test   %rdi,%rdi
+    1faf:	74 17                	je     1fc8 <destroyHashTable+0x88>
+    1fb1:	4c 89 4c 24 08       	mov    %r9,0x8(%rsp)
+    1fb6:	4c 89 04 24          	mov    %r8,(%rsp)
+        destroyOcurrencesRecursively(wordOcurrences->next);
+    1fba:	e8 11 ff ff ff       	callq  1ed0 <destroyOcurrencesRecursively>
+    1fbf:	4c 8b 4c 24 08       	mov    0x8(%rsp),%r9
+    1fc4:	4c 8b 04 24          	mov    (%rsp),%r8
+    free(wordOcurrences);
+    1fc8:	4c 89 cf             	mov    %r9,%rdi
+    1fcb:	4c 89 04 24          	mov    %r8,(%rsp)
+    1fcf:	e8 6c f1 ff ff       	callq  1140 <free@plt>
+    1fd4:	4c 8b 04 24          	mov    (%rsp),%r8
+    1fd8:	4c 89 c7             	mov    %r8,%rdi
+    1fdb:	e8 60 f1 ff ff       	callq  1140 <free@plt>
+    1fe0:	4c 89 ff             	mov    %r15,%rdi
+    1fe3:	e8 58 f1 ff ff       	callq  1140 <free@plt>
+    1fe8:	4c 89 f7             	mov    %r14,%rdi
+    1feb:	e8 50 f1 ff ff       	callq  1140 <free@plt>
+    1ff0:	48 89 ef             	mov    %rbp,%rdi
+    1ff3:	e8 48 f1 ff ff       	callq  1140 <free@plt>
+    1ff8:	4c 89 e7             	mov    %r12,%rdi
+    for(;*hashTableSize > 0; ++hashTable, --(*hashTableSize))
+    1ffb:	48 83 c3 08          	add    $0x8,%rbx
+    free(wordOcurrences);
+    1fff:	e8 3c f1 ff ff       	callq  1140 <free@plt>
+        free(*hashTable);
+    2004:	48 8b 7b f8          	mov    -0x8(%rbx),%rdi
+    2008:	e8 33 f1 ff ff       	callq  1140 <free@plt>
+    for(;*hashTableSize > 0; ++hashTable, --(*hashTableSize))
+    200d:	49 83 6d 00 01       	subq   $0x1,0x0(%r13)
+    2012:	0f 85 50 ff ff ff    	jne    1f68 <destroyHashTable+0x28>
+}
+    2018:	48 83 c4 18          	add    $0x18,%rsp
+    201c:	5b                   	pop    %rbx
+    201d:	5d                   	pop    %rbp
+    201e:	41 5c                	pop    %r12
+    2020:	41 5d                	pop    %r13
+    2022:	41 5e                	pop    %r14
+    2024:	41 5f                	pop    %r15
+    2026:	c3                   	retq   
+    2027:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+    202e:	00 00 
+    2030:	c3                   	retq   
+    2031:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)
+    2038:	00 00 00 
+    203b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+
+0000000000002040 <__libc_csu_init>:
+    2040:	f3 0f 1e fa          	endbr64 
+    2044:	41 57                	push   %r15
+    2046:	4c 8d 3d fb 2c 00 00 	lea    0x2cfb(%rip),%r15        # 4d48 <__frame_dummy_init_array_entry>
+    204d:	41 56                	push   %r14
+    204f:	49 89 d6             	mov    %rdx,%r14
+    2052:	41 55                	push   %r13
+    2054:	49 89 f5             	mov    %rsi,%r13
+    2057:	41 54                	push   %r12
+    2059:	41 89 fc             	mov    %edi,%r12d
+    205c:	55                   	push   %rbp
+    205d:	48 8d 2d ec 2c 00 00 	lea    0x2cec(%rip),%rbp        # 4d50 <__do_global_dtors_aux_fini_array_entry>
+    2064:	53                   	push   %rbx
+    2065:	4c 29 fd             	sub    %r15,%rbp
+    2068:	48 83 ec 08          	sub    $0x8,%rsp
+    206c:	e8 8f ef ff ff       	callq  1000 <_init>
+    2071:	48 c1 fd 03          	sar    $0x3,%rbp
+    2075:	74 1f                	je     2096 <__libc_csu_init+0x56>
+    2077:	31 db                	xor    %ebx,%ebx
+    2079:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+    2080:	4c 89 f2             	mov    %r14,%rdx
+    2083:	4c 89 ee             	mov    %r13,%rsi
+    2086:	44 89 e7             	mov    %r12d,%edi
+    2089:	41 ff 14 df          	callq  *(%r15,%rbx,8)
+    208d:	48 83 c3 01          	add    $0x1,%rbx
+    2091:	48 39 dd             	cmp    %rbx,%rbp
+    2094:	75 ea                	jne    2080 <__libc_csu_init+0x40>
+    2096:	48 83 c4 08          	add    $0x8,%rsp
+    209a:	5b                   	pop    %rbx
+    209b:	5d                   	pop    %rbp
+    209c:	41 5c                	pop    %r12
+    209e:	41 5d                	pop    %r13
+    20a0:	41 5e                	pop    %r14
+    20a2:	41 5f                	pop    %r15
+    20a4:	c3                   	retq   
+    20a5:	66 66 2e 0f 1f 84 00 	data16 nopw %cs:0x0(%rax,%rax,1)
+    20ac:	00 00 00 00 
+
+00000000000020b0 <__libc_csu_fini>:
+    20b0:	f3 0f 1e fa          	endbr64 
+    20b4:	c3                   	retq   
+
+Disassembly of section .fini:
+
+00000000000020b8 <_fini>:
+    20b8:	f3 0f 1e fa          	endbr64 
+    20bc:	48 83 ec 08          	sub    $0x8,%rsp
+    20c0:	48 83 c4 08          	add    $0x8,%rsp
+    20c4:	c3                   	retq   

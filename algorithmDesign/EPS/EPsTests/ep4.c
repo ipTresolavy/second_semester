@@ -11,7 +11,7 @@
 #include <string.h>
 
 #define HASH_TABLE_MAX_SIZE 100000
-#define SEED 0x1b873593
+#define SEED 0xbc9f1d34
 
 /* célula da lista ligada de ocorrências de uma palavra */
 typedef struct ocurrenceCell
@@ -33,7 +33,8 @@ typedef enum {FALSE, TRUE} boolean;
 
 /* funções e subrotinas da parte 1 */
 void updateHashTable(char*, unsigned long, words***, unsigned long*, unsigned long);
-unsigned int hash(const char*, unsigned long, unsigned int);
+unsigned int scramble(unsigned int);
+unsigned int murmurHash(const char*, unsigned long, unsigned int);
 void resizeHashTable(words***, unsigned long*, unsigned long);
 words* searchForWord(words*, char*);
 ocurrences* searchForLine(ocurrences*, unsigned long);
@@ -157,8 +158,8 @@ int main()
     removeHashTableNulls(&hashTable, &hashTableSize);
     solveCollisions(&hashTable, &hashTableSize, amntOfHashTableElements(hashTable, hashTableSize) - hashTableSize);
     hashTableHeapsort(hashTable, hashTableSize);
-/*     printHashTable(hashTable, hashTableSize);
- */
+    printHashTable(hashTable, hashTableSize);
+
     /* ------- FIM DA PARTE 2 ------- */
 
     /* desaloca espaço alocado para a tabela hash e zera 'hashTableSize' */
@@ -176,7 +177,7 @@ na tabela hash 'hashTable', de tamanho 'hashTableSize'.
     
     ocurrences *foundOcurrence;/* ponteiro que aponta para ocorrência da palavra 'word' na linha 'line' se ela já existir na table hash */
     
-    unsigned int hashFunction = hash(word, wordSize, SEED);/* função Hash da palavra 'word' */
+    unsigned int hashFunction = murmurHash(word, wordSize, SEED)%HASH_TABLE_MAX_SIZE;/* função Hash da palavra 'word' */
 
     if(hashFunction >= *hashTableSize)/* se o resultado da função hash for maior ou igual ao tamanho da tabela hash */
     {
@@ -201,20 +202,73 @@ na tabela hash 'hashTable', de tamanho 'hashTableSize'.
                                                                               na posição 'hashFunction' da tabela hash */
 }
 
-unsigned int hash(const char* key, unsigned long len, unsigned int seed)
+unsigned int scramble(unsigned int k) 
+/* 
+- Multiplica grupo de 4 bytes por c1; 
+- Rotaciona r1 bits de grupo do resultado para a esquerda; 
+- Multiplica resultado por c2; 
+*/
 {
-	unsigned int hashValue;
-    unsigned int sum;
+    k *= 0xcc9e2d51;
+    k = (k << 15) | (k >> 17);
+    k *= 0x1b873593;
+    return k;
+}
+
+unsigned int murmurHash(const char* key, unsigned long len, unsigned int seed)
+{
+	unsigned int h = seed;
+    unsigned int k;
     unsigned long i;
 
-    for(i = hashValue = sum = 0; i < len; ++i)
+    /* 
+    - Multiplica grupo de 4 bytes por c1; 
+    - Rotaciona r1 bits de grupo do resultado para a esquerda; 
+    - Multiplica resultado por c2; 
+    - Atribui à Seed valor da operação lógica OU EXCLUSIVO de Seed com valor do resultado; 
+    - Rotaciona r2 bits de Seed para a esquerda; 
+    - Atribui à Seed valor da multiplicação aritmética de Seed por m, somado à n. 
+    */
+    for (i = len >> 2; i > 0; i--) 
     {
-        hashValue += (((*(key + i)))*(i + 1));
-        sum += ((*(key + i)));
+        memcpy(&k, key, sizeof(unsigned int));
+        key += sizeof(unsigned int);
+        h ^= scramble(k);
+        h = (h << 13) | (h >> 19);
+        h = h * 5 + 0xe6546b64;
     }
 
-    
-	return (seed*hashValue*sum)%HASH_TABLE_MAX_SIZE;
+    /* 
+    - “Arrasta” (logical shift) bytes restantes 8 bits para a esquerda; 
+    - Atribui à resultado valor da operação lógica OU com bytes restantes;  
+    */
+    k = 0;
+    for (i = len & 3; i > 0; i--) 
+    {
+        k <<= 8;
+        k |= key[i - 1];
+    }
+
+    /* 
+    - Atribui à Seed o valor da operação lógica OU EXCLUSIVO de Seed com o resultado anterior; 
+    - Atribui à Seed o valor da operação lógica OU EXCLUSIVO de Seed com o valor de Len; 
+    - Atribui à Seed o valor da operação lógica OU EXCLUSIVO de Seed com o valor de Seed “arrastado” (logical shift) 16 bits para a direita; 
+    - Multiplica Seed por 0x85ebca6b; 
+    - Atribui à Seed o valor da operação lógica OU EXCLUSIVO de Seed com o valor de Seed “arrastado” (logical shift) 13 bits para a direita; 
+    - Multiplica Seed por 0xc2b2ae35; 
+    - Atribui à Seed o valor da operação lógica OU EXCLUSIVO de Seed com o valor de Seed “arrastado” (logical shift) 16 bits para a direita. 
+    - Retorna Seed; 
+    */
+
+    h ^= scramble(k);
+	h ^= len;
+	h ^= h >> 16;
+	h *= 0x85ebca6b;
+	h ^= h >> 13;
+	h *= 0xc2b2ae35;
+	h ^= h >> 16;
+
+	return h;
 }
 
 void resizeHashTable(words*** hashTable,unsigned long *oldSize, unsigned long newSize)
@@ -385,8 +439,6 @@ de tamanho 'hashTableSize', incluindo elementos "colididos".
         }while(aux != NULL);
     }
 
-    printf("Elements: %lu\n", amountOfElements);
-
     return amountOfElements;
 }
 
@@ -399,8 +451,6 @@ aumentando o tamanho da tabela e movendo-as para o seu fim.
     unsigned long i, j;
     words* aux;
 
-
-    printf("collisions: %lu\n", collisions);
 
     /* caso não haja colisões, nada é feito */
     if(collisions == 0)

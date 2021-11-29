@@ -1,6 +1,6 @@
 # Ajuste os diretorios abaixo conforme o seu sistema
 LIBDIR = /usr/local/lib
-CFLAGS = -g -Wall -std=c99 -O0 -ansi -pedantic -Wextra
+CFLAGS = -g -Wall -std=c99 -O2 -ansi -pedantic -Wextra
 CC = gcc
 ###########################################################################
 

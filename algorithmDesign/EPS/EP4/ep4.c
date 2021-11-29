@@ -2,7 +2,7 @@
  * @file ep4.c
  * @author Igor Pontes Tresolavy (tresolavy@usp.br)
  * @brief EP4 da disciplina de MAC0122: índice remissivo de palavras em texto 
- * @version 1.0
+ * @version 2.0
  * @date 2021-11-22
  */
 #include <stdio.h>
@@ -157,8 +157,8 @@ int main()
     removeHashTableNulls(&hashTable, &hashTableSize);
     solveCollisions(&hashTable, &hashTableSize, amntOfHashTableElements(hashTable, hashTableSize) - hashTableSize);
     hashTableHeapsort(hashTable, hashTableSize);
-/*     printHashTable(hashTable, hashTableSize);
- */
+    printHashTable(hashTable, hashTableSize);
+
     /* ------- FIM DA PARTE 2 ------- */
 
     /* desaloca espaço alocado para a tabela hash e zera 'hashTableSize' */
@@ -212,7 +212,6 @@ unsigned int hash(const char* key, unsigned long len, unsigned int seed)
         hashValue += (((*(key + i)))*(i + 1));
         sum += ((*(key + i)));
     }
-
     
 	return (seed*hashValue*sum)%HASH_TABLE_MAX_SIZE;
 }
@@ -385,7 +384,6 @@ de tamanho 'hashTableSize', incluindo elementos "colididos".
         }while(aux != NULL);
     }
 
-    printf("Elements: %lu\n", amountOfElements);
 
     return amountOfElements;
 }
@@ -398,9 +396,6 @@ aumentando o tamanho da tabela e movendo-as para o seu fim.
 {
     unsigned long i, j;
     words* aux;
-
-
-    printf("collisions: %lu\n", collisions);
 
     /* caso não haja colisões, nada é feito */
     if(collisions == 0)

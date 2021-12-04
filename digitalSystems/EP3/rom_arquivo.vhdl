@@ -22,12 +22,12 @@ architecture read_file_only_memory of rom_arquivo is
 
     -- file-reader function --
     impure function inicializa(nome_do_arquivo : in string) return mem_tipo is
-        
+
         file     arquivo  : text open read_mode is nome_do_arquivo;
         variable linha    : line;
         variable temp_bv  : bit_vector(7 downto 0);
         variable temp_mem : mem_tipo;
-            
+
             begin
                 for i in mem_tipo'range loop
                     readline(arquivo, linha);

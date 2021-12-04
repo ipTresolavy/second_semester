@@ -32,7 +32,7 @@ architecture generic_read_file_only_memory of rom_arquivo_generica is
         variable linha    : line;
         variable temp_bv  : bit_vector(wordSize-1 downto 0);
         variable temp_mem : mem_tipo;
-            
+
             begin
                 for i in mem_tipo'range loop
                     readline(arquivo, linha);

@@ -107,7 +107,6 @@ int main()
 
         /* Alocamento inicial de memória e inicialização da tabela hash*/
         hashTable = malloc(sizeof(words*));
-        *hashTable = malloc(sizeof(words));
         *hashTable = NULL;
 
         /* Aloca espaço para o vetor de palavras no texto e o inicializa com 0s */
@@ -237,10 +236,7 @@ subrotina que aumenta ou diminui o tamanho da tabela hash 'hashTable' de 'oldSiz
     if(*oldSize < newSize)
         /* para cada nova posição, aloca espaço para uma célula de palavras e às inicializa com um vetor nulo  */
         for(i = *oldSize; i < newSize; ++i)
-        {
-            *(*hashTable + i) = malloc(sizeof(words));
             *(*hashTable + i) = NULL;
-        }
 
     *oldSize = newSize;/* atualiza tamanho da tabela hash */
 }
@@ -346,7 +342,7 @@ ligadas de palavras.
         }
     }
 
-    /* 
+    /*
     ao final das iterações, as últimas ('hashTableSize' - 'nullPointerPosition') posições 
     da tabela hash 'hashTable' terão somente elementos nulos. Portanto, pode-se eliminar as
     últimas posições.

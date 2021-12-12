@@ -1,3 +1,9 @@
+-------------------------------------------------------
+--! @file data_flow.vhdl
+--! @brief Fluxo de dados para EP4 da disciplina de Sistemas Digitais I
+--! @author Igor Pontes Tresolavy (tresolavy@usp.br)
+--! @date 2021-11-28
+-------------------------------------------------------
 library IEEE;
 use IEEE.numeric_bit.all;
 
@@ -107,8 +113,8 @@ architecture data_flow_beh of data_flow is
         with alu_b_src select
             B_in <= imm_shft when "00",
                     alu_mem when "01",
-                    bit_vector(to_unsigned(to_integer(unsigned(ir_out(4 downto 0)  sll  5 )), word_s)) when "10",
-                    bit_vector(to_unsigned(to_integer(unsigned(((((not ir_out(4)) & (ir_out(3 downto 0))) sll 2) ))), word_s)) when others;
+                    bit_vector(to_unsigned(to_integer(unsigned(ir_out(4 downto 0))), word_s)) sll 5 when "10",
+                    bit_vector(to_unsigned(to_integer(unsigned(((((not ir_out(4)) & (ir_out(3 downto 0)))) ))), word_s)) sll 2 when others;
 
         with alu_shfimm_src select
             imm_shft <= bit_vector(to_unsigned(1, word_s)) when '0',

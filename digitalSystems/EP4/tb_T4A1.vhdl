@@ -83,6 +83,18 @@ architecture DUT of tb_T4A1 is
                 pc_src <= '1';
                 wait for clock_period;
 
+                alu_op <= "111";
+                memA_rdd <= "00000000000000000000000000111111";
+                alu_b_src <= "11"; -- 00...0111100 and not 00...11100
+                mem_b_addr_src <= "11";
+                mem_b_wrd_src <= "00";
+                wait for clock_period;
+
+                mem_b_wrd_src <= "11";
+                wait for clock_period;
+
+                memA_rdd <= "00000000000000000000000001100000";
+                wait for clock_period;
 
                 wait;
             end process;

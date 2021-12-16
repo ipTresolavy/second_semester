@@ -1,5 +1,3 @@
-#ifndef IMPRIME_PROPORCIONAL_A_PROFUNDIDADE
-#define IMPRIME_PROPORCIONAL_A_PROFUNDIDADE
 #include <stdio.h>
 
 typedef struct cel {
@@ -19,12 +17,10 @@ void imprimeProporcional(no *raiz, int profundidade)
         printf("\n");
 
         for(i = 0; i < profundidade; ++i)
-            printf("\t");
+            putchar('\t');
 
         printf("%d\n", raiz->info);
-    
+
         imprimeProporcional(raiz->esq, profundidade);
     }
 }
-
-#endif

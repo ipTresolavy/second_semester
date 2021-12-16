@@ -35,7 +35,7 @@ void print2DUtil(bruh *root, int profundidade)
     printf("\n");
 
     for(i = 0; i < profundidade; ++i)
-        printf("\t");
+        putchar('\t');
 
     printf("%d\n", root->data);
  

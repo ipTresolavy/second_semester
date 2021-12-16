@@ -21,7 +21,7 @@ entity control_unit is
     );
 end entity control_unit;
 
-architecture structural of control_unit is
+architecture arch of control_unit is
 
     type fsm is (fetch, decode, BREAK, PUSHSP, POPPC, ADD, AND_I, OR_I, LOAD, NOT_I, FLIP, NOP,
                 STORE, STORE_WRITE, POPSP, ADDSP, CALL, STORESP, LOADSP, IM1, IM_star);
@@ -353,6 +353,7 @@ architecture structural of control_unit is
                         when others =>
                             report "Estado não existe!"
                                 severity failure;
+
                     end case;
                 end loop;
         end process;

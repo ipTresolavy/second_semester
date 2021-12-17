@@ -109,6 +109,7 @@ architecture arch of control_unit is
                                         else
                                             case IR_LSN is
                                                 when "0000" => -- HALTING
+                                                    wait_mem(false);
                                                     next_state <= HALTING;
                                                 when "0010" => -- PUSHSP
                                                     -- wait_mem(false);

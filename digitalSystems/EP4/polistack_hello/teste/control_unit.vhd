@@ -23,14 +23,14 @@ end entity control_unit;
 
 architecture arch of control_unit is
 
-    type fsm is (fetch, decode, BREAK, PUSHSP, POPPC, ADD, AND_I, OR_I, LOAD, NOT_I, FLIP, NOP,
-                STORE, STORE_WRITE, POPSP, ADDSP, CALL, STORESP, LOADSP, IM1, IM_star);
+    type fsm is (fetch, decode, HALTING, PUSHSP, POPPC, ADD, AND_I, OR_I, LOAD, NOT_I, FLIP, NOP,
+                STORE_1, STORE_2, POPSP, ADDSP, CALL, STORESP, LOADSP, IM1, IM_star);
 
-    signal next_state, current_state : fsm;
+    signal next_state, current_state : fsm := fetch;
 
     begin
         
-        change_of_state: process(clock, reset)
+        change_of_state: process(clock, reset) is
             begin
                 if reset = '1' then
                     current_state <= fetch;
@@ -78,20 +78,20 @@ architecture arch of control_unit is
                     case current_state is
 
                         when fetch =>
-                            mem_a_addr_src <= '1';
-                            mem_b_addr_src <= "00";
-                            wait_mem(false);
-                            alu_a_src <= "00"; 
-                            alu_b_src <= "00";
-                            alu_shfimm_src <= '0';
-                            alu_op <= "001";
-                            pc_src <= '0';
-                            pc_en <= '1';
-                            ir_en <= '1';
+                            mem_a_addr_src <= '1'; -- pc
+                            mem_b_addr_src <= "00"; -- sp
+                            wait_mem(false); -- memA_rdd <= pc and memB_rdd <= sp
+                            alu_a_src <= "00"; -- pc
+                            alu_b_src <= "00"; -- imm_shft
+                            alu_shfimm_src <= '0'; -- 1
+                            alu_op <= "001"; -- addition
+                            pc_src <= '0'; -- ula_out
+                            pc_en <= '1'; -- pc <= pc + 1
+                            ir_en <= '1'; -- ir <= instruction
                             next_state <= decode;
                         
                         when decode =>
-                            if next_state = decode then -- maybe take this if out
+                            --if next_state = decode then maybe take this if out
                                 alu_a_src <=  "01"; -- sp
                                 alu_b_src <= "00"; -- imm_shfimm
                                 alu_shfimm_src <= '1'; -- 4
@@ -99,7 +99,7 @@ architecture arch of control_unit is
                                 mem_a_addr_src <= '0'; -- mem_a_addr <= sp
                                 mem_b_addr_src <= "11"; -- mem_b_addr <= ula_out
 
-                                if IR_MSb /= '1' then
+                                if IR_MSb = '0' then
                                     is_im_star := false;
                                     if IR_MSt = "000" then
                                         if IR_MSN = "0001" then -- ADDSP
@@ -108,10 +108,11 @@ architecture arch of control_unit is
                                             next_state <= ADDSP;
                                         else
                                             case IR_LSN is
-                                                when "0000" => -- BREAK
-                                                    next_state <= BREAK;
+                                                when "0000" => -- HALTING
+                                                    wait_mem(false);
+                                                    next_state <= HALTING;
                                                 when "0010" => -- PUSHSP
-                                                    -- wait_mem(false);
+                                                    wait_mem(false);
                                                     next_state <= PUSHSP; 
                                                 when "0100" => -- POPPC
                                                     wait_mem(false);
@@ -138,10 +139,11 @@ architecture arch of control_unit is
                                                     wait_mem(false);
                                                     next_state <= FLIP;
                                                 when "1011" => -- NOP
-                                                    next_state <= NOP;
-                                                when "1100" => -- STORE
                                                     wait_mem(false);
-                                                    next_state <= STORE;
+                                                    next_state <= NOP;
+                                                when "1100" => -- STORE_1
+                                                    wait_mem(false);
+                                                    next_state <= STORE_1;
                                                 when "1101" => -- POPSP
                                                     wait_mem(false);
                                                     next_state <= POPSP;
@@ -171,19 +173,21 @@ architecture arch of control_unit is
                                 else
                                     if is_im_star = false then -- IM1
                                         is_im_star := true;
+                                        wait_mem(false);
                                         alu_op <= "100"; -- ula_out = sp - 4
                                         sp_en <= '1'; -- sp <= sp - 4
                                         next_state <= IM1;
                                     else
+                                        wait_mem(false);
                                         next_state <= IM_star; -- IM_star
                                     end if;
                                 end if;
-                            end if;
+                            --end if;
                         
-                        when BREAK =>
+                        when HALTING =>
                             halted <= '1';
                             is_halted := true;
-                            next_state <= BREAK;
+                            next_state <= HALTING;
 
                         when PUSHSP =>
                             alu_a_src <=  "01"; -- sp
@@ -259,7 +263,7 @@ architecture arch of control_unit is
                         when NOP =>
                             next_state <= fetch;
 
-                        when STORE =>
+                        when STORE_1 =>
                             mem_b_addr_src <= "01"; -- memB_addr <= memA_rdd
                             mem_b_mem_src <= '1'; -- memB_rdd
                             mem_b_wrd_src <= "01"; -- memB_mem (= memB_rdd)
@@ -268,9 +272,9 @@ architecture arch of control_unit is
                             alu_b_src <= "00"; -- imm_shft (= 4)
                             alu_op <= "001"; -- addition
                             sp_en <= '1'; -- sp <= sp + 4
-                            next_state <= STORE_WRITE;
+                            next_state <= STORE_2;
 
-                        when STORE_WRITE =>
+                        when STORE_2 =>
                             -- sp_en <= '0';
                             wait_mem(true);
                             alu_a_src <= "01"; -- sp_out
@@ -353,8 +357,8 @@ architecture arch of control_unit is
                         when others =>
                             report "Estado não existe!"
                                 severity failure;
-
                     end case;
-                end loop;
+                wait on current_state;
+            end loop;
         end process;
 end architecture;

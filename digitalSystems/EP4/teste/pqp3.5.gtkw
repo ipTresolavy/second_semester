@@ -1,0 +1,36 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Sun Apr 10 20:53:27 2022
+[*]
+[dumpfile] "/home/ipontes3olavy/third_semester/digital_systems_II/second_semester_EPs/second_semester/digitalSystems/EP4/teste/pqp3.vcd"
+[dumpfile_mtime] "Sun Apr 10 20:52:58 2022"
+[dumpfile_size] 123844
+[savefile] "/home/ipontes3olavy/third_semester/digital_systems_II/second_semester_EPs/second_semester/digitalSystems/EP4/teste/pqp3.5.gtkw"
+[timestart] 205720000
+[size] 1920 1016
+[pos] -39 -39
+*-23.000000 217630000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] toplevel.
+[treeopen] toplevel.proc.
+[sst_width] 233
+[signals_width] 242
+[sst_expanded] 1
+[sst_vpaned_height] 289
+@22
+toplevel.proc.uc.instruction[7:0]
+@28
+toplevel.proc.uc.ir_en
+toplevel.proc.uc.mem_busy
+@22
+toplevel.proc.df.sp_out[31:0]
+toplevel.proc.df.sp_in[31:0]
+@28
+toplevel.proc.df.sp_en
+toplevel.proc.uc.mem_b_addr_src[1:0]
+toplevel.proc.uc.mem_b_mem_src
+@29
+toplevel.proc.uc.mem_b_wrd_src[1:0]
+@28
+toplevel.proc.uc.clock
+[pattern_trace] 1
+[pattern_trace] 0

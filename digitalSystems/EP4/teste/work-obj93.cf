@@ -1,7 +1,10 @@
 v 4
-file . "control_unit.vhd" "0f380d56a8ca976e369900afd2c99ec7b6333d31" "20211219024109.230":
-  entity control_unit at 7( 291) + 0 on 118;
-  architecture arch of control_unit at 24( 807) + 0 on 119;
+file . "data_flow.vhd" "fea6f052f2727f090af8f5433e410f83ef39352c" "20211214182940.028":
+  entity data_flow at 8( 299) + 0 on 76;
+  architecture structural of data_flow at 31( 1118) + 0 on 77;
+file . "control_unit.vhd" "c6b77c8331ebe404c28c96cbbff4c6c72b032718" "20220411012215.998":
+  entity control_unit at 7( 291) + 0 on 156;
+  architecture arch of control_unit at 24( 807) + 0 on 157;
 file . "ep4_tb.vhd" "48aa41c7e5039bcad5bc3810c6791caacf20b945" "20211214183436.236":
   package support at 1( 0) + 0 on 92 body;
   package body support at 19( 667) + 0 on 93;
@@ -17,6 +20,3 @@ file . "ep4_tb.vhd" "48aa41c7e5039bcad5bc3810c6791caacf20b945" "20211214183436.2
   architecture ucdf of polistack at 1341( 52403) + 0 on 103;
   entity toplevel at 1428( 55355) + 0 on 104;
   architecture arch of toplevel at 1431( 55387) + 0 on 105;
-file . "data_flow.vhd" "fea6f052f2727f090af8f5433e410f83ef39352c" "20211214182940.028":
-  entity data_flow at 8( 299) + 0 on 76;
-  architecture structural of data_flow at 31( 1118) + 0 on 77;

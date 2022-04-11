@@ -29,7 +29,7 @@ architecture arch of control_unit is
     signal next_state, current_state : fsm := fetch;
 
     begin
-        
+
         change_of_state: process(clock, reset) is
             begin
                 if reset = '1' then
@@ -40,8 +40,8 @@ architecture arch of control_unit is
         end process change_of_state;
 
 
-        determining_next_state: process
-        
+        determining_next_state: process is
+
             alias IR_MSN               : bit_vector(3 downto 0) is instruction(7 downto 4);
             alias IR_LSN               : bit_vector(3 downto 0) is instruction(3 downto 0);
             alias IR_MSt               : bit_vector(2 downto 0) is instruction(7 downto 5);
@@ -56,20 +56,20 @@ architecture arch of control_unit is
                     if dowrite then
                         mem_we <= '1';
                     end if;
-                    
+
                     mem_enable <= '1';
                     wait until mem_busy = '1';
-                    
+
                     mem_we <= '0';
                     wait until mem_busy = '0';
-                    
+
                     mem_enable <= '0';
 
             end procedure wait_mem;
 
 
-            begin 
-                    
+            begin
+
                 halted <= '0';
                 while not is_halted loop
                     pc_en <= '0';
@@ -89,7 +89,7 @@ architecture arch of control_unit is
                             pc_en <= '1'; -- pc <= pc + 1
                             ir_en <= '1'; -- ir <= instruction
                             next_state <= decode;
-                        
+
                         when decode =>
                             --if next_state = decode then maybe take this if out
                                 alu_a_src <=  "01"; -- sp
@@ -109,13 +109,12 @@ architecture arch of control_unit is
                                         else
                                             case IR_LSN is
                                                 when "0000" => -- HALTING
-                                                    wait_mem(false);
                                                     next_state <= HALTING;
                                                 when "0010" => -- PUSHSP
-                                                    wait_mem(false);
-                                                    next_state <= PUSHSP; 
+                                                    next_state <= PUSHSP;
                                                 when "0100" => -- POPPC
                                                     wait_mem(false);
+                                                    sp_en <= '1';
                                                     next_state <= POPPC;
                                                 when "0101" => -- ADD
                                                     wait_mem(false);
@@ -139,10 +138,11 @@ architecture arch of control_unit is
                                                     wait_mem(false);
                                                     next_state <= FLIP;
                                                 when "1011" => -- NOP
-                                                    wait_mem(false);
+                                                    sp_en <= '0';
                                                     next_state <= NOP;
                                                 when "1100" => -- STORE_1
                                                     wait_mem(false);
+                                                    --sp_en <= '1';
                                                     next_state <= STORE_1;
                                                 when "1101" => -- POPSP
                                                     wait_mem(false);
@@ -152,7 +152,7 @@ architecture arch of control_unit is
                                                         severity failure;
                                             end case;
                                         end if;
-                                    else 
+                                    else
                                         case IR_MSt is
                                             when "001" => -- CALL
                                                 alu_op <= "100"; -- ula_out = sp - 4
@@ -168,22 +168,21 @@ architecture arch of control_unit is
                                             when others =>
                                                 report "Instrução não existe!"
                                                     severity failure;
-                                        end case; 
+                                        end case;
                                     end if;
                                 else
                                     if is_im_star = false then -- IM1
                                         is_im_star := true;
-                                        wait_mem(false);
                                         alu_op <= "100"; -- ula_out = sp - 4
                                         sp_en <= '1'; -- sp <= sp - 4
                                         next_state <= IM1;
                                     else
-                                        wait_mem(false);
+                                        --wait_mem(false);
                                         next_state <= IM_star; -- IM_star
                                     end if;
                                 end if;
                             --end if;
-                        
+
                         when HALTING =>
                             halted <= '1';
                             is_halted := true;
@@ -195,7 +194,7 @@ architecture arch of control_unit is
                             alu_shfimm_src <= '1'; -- 4
                             alu_op <= "100"; -- alu_out = sp - 4
                             mem_b_addr_src <= "11"; -- memB_addr <= ula_out
-                            mem_b_wrd_src <= "10" ;-- sp_out
+                            mem_b_wrd_src <= "10" ; --sp_out
                             wait_mem(true);
                             sp_en <= '1'; --sp=sp-4
                             next_state <= fetch;
@@ -234,7 +233,7 @@ architecture arch of control_unit is
                             mem_b_wrd_src <= "00"; -- ula_out
                             wait_mem(true);
                             next_state <= fetch;
-                        
+
                         when LOAD =>
                             mem_b_addr_src <= "01"; -- memB_addr <= memA_rdd
                             wait_mem(false);
@@ -261,6 +260,7 @@ architecture arch of control_unit is
                             next_state <= fetch;
 
                         when NOP =>
+                            sp_en <= '0';
                             next_state <= fetch;
 
                         when STORE_1 =>
@@ -275,7 +275,7 @@ architecture arch of control_unit is
                             next_state <= STORE_2;
 
                         when STORE_2 =>
-                            -- sp_en <= '0';
+                            --sp_en <= '1';
                             wait_mem(true);
                             alu_a_src <= "01"; -- sp_out
                             alu_shfimm_src <= '1'; -- 4
@@ -303,7 +303,7 @@ architecture arch of control_unit is
                         when CALL =>
                             mem_b_addr_src <= "00"; -- sp
                             alu_op <= "000";
-                            alu_a_src <= "00"; -- pc 
+                            alu_a_src <= "00"; -- pc
                             mem_b_wrd_src <= "00"; -- ula_out
                             wait_mem(true);
                             alu_op <= "111";
@@ -311,7 +311,7 @@ architecture arch of control_unit is
                             pc_src <= '0';
                             pc_en <= '1';
                             next_state <= fetch;
-            
+
                         when STORESP =>
                             mem_b_addr_src <= "11"; -- ula_out
                             alu_a_src <=  "01"; -- sp
@@ -358,7 +358,7 @@ architecture arch of control_unit is
                             report "Estado não existe!"
                                 severity failure;
                     end case;
-                wait on current_state;
+              wait on instruction, current_state;
             end loop;
         end process;
-end architecture;
+end architecture arch;

@@ -5,7 +5,7 @@ entity tb_T4A1 is
 end entity tb_T4A1;
 
 architecture DUT of tb_T4A1 is
-    
+
         component data_flow is
             generic (
                 addr_s : natural := 16; -- address size in bits
@@ -13,12 +13,12 @@ architecture DUT of tb_T4A1 is
             );
             port (
                 clock, reset : in bit;
-                
+
                 -- Memory interface
                 memA_addr, memB_addr : out bit_vector(addr_s-1 downto 0);
                             memB_wrd : out bit_vector(word_s-1 downto 0);
                 memA_rdd, memB_rdd   : in bit_vector(word_s-1 downto 0);
-        
+
                 -- Control unit interface
                 pc_en, ir_en, sp_en           : in bit;
                 pc_src, mem_a_addr_src,
@@ -48,13 +48,13 @@ architecture DUT of tb_T4A1 is
         signal alu_shfimm_src , alu_mem_src  :  bit;
         signal alu_op                        :  bit_vector(2 downto 0);
         signal instruction                   :  bit_vector(7 downto 0);
-    
+
     begin
-    
-        bruh: entity work.data_flow(data_flow_beh) generic map (17, 32) 
+
+        bruh: entity work.data_flow(data_flow_beh) generic map (17, 32)
         port map(clock, reset, memA_addr, memB_addr, memB_wrd, memA_rdd, memB_rdd,
-         pc_en, ir_en, sp_en, pc_src, mem_a_addr_src, 
-        mem_b_mem_src, mem_b_addr_src, mem_b_wrd_src, alu_a_src, alu_b_src, 
+         pc_en, ir_en, sp_en, pc_src, mem_a_addr_src,
+        mem_b_mem_src, mem_b_addr_src, mem_b_wrd_src, alu_a_src, alu_b_src,
         alu_shfimm_src , alu_mem_src, alu_op, instruction);
 
 
@@ -99,4 +99,4 @@ architecture DUT of tb_T4A1 is
                 wait;
             end process;
 
-end architecture DUT; 
+end architecture DUT;

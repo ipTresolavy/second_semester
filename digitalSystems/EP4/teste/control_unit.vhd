@@ -42,11 +42,6 @@ architecture arch of control_unit is
 
         determining_next_state: process is
 
-            alias IR_MSN               : bit_vector(3 downto 0) is instruction(7 downto 4);
-            alias IR_LSN               : bit_vector(3 downto 0) is instruction(3 downto 0);
-            alias IR_MSt               : bit_vector(2 downto 0) is instruction(7 downto 5);
-            alias IR_MSb               : bit is instruction(7);
-
             variable is_im_star, is_halted  : boolean := false;
 
             procedure wait_mem(dowrite:boolean) is
@@ -99,15 +94,25 @@ architecture arch of control_unit is
                                 mem_a_addr_src <= '0'; -- mem_a_addr <= sp
                                 mem_b_addr_src <= "11"; -- mem_b_addr <= ula_out
 
-                                if IR_MSb = '0' then
+                                if instruction(7) = '1' then
+                                    if is_im_star = false then -- IM1
+                                        is_im_star := true;
+                                        alu_op <= "100"; -- ula_out = sp - 4
+                                        sp_en <= '1'; -- sp <= sp - 4
+                                        next_state <= IM1;
+                                    else
+                                        wait_mem(false);
+                                        next_state <= IM_star; -- IM_star
+                                    end if;
+                                else
                                     is_im_star := false;
-                                    if IR_MSt = "000" then
-                                        if IR_MSN = "0001" then -- ADDSP
+                                    if instruction(7 downto 5) = "000" then
+                                        if instruction(7 downto 4) = "0001" then -- ADDSP
                                             alu_b_src <= "11"; -- not ir[4] & ir[3:0]<<2
                                             wait_mem(false);
                                             next_state <= ADDSP;
                                         else
-                                            case IR_LSN is
+                                            case instruction(3 downto 0) is
                                                 when "0000" => -- HALTING
                                                     next_state <= HALTING;
                                                 when "0010" => -- PUSHSP
@@ -144,16 +149,13 @@ architecture arch of control_unit is
                                                     wait_mem(false);
                                                     --sp_en <= '1';
                                                     next_state <= STORE_1;
-                                                when "1101" => -- POPSP
+                                                when others  => -- POPSP
                                                     wait_mem(false);
                                                     next_state <= POPSP;
-                                                when others =>
-                                                    report "Instrução não existe!"
-                                                        severity failure;
                                             end case;
                                         end if;
                                     else
-                                        case IR_MSt is
+                                        case instruction(7 downto 5) is
                                             when "001" => -- CALL
                                                 alu_op <= "100"; -- ula_out = sp - 4
                                                 sp_en <= '1'; -- sp <= sp - 4
@@ -161,24 +163,11 @@ architecture arch of control_unit is
                                             when "010" => -- STORESP
                                                 wait_mem(false);
                                                 next_state <= STORESP;
-                                            when "011" => -- LOADSP
+                                            when others  => -- LOADSP
                                                 alu_b_src <= "11"; -- not ir[4] & ir[3:0]<<2
                                                 wait_mem(false);
                                                 next_state <= LOADSP;
-                                            when others =>
-                                                report "Instrução não existe!"
-                                                    severity failure;
                                         end case;
-                                    end if;
-                                else
-                                    if is_im_star = false then -- IM1
-                                        is_im_star := true;
-                                        alu_op <= "100"; -- ula_out = sp - 4
-                                        sp_en <= '1'; -- sp <= sp - 4
-                                        next_state <= IM1;
-                                    else
-                                        --wait_mem(false);
-                                        next_state <= IM_star; -- IM_star
                                     end if;
                                 end if;
                             --end if;
@@ -261,6 +250,7 @@ architecture arch of control_unit is
 
                         when NOP =>
                             sp_en <= '0';
+                            wait on clock;
                             next_state <= fetch;
 
                         when STORE_1 =>
@@ -358,7 +348,8 @@ architecture arch of control_unit is
                             report "Estado não existe!"
                                 severity failure;
                     end case;
-              wait on instruction, current_state;
+              wait on reset, current_state;
+              wait on clock;
             end loop;
         end process;
 end architecture arch;
